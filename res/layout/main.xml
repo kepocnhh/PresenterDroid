@@ -1,0 +1,66 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/cblack"
+    android:gravity="top"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin">
+    <ImageView
+        android:id="@+id/mainiv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/pr_logo"
+        android:layout_gravity="center"
+        android:layout_above="@+id/mbe"
+        android:layout_below="@+id/butreg"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:textColor="@color/text_button"
+        android:background="@drawable/enter_button"
+        android:onClick="butenter"
+        android:text=" Начать игру "/>
+    <Button
+        android:id="@+id/butreg"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/back_button"
+        android:onClick="but_prop"
+        android:text=" Настройки приложения "
+        android:textColor="@color/text_button"
+        android:layout_below="@+id/button2" />
+    <Button
+        android:id="@+id/mbe"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/b_forget"
+        android:textColor="@color/text_button"
+        android:onClick="butexit"
+        android:text=" ВЫХОД "
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+    <Button
+        android:id="@+id/buttest"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/test_button"
+        android:textColor="@color/cblack"
+        android:onClick="buttest"
+        android:text="[TEST]"
+        android:layout_above="@+id/mbe"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>

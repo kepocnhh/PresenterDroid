@@ -1,0 +1,31 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/day_rl"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/cwhite">
+    <ListView
+        android:id="@+id/day_lv"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/day_sp">
+    </ListView>
+    <Spinner
+        android:id="@+id/day_sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/day_b_kill">
+    </Spinner>
+    <Button
+        android:id="@+id/day_b_kill"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="kill_day"
+        android:text="Казнить"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+</RelativeLayout>

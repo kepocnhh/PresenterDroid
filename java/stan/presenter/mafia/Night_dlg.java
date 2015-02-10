@@ -1,0 +1,121 @@
+package stan.presenter.mafia;
+
+import android.app.Activity;
+import android.app.Dialog;
+import android.os.Bundle;
+import android.view.View;
+import android.view.Window;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Night_dlg
+        //extends Activity
+        implements View.OnClickListener
+{
+    private Activity activity;
+    private Dialog dialoggen;
+    private Button btnok;
+    private TextView name_tv;
+    private TextView role_tv;
+    private Spinner sp_act;
+    private Spinner sp_pl;
+    private List<String> actions;
+    private List<String> players;
+    private int player;
+
+    public Night_dlg(Activity activity)
+    {
+        this.activity = activity;
+    }
+    public void init(int p)
+    {
+        dialoggen=new Dialog(activity);
+        dialoggen.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialoggen.setContentView(R.layout.night_dlg);
+        //dialoggen.setTitle(Pretreatment.pl_list.get(p).name);
+        btnok = (Button) dialoggen.findViewById(R.id.nig_dlg_b_engage);
+        btnok.setOnClickListener(this);
+        name_tv = (TextView) dialoggen.findViewById(R.id.nig_dlg_tv_name);
+        name_tv.setText(Pretreatment.pl_list.get(p).name);
+        role_tv = (TextView) dialoggen.findViewById(R.id.nig_dlg_tv_role);
+        role_tv.setText(Pretreatment.pl_list.get(p).role.name);
+        //
+        sp_act = (Spinner) dialoggen.findViewById(R.id.nig_dlg_sp_act);
+        sp_pl = (Spinner) dialoggen.findViewById(R.id.nig_dlg_sp_pl);
+        actions = new ArrayList<String>();
+        players = new ArrayList<String>();
+        if(Pretreatment.pl_list.get(p).role.act!=null)
+        {
+            for (int i = 0; i < Pretreatment.pl_list.get(p).role.act.length; i++)
+            {
+                actions.add(Pretreatment.pl_list.get(p).role.act[i].name);
+            }
+            for (int i = 0; i < Pretreatment.pl_list.size(); i++)
+            {
+                players.add(Pretreatment.pl_list.get(i).name);
+            }
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity,R.layout.n_sp_item,actions);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            sp_act.setAdapter(adapter);
+            sp_act.setSelection(0);
+            ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(activity, R.layout.n_sp_item, players);
+            adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            sp_pl.setAdapter(adapter2);
+            sp_pl.setSelection(0);
+        }
+        else
+        {
+            Main.to_Debug(Main.p_t_p(Pretreatment.pl_list.get(p)),  "ничего не делает\n");
+            sp_act.setVisibility(View.GONE);
+            sp_pl.setVisibility(View.GONE);
+        }
+        player = p;
+    }
+    public void show()
+    {
+        dialoggen.show();
+    }
+    private void buton_Ok()
+    {
+        if(Pretreatment.pl_list.get(player).role.act!=null)
+        {
+            int n = sp_pl.getSelectedItemPosition();
+            int act = sp_act.getSelectedItemPosition();
+            if (n == player && !Pretreatment.pl_list.get(player).role.act[act].selfie) {
+                say(Pretreatment.pl_list.get(player).role.name + " не может действовать на себя!");
+                return;
+            }
+            Pretreatment.pl_list.get(player).role.act[act].to = n;
+            if (Pretreatment.pl_list.get(player).role.rang < 0 ||
+                    Pretreatment.pl_list.get(player).role.rang == 1 ||
+                    Pretreatment.pl_list.get(player).role.rang_shot) {
+                Pretreatment.pl_list.get(player).role.act[act].from = player;
+                if (Pretreatment.pl_list.get(player).role.act[act].try_stop) {
+                    Pretreatment.pl_list.get(player).try_stop = true;
+                }
+                Night.act_list.add(Pretreatment.pl_list.get(player).role.act[act]);
+            }
+            Main.to_Debug(Main.p_t_p(Pretreatment.pl_list.get(player)),Pretreatment.pl_list.get(player).role.act[act].name +" "+ Main.p_t_p(Pretreatment.pl_list.get(n)));
+        }
+        dialoggen.cancel();
+    }
+    @Override
+    public void onClick(View v)
+    {
+        switch (v.getId())
+        {
+            case R.id.nig_dlg_b_engage:
+                buton_Ok();
+        }
+    }
+    public void say(String s)
+    {
+        Toast.makeText(activity, s, Toast.LENGTH_SHORT).show();
+    }
+}

@@ -1,0 +1,39 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/cblack"
+    android:gravity="top"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin">
+    <ViewFlipper
+        android:id="@+id/flipper"
+        android:layout_above="@+id/mbe"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+    </ViewFlipper>
+    <Button
+        android:id="@+id/pr_b_ok"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_button"
+        android:background="@drawable/enter_button"
+        android:onClick="play_game"
+        android:text=" Начать игру "
+        android:layout_toLeftOf="@+id/mbe"
+        android:layout_toStartOf="@+id/mbe"
+        android:layout_alignBottom="@+id/mbe" />
+    <Button
+        android:id="@+id/mbe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/b_forget"
+        android:textColor="@color/text_button"
+        android:onClick="b_ret_main"
+        android:text=" Отмена "
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/flipper"
+        android:layout_alignEnd="@+id/flipper" />
+</RelativeLayout>

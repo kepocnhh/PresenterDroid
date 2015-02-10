@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Цвета -->
+    <color name="cblue">#3399CC</color>
+    <color name="cnewblue">#0080FF</color>
+    <color name="cnewgreen">#31A920</color>
+    <color name="cnewye">#FFA500</color>
+    <color name="cwhite">#FFFFFF</color>
+    <color name="cblack">#000000</color>
+    <color name="cred">#FF0000</color>
+    <color name="cfon">#92C3EB</color>
+    <color name="transparent">#92C3EB</color>
+    <!-- Строки -->
+    <string name="app_name">Presenter</string>
+    <string name="pret">Pretreatment</string>
+    <string name="day">Day</string>
+    <string name="night">Night</string>
+
+
+</resources>
