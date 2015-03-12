@@ -1,41 +1,55 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/nig_dlg_ll"
-    android:layout_width="wrap_content"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/nig_dlg_rl"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_gravity="center"
-    android:background="@color/cblack">
+    android:background="@color/cdgrey">
     <TextView
         android:id="@+id/nig_dlg_tv_name"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_alignParentTop="true"
         android:text="name"
         android:textColor="@color/cwhite" />
     <TextView
         android:id="@+id/nig_dlg_tv_role"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textSize="29sp"
         android:text="role"
-        android:textColor="@color/cblue" />
+        android:textColor="@color/cblue"
+        android:layout_below="@+id/nig_dlg_tv_name"/>
     <Spinner
         android:id="@+id/nig_dlg_sp_act"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_below="@+id/nig_dlg_tv_role"
+        android:layout_alignLeft="@+id/nig_dlg_tv_role"
+        android:layout_alignStart="@+id/nig_dlg_tv_role">
     </Spinner>
     <Spinner
         android:id="@+id/nig_dlg_sp_pl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_below="@+id/nig_dlg_sp_act"
+        android:layout_alignLeft="@+id/nig_dlg_sp_act"
+        android:layout_alignStart="@+id/nig_dlg_sp_act">
     </Spinner>
     <Button
         android:id="@+id/nig_dlg_b_engage"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:onClick="engage"
         android:text=" Сделать выбор "
+        android:layout_below="@+id/nig_dlg_sp_pl"
         android:textColor="@color/text_button"
         android:background="@drawable/enter_button"/>
 
-</LinearLayout>
+    <SeekBar
+        android:id="@+id/nig_dlg_sb_engage"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nig_dlg_sp_pl"/>
+</RelativeLayout>

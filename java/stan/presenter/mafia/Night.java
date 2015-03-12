@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SeekBar;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,12 +18,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-public class Night extends Activity
+public class Night
+        extends Activity
+        implements View.OnClickListener
 {
     private ListView n_lv;
     private ArrayList<HashMap<String, String>> hm = new ArrayList<HashMap<String, String>>();
     private SimpleAdapter sa;
     private int player_num;
+    private Button btnok;
+    private SeekBar seekBarok;
+    private TextView asleeptv;
     TextView pl_name;
     List<Player> tmp_list;
     Random rand;
@@ -58,6 +64,38 @@ public class Night extends Activity
         }
         rand = new Random();
         player_num = next_player();
+        //
+        btnok = (Button) findViewById(R.id.nig_b_engage);
+        btnok.setOnClickListener(this);
+        btnok.setVisibility(View.INVISIBLE);
+        asleeptv = (TextView) findViewById(R.id.nig_tv_asleep);
+        seekBarok = (SeekBar) findViewById(R.id.nig_sb_engage);
+        seekBarok.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
+        {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
+            {
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar)
+            {
+            }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar)
+            {
+                if(seekBar.getProgress() >= seekBar.getMax())
+                {
+                    wakeup();
+                }
+                seekBar.setProgress(0);
+                if(tmp_list.size()==0)
+                {
+                    seekBarok.setVisibility(View.GONE);
+                    asleeptv.setVisibility(View.GONE);
+                    btnok.setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
     private HashMap<String, String> add_hm(String n)
     {
@@ -139,8 +177,22 @@ public class Night extends Activity
     {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
-
-    public void wakeup(View view)
+    public void wakeup()
+    {
+        Night_dlg nd = new Night_dlg(this);
+        nd.init(player_num);
+        nd.show();
+        hm.add(add_hm(Pretreatment.pl_list.get(player_num).name));
+        sa.notifyDataSetChanged();
+        player_num = next_player();
+    }
+    public void wakeupAll()
+    {
+        Engage(Night.act_list);
+        setResult(RESULT_OK, this.getIntent());
+        finish();
+    }
+    public void wakeup2()
     {
         if(tmp_list.size()>0)
         {
@@ -156,6 +208,16 @@ public class Night extends Activity
             Engage(Night.act_list);
             setResult(RESULT_OK, this.getIntent());
             finish();
+        }
+    }
+
+    @Override
+    public void onClick(View v)
+    {
+        switch (v.getId())
+        {
+            case R.id.nig_b_engage:
+                wakeupAll();
         }
     }
 }

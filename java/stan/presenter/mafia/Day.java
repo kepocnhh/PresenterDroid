@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
-//FORCOMMIT!!!!!
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -24,6 +24,7 @@ public class Day extends Activity
     private ArrayList<HashMap<String, String>> hm = new ArrayList<HashMap<String, String>>();
     private SimpleAdapter sa;
     private boolean win;
+    private boolean day_time;
     private Date cur_date;
     Spinner plrs;
     @Override
@@ -57,7 +58,6 @@ public class Day extends Activity
         {
             d = "ИГРА ОКОНЧЕНА";
             win = true;
-            b_kill.setText(" ВЫЙТИ ");
             if(st<0)
             {
                 hm.add(add_hm(d,"Этой ночью " + "мафия побеждает город"));
@@ -67,10 +67,47 @@ public class Day extends Activity
                 hm.add(add_hm(d,"Этой ночью " + "город побеждает мафию"));
             }
             sa.notifyDataSetChanged();
-            plrs.setVisibility(View.GONE);
+            setDayTime(false, " ВЫЙТИ ",View.GONE);
             return;
         }
         set_Spinner();
+    }
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.day);
+        //
+        events = (ListView) findViewById(R.id.day_lv);
+        hm = new ArrayList<HashMap<String, String>>();
+        sa = new SimpleAdapter(this,
+                hm,
+                R.layout.day_list_item, new String[]
+                {
+                        "date",
+                        "event"
+                },
+                new int[]
+                        {
+                                R.id.dli_tv_date,
+                                R.id.dli_tv_event
+                        });
+        events.setAdapter(sa);
+        //
+        plrs = (Spinner) findViewById(R.id.day_sp);
+        plrs.setVisibility(View.GONE);
+        //
+        b_kill = (Button) findViewById(R.id.day_b_kill);
+        //
+        win = false;
+        cur_date = new Date();
+        Begin_Game();
+    }
+    private void setDayTime(boolean b, String bt, int sv)
+    {
+        day_time = b;
+        b_kill.setText(bt);
+        plrs.setVisibility(sv);
     }
     private List<Player> Kills()
     {
@@ -105,37 +142,6 @@ public class Day extends Activity
             }
         }
         return tmp;
-    }
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.day);
-        //
-        events = (ListView) findViewById(R.id.day_lv);
-        hm = new ArrayList<HashMap<String, String>>();
-        sa = new SimpleAdapter(this,
-                hm,
-                R.layout.day_list_item, new String[]
-                {
-                    "date",
-                    "event"
-                },
-                new int[]
-                {
-                    R.id.dli_tv_date,
-                    R.id.dli_tv_event
-                });
-        events.setAdapter(sa);
-        //
-        plrs = (Spinner) findViewById(R.id.day_sp);
-        plrs.setVisibility(View.GONE);
-        //
-        b_kill = (Button) findViewById(R.id.day_b_kill);
-        //
-        win = false;
-        cur_date = new Date();
-        Begin_Game();
     }
     private HashMap<String, String> add_hm(String d, String e)
     {
@@ -175,9 +181,15 @@ public class Day extends Activity
     {
         plrs.setVisibility(View.GONE);
         startActivityForResult(new Intent(Day.this, Night.class), 0);
+        setDayTime(true, "Казнить",View.VISIBLE);
     }
     private void Day()
     {
+        if(!day_time)
+        {
+            Night();
+            return;
+        }
         String d = "";
         d = cur_date.getDate() +"."+ (cur_date.getMonth()+1) +"."+ (cur_date.getYear()+1900)+" ДЕНЬ";
         cur_date.setDate(cur_date.getDate()+1);
@@ -217,7 +229,6 @@ public class Day extends Activity
         {
             d = "ИГРА ОКОНЧЕНА";
             win = true;
-            b_kill.setText(" ВЫЙТИ ");
             if(st<0)
             {
                 hm.add(add_hm(d,"Этим днём " + "мафия побеждает город"));
@@ -227,11 +238,11 @@ public class Day extends Activity
                 hm.add(add_hm(d,"Этим днём " + "город побеждает мафию"));
             }
             sa.notifyDataSetChanged();
-            plrs.setVisibility(View.GONE);
+            setDayTime(false, " ВЫЙТИ ",View.GONE);
             return;
         }
         null_players();
-        Night();
+        setDayTime(false, "Город засыпает",View.GONE);
     }
     private static void null_players()
     {

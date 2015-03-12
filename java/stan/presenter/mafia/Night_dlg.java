@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,12 +22,11 @@ public class Night_dlg
     private Activity activity;
     private Dialog dialoggen;
     private Button btnok;
+    private SeekBar seekBarok;
     private TextView name_tv;
     private TextView role_tv;
     private Spinner sp_act;
     private Spinner sp_pl;
-    private List<String> actions;
-    private List<String> players;
     private int player;
 
     public Night_dlg(Activity activity)
@@ -38,9 +38,31 @@ public class Night_dlg
         dialoggen=new Dialog(activity);
         dialoggen.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialoggen.setContentView(R.layout.night_dlg);
-        //dialoggen.setTitle(Pretreatment.pl_list.get(p).name);
+        dialoggen.setCancelable(false);
         btnok = (Button) dialoggen.findViewById(R.id.nig_dlg_b_engage);
         btnok.setOnClickListener(this);
+        seekBarok = (SeekBar) dialoggen.findViewById(R.id.nig_dlg_sb_engage);
+        seekBarok.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
+        {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
+            {
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar)
+            {
+            }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar)
+            {
+                if(seekBar.getProgress() >= seekBar.getMax())
+                {
+                    seekBarok.setVisibility(View.GONE);
+                    btnok.setVisibility(View.VISIBLE);
+                }
+                seekBar.setProgress(0);
+            }
+        });
         name_tv = (TextView) dialoggen.findViewById(R.id.nig_dlg_tv_name);
         name_tv.setText(Pretreatment.pl_list.get(p).name);
         role_tv = (TextView) dialoggen.findViewById(R.id.nig_dlg_tv_role);
@@ -48,10 +70,10 @@ public class Night_dlg
         //
         sp_act = (Spinner) dialoggen.findViewById(R.id.nig_dlg_sp_act);
         sp_pl = (Spinner) dialoggen.findViewById(R.id.nig_dlg_sp_pl);
-        actions = new ArrayList<String>();
-        players = new ArrayList<String>();
         if(Pretreatment.pl_list.get(p).role.act!=null)
         {
+            List<String> actions = new ArrayList<String>();
+            List<String> players = new ArrayList<String>();
             for (int i = 0; i < Pretreatment.pl_list.get(p).role.act.length; i++)
             {
                 actions.add(Pretreatment.pl_list.get(p).role.act[i].name);
@@ -68,12 +90,14 @@ public class Night_dlg
             adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             sp_pl.setAdapter(adapter2);
             sp_pl.setSelection(0);
+            seekBarok.setVisibility(View.GONE);
         }
         else
         {
             Main.to_Debug(Main.p_t_p(Pretreatment.pl_list.get(p)),  "ничего не делает\n");
             sp_act.setVisibility(View.GONE);
             sp_pl.setVisibility(View.GONE);
+            btnok.setVisibility(View.GONE);
         }
         player = p;
     }
@@ -81,27 +105,34 @@ public class Night_dlg
     {
         dialoggen.show();
     }
+    private void result(int n, int act)
+    {
+        Pretreatment.pl_list.get(player).role.act[act].to = n;
+        if (Pretreatment.pl_list.get(player).role.rang < 0 ||
+            Pretreatment.pl_list.get(player).role.rang == 1 ||
+            Pretreatment.pl_list.get(player).role.rang_shot)
+        {
+            Pretreatment.pl_list.get(player).role.act[act].from = player;
+            if (Pretreatment.pl_list.get(player).role.act[act].try_stop)
+            {
+                Pretreatment.pl_list.get(player).try_stop = true;
+            }
+            Night.act_list.add(Pretreatment.pl_list.get(player).role.act[act]);
+        }
+        Main.to_Debug(Main.p_t_p(Pretreatment.pl_list.get(player)), Pretreatment.pl_list.get(player).role.act[act].name + " " + Main.p_t_p(Pretreatment.pl_list.get(n)));
+    }
     private void buton_Ok()
     {
         if(Pretreatment.pl_list.get(player).role.act!=null)
         {
             int n = sp_pl.getSelectedItemPosition();
             int act = sp_act.getSelectedItemPosition();
-            if (n == player && !Pretreatment.pl_list.get(player).role.act[act].selfie) {
+            if (n == player && !Pretreatment.pl_list.get(player).role.act[act].selfie)
+            {
                 say(Pretreatment.pl_list.get(player).role.name + " не может действовать на себя!");
                 return;
             }
-            Pretreatment.pl_list.get(player).role.act[act].to = n;
-            if (Pretreatment.pl_list.get(player).role.rang < 0 ||
-                    Pretreatment.pl_list.get(player).role.rang == 1 ||
-                    Pretreatment.pl_list.get(player).role.rang_shot) {
-                Pretreatment.pl_list.get(player).role.act[act].from = player;
-                if (Pretreatment.pl_list.get(player).role.act[act].try_stop) {
-                    Pretreatment.pl_list.get(player).try_stop = true;
-                }
-                Night.act_list.add(Pretreatment.pl_list.get(player).role.act[act]);
-            }
-            Main.to_Debug(Main.p_t_p(Pretreatment.pl_list.get(player)),Pretreatment.pl_list.get(player).role.act[act].name +" "+ Main.p_t_p(Pretreatment.pl_list.get(n)));
+            result(n, act);
         }
         dialoggen.cancel();
     }

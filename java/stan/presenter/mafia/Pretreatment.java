@@ -39,10 +39,11 @@ public class Pretreatment extends Activity implements View.OnTouchListener
         private ListView n_lv;
         private EditText et_name;
         private CheckBox cb_bot;
+        private TextView tv_to;
         private TextView tv_mess;
         //
         private ListView r_lv;
-        private TextView r_tv_mess;
+        //private TextView r_tv_mess;
     //
     private ArrayList<HashMap<String, String>> hm = new ArrayList<HashMap<String, String>>();
     private SimpleAdapter sa;
@@ -80,6 +81,43 @@ public class Pretreatment extends Activity implements View.OnTouchListener
         {
             say("players != roles");
         }
+    }
+    @Override
+    public boolean onTouch(View view, MotionEvent event)
+    {
+        switch (event.getAction())
+        {
+            case MotionEvent.ACTION_DOWN:
+                fromPosition = event.getX();
+                break;
+            case MotionEvent.ACTION_UP:
+                float toPosition = event.getX();
+                if(flipper.getDisplayedChild() == 0)
+                {
+                    if (fromPosition > toPosition)
+                    {
+                        flipper.showNext();
+                    }
+                }
+                else
+                {
+                    if (fromPosition < toPosition)
+                    {
+                        flipper.showPrevious();
+                    }
+                }
+                if(flipper.getDisplayedChild() == 0)
+                {
+                    tv_to.setText("к выбору ролей -->");
+                }
+                else
+                {
+                    tv_to.setText("<-- к добавлению игроков");
+                }
+            default:
+                break;
+        }
+        return true;
     }
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -141,7 +179,9 @@ public class Pretreatment extends Activity implements View.OnTouchListener
             }
         });
         cb_bot = (CheckBox) findViewById(R.id.n_cb_bot);
-        tv_mess = (TextView) findViewById(R.id.n_tv_mess);
+        tv_mess = (TextView) findViewById(R.id.p_tv_mess);
+        tv_to = (TextView) findViewById(R.id.p_tv_to);
+        tv_to.setText("к выбору ролей -->");
         //
         pl_list = new ArrayList<Player>();
         check_count();
@@ -250,7 +290,7 @@ public class Pretreatment extends Activity implements View.OnTouchListener
         }
         sa_roles.notifyDataSetChanged();
         //
-        r_tv_mess = (TextView) findViewById(R.id.r_tv_mess);
+        //r_tv_mess = (TextView) findViewById(R.id.r_tv_mess);
         rl_count = 0;
         check_count_roles();
     }
@@ -300,35 +340,6 @@ public class Pretreatment extends Activity implements View.OnTouchListener
     {
         add_to_list();
     }
-    @Override
-    public boolean onTouch(View view, MotionEvent event)
-    {
-        switch (event.getAction())
-        {
-            case MotionEvent.ACTION_DOWN:
-                fromPosition = event.getX();
-                break;
-            case MotionEvent.ACTION_UP:
-                float toPosition = event.getX();
-                if(flipper.getDisplayedChild() == 0)
-                {
-                    if (fromPosition > toPosition)
-                    {
-                        flipper.showNext();
-                    }
-                }
-                else
-                {
-                    if (fromPosition < toPosition)
-                    {
-                        flipper.showPrevious();
-                    }
-                }
-            default:
-                break;
-        }
-        return true;
-    }
     //
     public void say(String s)
     {
@@ -350,28 +361,29 @@ public class Pretreatment extends Activity implements View.OnTouchListener
     }
     public boolean check_count_roles()
     {
+        String res = "";
+        boolean bres = true;
         if(pl_list.size()>=5)
         {
-            if(rl_count<pl_list.size())
+            if(rl_count != pl_list.size())
             {
-                r_tv_mess.setText("осталось выбрать "+(pl_list.size()-rl_count)+" ролей");
-                return false;
-            }
-            else if(rl_count>pl_list.size())
-            {
-                r_tv_mess.setText("ролей больше чем игроков!");
-                return false;
-            }
-            else
-            {
-                r_tv_mess.setText("");
+                bres = false;
+                if(rl_count<pl_list.size())
+                {
+                    res = "осталось выбрать "+(pl_list.size()-rl_count)+" ролей";
+                }
+                else if(rl_count>pl_list.size())
+                {
+                    res = "ролей больше чем игроков!";
+                }
             }
         }
         else
         {
-            r_tv_mess.setText("players < 5");
-            return false;
+            res = "players < 5";
+            bres = false;
         }
-        return true;
+        tv_mess.setText(res);
+        return bres;
     }
 }

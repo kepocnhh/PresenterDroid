@@ -10,6 +10,8 @@
     <color name="cblack">#000000</color>
     <color name="cred">#FF0000</color>
     <color name="cfon">#92C3EB</color>
+    <color name="cgrey">#708090</color>
+    <color name="cdgrey">#2F2F2F</color>
     <color name="transparent">#92C3EB</color>
     <!-- Строки -->
     <string name="app_name">Presenter</string>

@@ -2,13 +2,14 @@
     android:id="@+id/day_rl"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@color/cwhite">
+    android:background="@color/cgrey">
     <ListView
         android:id="@+id/day_lv"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
+        android:background="@color/cgrey"
         android:layout_above="@+id/day_sp">
     </ListView>
     <Spinner
