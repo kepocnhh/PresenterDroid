@@ -127,7 +127,7 @@ public class Night_dlg
             Pretreatment.pl_list.get(player).role.act[act].from = player;
             if (Pretreatment.pl_list.get(player).role.act[act].try_stop)
             {
-                Pretreatment.pl_list.get(player).try_stop = true;
+                Pretreatment.pl_list.get(n).try_stop = true;
             }
             Night.act_list.add(Pretreatment.pl_list.get(player).role.act[act]);
         }
