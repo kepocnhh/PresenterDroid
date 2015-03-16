@@ -232,6 +232,7 @@ public class Day extends Activity
         hm.add(add_hm(d,"Этим днём " + s, MyAdapter.DAYKEY));
         sa.notifyDataSetChanged();
         short st = check_win();
+        //windows
         if(st!=0)
         {
             d = "ИГРА ОКОНЧЕНА";
