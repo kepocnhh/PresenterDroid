@@ -21,8 +21,9 @@ public class Day extends Activity
 {
     private Button b_kill;
     private ListView events;
-    private ArrayList<HashMap<String, String>> hm = new ArrayList<HashMap<String, String>>();
-    private SimpleAdapter sa;
+    private ArrayList<HashMap<String, Object>> hm = new ArrayList<HashMap<String, Object>>();
+    //private SimpleAdapter sa;
+    private MyAdapter sa;
     private boolean win;
     private boolean day_time;
     private Date cur_date;
@@ -51,7 +52,7 @@ public class Day extends Activity
         {
             s = "никто не умер.";
         }
-        hm.add(add_hm(d,"Этой ночью " + s));
+        hm.add(add_hm(d,"Этой ночью " + s, MyAdapter.NIGHTKEY));
         sa.notifyDataSetChanged();
         short st = check_win();
         if(st!=0)
@@ -60,11 +61,11 @@ public class Day extends Activity
             win = true;
             if(st<0)
             {
-                hm.add(add_hm(d,"Этой ночью " + "мафия побеждает город"));
+                hm.add(add_hm(d,"Этой ночью " + "мафия побеждает город", MyAdapter.ENDBADKEY));
             }
             else
             {
-                hm.add(add_hm(d,"Этой ночью " + "город побеждает мафию"));
+                hm.add(add_hm(d,"Этой ночью " + "город побеждает мафию", MyAdapter.ENDGOODKEY));
             }
             sa.notifyDataSetChanged();
             setDayTime(false, " ВЫЙТИ ",View.GONE);
@@ -79,7 +80,11 @@ public class Day extends Activity
         setContentView(R.layout.day);
         //
         events = (ListView) findViewById(R.id.day_lv);
-        hm = new ArrayList<HashMap<String, String>>();
+        hm = new ArrayList<HashMap<String, Object>>();
+        sa = new MyAdapter(this,hm,R.layout.day_list_item,new int[]{
+                R.id.dli_tv_date,
+                R.id.dli_tv_event});
+        /*
         sa = new SimpleAdapter(this,
                 hm,
                 R.layout.day_list_item, new String[]
@@ -92,6 +97,7 @@ public class Day extends Activity
                                 R.id.dli_tv_date,
                                 R.id.dli_tv_event
                         });
+        */
         events.setAdapter(sa);
         //
         plrs = (Spinner) findViewById(R.id.day_sp);
@@ -143,11 +149,12 @@ public class Day extends Activity
         }
         return tmp;
     }
-    private HashMap<String, String> add_hm(String d, String e)
+    private HashMap<String, Object> add_hm(String d, String e, String c)
     {
-        HashMap<String, String> hm2 = new HashMap<String, String>();
-        hm2.put("date", d);
-        hm2.put("event", e);
+        HashMap<String, Object> hm2 = new HashMap<String, Object>();
+        hm2.put(MyAdapter.DATEKEY, d);
+        hm2.put(MyAdapter.EVENTKEY, e);
+        hm2.put(MyAdapter.COLKEY, c);
         return hm2;
     }
     private void set_Spinner()
@@ -222,7 +229,7 @@ public class Day extends Activity
             }
             Pretreatment.pl_list.remove(n);
         }
-        hm.add(add_hm(d,"Этим днём " + s));
+        hm.add(add_hm(d,"Этим днём " + s, MyAdapter.DAYKEY));
         sa.notifyDataSetChanged();
         short st = check_win();
         if(st!=0)
@@ -231,11 +238,11 @@ public class Day extends Activity
             win = true;
             if(st<0)
             {
-                hm.add(add_hm(d,"Этим днём " + "мафия побеждает город"));
+                hm.add(add_hm(d,"Этим днём " + "мафия побеждает город", MyAdapter.ENDBADKEY));
             }
             else
             {
-                hm.add(add_hm(d,"Этим днём " + "город побеждает мафию"));
+                hm.add(add_hm(d,"Этим днём " + "город побеждает мафию", MyAdapter.ENDGOODKEY));
             }
             sa.notifyDataSetChanged();
             setDayTime(false, " ВЫЙТИ ",View.GONE);
