@@ -42,15 +42,25 @@ public class Night_dlg
         btnok = (Button) dialoggen.findViewById(R.id.nig_dlg_b_engage);
         btnok.setOnClickListener(this);
         seekBarok = (SeekBar) dialoggen.findViewById(R.id.nig_dlg_sb_engage);
-        seekBarok.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
+        SeekBar.OnSeekBarChangeListener sbcl = new SeekBar.OnSeekBarChangeListener()
         {
+            int originalProgress;
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
             {
+                if(fromUser && Math.abs(originalProgress - progress) < 10)
+                {
+                    originalProgress = progress;
+                }
+                else
+                {
+                    seekBar.setProgress( originalProgress);
+                }
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar)
             {
+                originalProgress = seekBar.getProgress();
             }
             @Override
             public void onStopTrackingTouch(SeekBar seekBar)
@@ -60,9 +70,11 @@ public class Night_dlg
                     seekBarok.setVisibility(View.GONE);
                     btnok.setVisibility(View.VISIBLE);
                 }
-                seekBar.setProgress(0);
+                originalProgress = 0;
+                seekBar.setProgress(originalProgress);
             }
-        });
+        };
+        seekBarok.setOnSeekBarChangeListener(sbcl);
         name_tv = (TextView) dialoggen.findViewById(R.id.nig_dlg_tv_name);
         name_tv.setText(Pretreatment.pl_list.get(p).name);
         role_tv = (TextView) dialoggen.findViewById(R.id.nig_dlg_tv_role);

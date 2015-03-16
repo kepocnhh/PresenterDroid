@@ -70,15 +70,25 @@ public class Night
         btnok.setVisibility(View.INVISIBLE);
         asleeptv = (TextView) findViewById(R.id.nig_tv_asleep);
         seekBarok = (SeekBar) findViewById(R.id.nig_sb_engage);
-        seekBarok.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
+        SeekBar.OnSeekBarChangeListener sbcl = new SeekBar.OnSeekBarChangeListener()
         {
+            int originalProgress;
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
             {
+                if(fromUser && Math.abs(originalProgress - progress) < 10)
+                {
+                    originalProgress = progress;
+                }
+                else
+                {
+                    seekBar.setProgress( originalProgress);
+                }
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar)
             {
+                originalProgress = seekBar.getProgress();
             }
             @Override
             public void onStopTrackingTouch(SeekBar seekBar)
@@ -87,7 +97,8 @@ public class Night
                 {
                     wakeup();
                 }
-                seekBar.setProgress(0);
+                originalProgress = 0;
+                seekBar.setProgress(originalProgress);
                 if(tmp_list.size()==0)
                 {
                     seekBarok.setVisibility(View.GONE);
@@ -95,7 +106,8 @@ public class Night
                     btnok.setVisibility(View.VISIBLE);
                 }
             }
-        });
+        };
+        seekBarok.setOnSeekBarChangeListener(sbcl);
     }
     private HashMap<String, String> add_hm(String n)
     {
