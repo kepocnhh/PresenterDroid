@@ -19,6 +19,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -189,6 +190,7 @@ public class Pretreatment extends Activity implements View.OnTouchListener
     public  void add_role(Role r)
     {
         boolean more = false;
+        Role newrole = null;
         if(r.rang>-1)
         {
             for(int i=0; i<rl_list.size(); i++)
@@ -205,12 +207,17 @@ public class Pretreatment extends Activity implements View.OnTouchListener
                     }
                 }
             }
-            if(more||r.rang == 0)
+            newrole = r.clone(r.name, r.act);
+            if(more||newrole.rang == 0)
             {
-                r.rang ++;
+                newrole.rang ++;
             }
         }
-        rl_list.add(r);
+        else
+        {
+            newrole = r;
+        }
+        rl_list.add(newrole);
     }
     private void init_roles()
     {
@@ -246,9 +253,25 @@ public class Pretreatment extends Activity implements View.OnTouchListener
             public View getView(int position, View convertView, ViewGroup parent)
             {
                 View view = super.getView(position, convertView, parent);
+                final int p = position;
+//                NumberPicker np = (NumberPicker) view.findViewById(R.id.r_li_np);
+//                np.setMinValue(0);
+//                np.setOnScrollListener(new NumberPicker.OnScrollListener()
+//                {
+//                    @Override
+//                    public void onScrollStateChange(NumberPicker numberPicker, int i)
+//                    {
+//                        int c = 0;
+//                        String tmp = hm_roles.get(p).values().toArray()[0].toString();
+//                        c = Integer.parseInt(tmp);
+//                        rl_count = i;
+//                        hm_roles.set(p,hm_roles((c-1)+"",hm_roles.get(p).values().toArray()[1].toString()));
+//                        sa_roles.notifyDataSetChanged();
+//                        check_count_roles();
+//                    }
+//                });
                 Button b_min = (Button) view.findViewById(R.id.r_li_b_minus);
                 Button b_plus = (Button) view.findViewById(R.id.r_li_b_plus);
-                final int p = position;
                 b_min.setOnClickListener(new View.OnClickListener()
                 {
                     @Override

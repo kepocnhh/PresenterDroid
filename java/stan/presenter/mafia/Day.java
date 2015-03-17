@@ -84,20 +84,6 @@ public class Day extends Activity
         sa = new MyAdapter(this,hm,R.layout.day_list_item,new int[]{
                 R.id.dli_tv_date,
                 R.id.dli_tv_event});
-        /*
-        sa = new SimpleAdapter(this,
-                hm,
-                R.layout.day_list_item, new String[]
-                {
-                        "date",
-                        "event"
-                },
-                new int[]
-                        {
-                                R.id.dli_tv_date,
-                                R.id.dli_tv_event
-                        });
-        */
         events.setAdapter(sa);
         //
         plrs = (Spinner) findViewById(R.id.day_sp);

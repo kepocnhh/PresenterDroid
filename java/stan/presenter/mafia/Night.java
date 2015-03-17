@@ -204,25 +204,6 @@ public class Night
         setResult(RESULT_OK, this.getIntent());
         finish();
     }
-    public void wakeup2()
-    {
-        if(tmp_list.size()>0)
-        {
-            Night_dlg nd = new Night_dlg(this);
-            nd.init(player_num);
-            nd.show();
-            hm.add(add_hm(Pretreatment.pl_list.get(player_num).name));
-            sa.notifyDataSetChanged();
-            player_num = next_player();
-        }
-        else
-        {
-            Engage(Night.act_list);
-            setResult(RESULT_OK, this.getIntent());
-            finish();
-        }
-    }
-
     @Override
     public void onClick(View v)
     {

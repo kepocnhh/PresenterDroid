@@ -135,7 +135,10 @@ public class Night_dlg
     }
     private void buton_Ok()
     {
-        if(Pretreatment.pl_list.get(player).role.act!=null)
+        if(Pretreatment.pl_list.get(player).role.act!=null &&(
+                Pretreatment.pl_list.get(player).role.rang < 0  ||
+                Pretreatment.pl_list.get(player).role.rang == 1 ||
+                Pretreatment.pl_list.get(player).role.rang_shot) )
         {
             int n = sp_pl.getSelectedItemPosition();
             int act = sp_act.getSelectedItemPosition();
