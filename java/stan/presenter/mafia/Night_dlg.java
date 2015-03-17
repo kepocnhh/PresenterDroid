@@ -25,6 +25,7 @@ public class Night_dlg
     private SeekBar seekBarok;
     private TextView name_tv;
     private TextView role_tv;
+    private TextView group_tv;
     private Spinner sp_act;
     private Spinner sp_pl;
     private int player;
@@ -78,11 +79,25 @@ public class Night_dlg
         name_tv = (TextView) dialoggen.findViewById(R.id.nig_dlg_tv_name);
         name_tv.setText(Pretreatment.pl_list.get(p).name);
         role_tv = (TextView) dialoggen.findViewById(R.id.nig_dlg_tv_role);
-        role_tv.setText(Pretreatment.pl_list.get(p).role.name);
+        group_tv = (TextView) dialoggen.findViewById(R.id.nig_dlg_tv_group);
+        String role = Pretreatment.pl_list.get(p).role.name;
+        if(Pretreatment.pl_list.get(p).role.rang > 0)
+        {
+            role += " - ранг " + Pretreatment.pl_list.get(p).role.rang;
+            show_role_group(p);
+        }
+        else
+        {
+            group_tv.setVisibility(View.GONE);
+        }
+        role_tv.setText(role);
         //
         sp_act = (Spinner) dialoggen.findViewById(R.id.nig_dlg_sp_act);
         sp_pl = (Spinner) dialoggen.findViewById(R.id.nig_dlg_sp_pl);
-        if(Pretreatment.pl_list.get(p).role.act!=null)
+        if(Pretreatment.pl_list.get(p).role.act!=null &&
+                (Pretreatment.pl_list.get(p).role.rang_shot ||
+                 Pretreatment.pl_list.get(p).role.rang == 1 ||
+                 Pretreatment.pl_list.get(p).role.rang < 0  ))
         {
             List<String> actions = new ArrayList<String>();
             List<String> players = new ArrayList<String>();
@@ -116,6 +131,48 @@ public class Night_dlg
     public void show()
     {
         dialoggen.show();
+    }
+    private void show_role_group(int me)
+    {
+        String res = "";
+        for(int k=0; k<Pretreatment.pl_list.size(); k++)
+        {
+            if(k==me)
+            {
+                continue;
+            }
+            if(Pretreatment.pl_list.get(k).role.UI == Pretreatment.pl_list.get(me).role.UI &&
+                    Pretreatment.pl_list.get(k).role.rang>-1)
+            {
+                String m = Pretreatment.pl_list.get(k).name + " - ранг " + Pretreatment.pl_list.get(k).role.rang + " ";
+                if(res.length()>0)
+                {
+                    res+="\n";
+                }
+                res+=m;
+                if(Pretreatment.pl_list.get(me).role.rang_shot || Pretreatment.pl_list.get(k).role.rang == 1)
+                {
+                    String m2 = " ещё не сделал выбор";
+                    if (Pretreatment.pl_list.get(k).role.act != null)
+                    {
+                        for (int q = 0; q < Pretreatment.pl_list.get(k).role.act.length; q++)
+                        {
+                            if (Pretreatment.pl_list.get(k).role.act[q].to != -1)
+                            {
+                                m2 = Pretreatment.pl_list.get(k).role.act[q].name + " - " + Pretreatment.pl_list.get(Pretreatment.pl_list.get(k).role.act[q].to).name;
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        m2 = " ничего не делает";
+                    }
+                    res+="\n"+m2;
+                }
+            }
+        }
+        group_tv.setText(res);
     }
     private void result(int n, int act)
     {

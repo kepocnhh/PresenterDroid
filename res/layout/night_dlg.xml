@@ -19,12 +19,22 @@
         android:text="role"
         android:textColor="@color/cblue"
         android:layout_below="@+id/nig_dlg_tv_name"/>
+    <TextView
+        android:id="@+id/nig_dlg_tv_group"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="group"
+        android:gravity="right"
+        android:textColor="@color/cblue"
+        android:layout_below="@+id/nig_dlg_tv_role"
+        android:layout_alignRight="@+id/nig_dlg_sp_pl"
+        android:layout_alignEnd="@+id/nig_dlg_sp_pl" />
     <Spinner
         android:id="@+id/nig_dlg_sp_act"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
-        android:layout_below="@+id/nig_dlg_tv_role"
+        android:layout_below="@+id/nig_dlg_tv_group"
         android:layout_alignLeft="@+id/nig_dlg_tv_role"
         android:layout_alignStart="@+id/nig_dlg_tv_role">
     </Spinner>

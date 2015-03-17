@@ -56,6 +56,11 @@ public class Pretreatment extends Activity implements View.OnTouchListener
     private static List<Role> rl_to_play;
     private static int rl_count;
 ////////////////////////////////////////////////////////////////////////////////////////
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        finish();
+    }
     //кнопка
     public void b_ret_main(View v)
     {
@@ -237,7 +242,7 @@ public class Pretreatment extends Activity implements View.OnTouchListener
         rl_to_play.add(peace);
         rl_to_play.add(police);
         rl_to_play.add(doctor);
-        rl_to_play.add(maniac);
+        //rl_to_play.add(maniac);
         rl_to_play.add(mafia);
         //
         r_lv = (ListView) findViewById(R.id.r_lv_roles);
