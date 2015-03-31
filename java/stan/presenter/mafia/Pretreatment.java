@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -30,52 +31,60 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Pretreatment extends Activity implements View.OnTouchListener
+public class Pretreatment
+        extends Activity
+//        implements View.OnTouchListener
 {
-    ViewFlipper flipper;
+    ViewFlipper    flipper;
     LayoutInflater inflater;
-    private float fromPosition;
+    private float    fromPosition;
     private Activity ac;
+    private RelativeLayout rl_roles;
+    private RelativeLayout rl_names;
     //
-        private ListView n_lv;
-        private EditText et_name;
-        private CheckBox cb_bot;
-        private TextView tv_to;
-        private TextView tv_mess;
-        //
-        private ListView r_lv;
-        //private TextView r_tv_mess;
+    private ListView n_lv;
+    private EditText et_name;
+    private CheckBox cb_bot;
+    private TextView tv_to;
+    private TextView tv_mess;
+    //
+    private ListView r_lv;
+    //private TextView r_tv_mess;
     //
     private ArrayList<HashMap<String, String>> hm = new ArrayList<HashMap<String, String>>();
     private SimpleAdapter sa;
     private ArrayList<HashMap<String, String>> hm_roles = new ArrayList<HashMap<String, String>>();
-    private SimpleAdapter sa_roles;
+    private        SimpleAdapter sa_roles;
     //
-    public static List<Player> pl_list;
-    public static List<Role> rl_list;
-    private static List<Role> rl_to_play;
-    private static int rl_count;
-////////////////////////////////////////////////////////////////////////////////////////
+    public static  List<Player>  pl_list;
+    public static  List<Role>    rl_list;
+    private static List<Role>    rl_to_play;
+    private static int           rl_count;
+
+    ////////////////////////////////////////////////////////////////////////////////////////
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         finish();
     }
+
     //кнопка
     public void b_ret_main(View v)
     {
         finish();
     }
+
     //кнопка
     public void play_game(View v)
     {
         if(check_count() && check_count_roles())
         {
-            while(rl_to_play.size()>0)
+            while(rl_to_play.size() > 0)
             {
                 int roles = 0;
-                roles = Integer.parseInt(hm_roles.get(hm_roles.size() - rl_to_play.size()).values().toArray()[0].toString());
-                for(int i=0;i<roles;i++)
+                roles = Integer.parseInt(hm_roles.get(
+                        hm_roles.size() - rl_to_play.size()).values().toArray()[0].toString());
+                for(int i = 0; i < roles; i++)
                 {
                     add_role(rl_to_play.get(0));
                 }
@@ -88,42 +97,50 @@ public class Pretreatment extends Activity implements View.OnTouchListener
             say("players != roles");
         }
     }
-    @Override
-    public boolean onTouch(View view, MotionEvent event)
+
+    private void flipnext()
     {
-        switch (event.getAction())
+        flipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.left));
+        flipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.left_out));
+        flipper.showNext();
+    }
+    private void flipprev()
+    {
+        flipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.right_out));
+        flipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.right));
+        flipper.showPrevious();
+    }
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev)
+    {
+        int t = ev.getAction();
+        if(t == MotionEvent.ACTION_DOWN)
         {
-            case MotionEvent.ACTION_DOWN:
-                fromPosition = event.getX();
-                break;
-            case MotionEvent.ACTION_UP:
-                float toPosition = event.getX();
-                if(flipper.getDisplayedChild() == 0)
-                {
-                    if (fromPosition > toPosition)
-                    {
-                        flipper.showNext();
-                    }
-                }
-                else
-                {
-                    if (fromPosition < toPosition)
-                    {
-                        flipper.showPrevious();
-                    }
-                }
-                if(flipper.getDisplayedChild() == 0)
-                {
-                    tv_to.setText("к выбору ролей -->");
-                }
-                else
+            fromPosition = ev.getX();
+        }
+        else if(t == MotionEvent.ACTION_UP)
+        {
+            float toPosition = ev.getX();
+            if(flipper.getDisplayedChild() == 0)
+            {
+                if(fromPosition > toPosition + 200)
                 {
                     tv_to.setText("<-- к добавлению игроков");
+                    tv_to.setGravity(Gravity.END);
+                    flipnext();
                 }
-            default:
-                break;
+            }
+            else
+            {
+                if(fromPosition < toPosition - 200)
+                {
+                    tv_to.setText("к выбору ролей -->");
+                    tv_to.setGravity(Gravity.START);
+                    flipprev();
+                }
+            }
         }
-        return true;
+        return super.dispatchTouchEvent(ev);
     }
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -133,24 +150,81 @@ public class Pretreatment extends Activity implements View.OnTouchListener
         ac = this;
         //
         RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.main_layout);
-        mainLayout.setOnTouchListener(this);
+        //mainLayout.setOnTouchListener(this);
         //
         flipper = (ViewFlipper) findViewById(R.id.flipper);
         inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         flipper.addView(inflater.inflate(R.layout.names, null));
         flipper.addView(inflater.inflate(R.layout.roles, null));
+//        Button b = (Button) findViewById(R.id.n_b_add);
+//        b.setOnTouchListener(new View.OnTouchListener()
+//        {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event)
+//            {
+//                return false;
+//            }
+//        });
+//        RelativeLayout rl = (RelativeLayout) findViewById(R.id.rl_names);
+//        rl.setOnTouchListener(new View.OnTouchListener()
+//        {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event)
+//            {
+//                return false;
+//            }
+//        });
+//        View v = (View) findViewById(R.id.flip);
+//        v.setOnTouchListener(new View.OnTouchListener()
+//        {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event)
+//            {
+//                int t = event.getAction();
+//                if(t == MotionEvent.ACTION_DOWN)
+//                {
+//                    fromPosition = event.getX();
+////                    return true;
+//                }
+//                else if(t == MotionEvent.ACTION_UP)
+//                {
+//                    float toPosition = event.getX();
+//                    if(flipper.getDisplayedChild() == 0)
+//                    {
+//                        if(fromPosition > toPosition + 200)
+//                        {
+//                            tv_to.setText("<-- к добавлению игроков");
+//                            tv_to.setGravity(Gravity.END);
+//                            flipnext();
+//                        }
+//                    }
+//                    else
+//                    {
+//                        if(fromPosition < toPosition - 200)
+//                        {
+//                            tv_to.setText("к выбору ролей -->");
+//                            tv_to.setGravity(Gravity.START);
+//                            flipprev();
+//                        }
+//                    }
+//                }
+//                return false;
+////                return true;
+//            }
+//        });
         //
         init_players();
         init_roles();
         //
     }
+
     private void init_players()
     {
         n_lv = (ListView) findViewById(R.id.n_lv1);
         hm = new ArrayList<HashMap<String, String>>();
         sa = new SimpleAdapter(this,
-                hm,
-                R.layout.n_list_item, new String[]{
+                               hm,
+                               R.layout.n_list_item, new String[]{
                 "name",
                 "del"
         }, new int[]{
@@ -163,9 +237,11 @@ public class Pretreatment extends Activity implements View.OnTouchListener
                 Button b1;
                 b1 = (Button) view.findViewById(R.id.button);
                 final int p = position;
-                b1.setOnClickListener(new View.OnClickListener() {
+                b1.setOnClickListener(new View.OnClickListener()
+                {
                     @Override
-                    public void onClick(View view) {
+                    public void onClick(View view)
+                    {
                         pl_list.remove(p);
                         hm.remove(p);
                         sa.notifyDataSetChanged();
@@ -173,7 +249,9 @@ public class Pretreatment extends Activity implements View.OnTouchListener
                     }
                 });
                 return view;
-            };
+            }
+
+            ;
         };
         n_lv.setAdapter(sa);
         et_name = (EditText) findViewById(R.id.n_et_name);
@@ -192,30 +270,31 @@ public class Pretreatment extends Activity implements View.OnTouchListener
         pl_list = new ArrayList<Player>();
         check_count();
     }
-    public  void add_role(Role r)
+
+    public void add_role(Role r)
     {
         boolean more = false;
         Role newrole = null;
-        if(r.rang>-1)
+        if(r.rang > -1)
         {
-            for(int i=0; i<rl_list.size(); i++)
+            for(int i = 0; i < rl_list.size(); i++)
             {
                 if(rl_list.get(i).UI == r.UI &&
-                        rl_list.get(i).rang>-1 &&
-                        rl_list.get(i).rang>=r.rang)
+                        rl_list.get(i).rang > -1 &&
+                        rl_list.get(i).rang >= r.rang)
                 {
                     more = true;
                     r.rang = rl_list.get(i).rang;
-                    if(rl_list.get(i).act!=null && !r.rang_shot)
+                    if(rl_list.get(i).act != null && !r.rang_shot)
                     {
                         r.act = rl_list.get(i).act;
                     }
                 }
             }
             newrole = r.clone(r.name, r.act);
-            if(more||newrole.rang == 0)
+            if(more || newrole.rang == 0)
             {
-                newrole.rang ++;
+                newrole.rang++;
             }
         }
         else
@@ -224,6 +303,7 @@ public class Pretreatment extends Activity implements View.OnTouchListener
         }
         rl_list.add(newrole);
     }
+
     private void init_roles()
     {
         //create actions
@@ -232,11 +312,16 @@ public class Pretreatment extends Activity implements View.OnTouchListener
                 new Action.Kill(false)};
         //create roles
         Role peace = new Role("Мирный житель", Role.TypeRole.peace, Role.TypeVisibility.peace);
-        Role maniac_group = new Role("Насильник", Role.TypeRole.peace, Role.TypeVisibility.peace, new Action.Violence(),true,0,2);
-        Role maniac = new Role("Насильник", Role.TypeRole.peace, Role.TypeVisibility.peace, new Action.Violence());
-        Role mafia = new Role("Мафия", Role.TypeRole.mafia, Role.TypeVisibility.mafia, new Action.Kill(true), false, 0,1);
-        Role police = new Role("Коммисар", Role.TypeRole.peace, Role.TypeVisibility.peace, for_police, false, -1,-1);
-        Role doctor = new Role("Доктор", Role.TypeRole.peace, Role.TypeVisibility.peace, new Action.Doctor_heal());
+        Role maniac_group = new Role("Насильник", Role.TypeRole.peace, Role.TypeVisibility.peace,
+                                     new Action.Violence(), true, 0, 2);
+        Role maniac = new Role("Насильник", Role.TypeRole.peace, Role.TypeVisibility.peace,
+                               new Action.Violence());
+        Role mafia = new Role("Мафия", Role.TypeRole.mafia, Role.TypeVisibility.mafia,
+                              new Action.Kill(true), false, 0, 1);
+        Role police = new Role("Коммисар", Role.TypeRole.peace, Role.TypeVisibility.peace,
+                               for_police, false, -1, -1);
+        Role doctor = new Role("Доктор", Role.TypeRole.peace, Role.TypeVisibility.peace,
+                               new Action.Doctor_heal());
         rl_list = new ArrayList<Role>();
         rl_to_play = new ArrayList<Role>();
         rl_to_play.add(peace);
@@ -247,8 +332,8 @@ public class Pretreatment extends Activity implements View.OnTouchListener
         //
         r_lv = (ListView) findViewById(R.id.r_lv_roles);
         sa_roles = new SimpleAdapter(this,
-                hm_roles,
-                R.layout.r_list_item, new String[]{
+                                     hm_roles,
+                                     R.layout.r_list_item, new String[]{
                 "count",
                 "role"
         }, new int[]{
@@ -285,10 +370,11 @@ public class Pretreatment extends Activity implements View.OnTouchListener
                         int c = 0;
                         String tmp = hm_roles.get(p).values().toArray()[0].toString();
                         c = Integer.parseInt(tmp);
-                        if(c>0)
+                        if(c > 0)
                         {
                             rl_count--;
-                            hm_roles.set(p,hm_roles((c-1)+"",hm_roles.get(p).values().toArray()[1].toString()));
+                            hm_roles.set(p, hm_roles((c - 1) + "", hm_roles.get(
+                                    p).values().toArray()[1].toString()));
                             sa_roles.notifyDataSetChanged();
                             check_count_roles();
                         }
@@ -303,18 +389,21 @@ public class Pretreatment extends Activity implements View.OnTouchListener
                         String tmp = hm_roles.get(p).values().toArray()[0].toString();
                         c = Integer.parseInt(tmp);
                         rl_count++;
-                            hm_roles.set(p,hm_roles((c+1)+"",hm_roles.get(p).values().toArray()[1].toString()));
-                            sa_roles.notifyDataSetChanged();
-                            check_count_roles();
+                        hm_roles.set(p, hm_roles((c + 1) + "",
+                                                 hm_roles.get(p).values().toArray()[1].toString()));
+                        sa_roles.notifyDataSetChanged();
+                        check_count_roles();
                     }
                 });
                 return view;
-            };
+            }
+
+            ;
         };
         r_lv.setAdapter(sa_roles);
-        for(int i=0;i<rl_to_play.size();i++)
+        for(int i = 0; i < rl_to_play.size(); i++)
         {
-            hm_roles.add(hm_roles("0",rl_to_play.get(i).name));
+            hm_roles.add(hm_roles("0", rl_to_play.get(i).name));
         }
         sa_roles.notifyDataSetChanged();
         //
@@ -322,6 +411,7 @@ public class Pretreatment extends Activity implements View.OnTouchListener
         rl_count = 0;
         check_count_roles();
     }
+
     //
     private HashMap<String, String> addar(String s)
     {
@@ -330,18 +420,20 @@ public class Pretreatment extends Activity implements View.OnTouchListener
         hm2.put("del", "X");
         return hm2;
     }
-    private HashMap<String, String> hm_roles(String c,String r)
+
+    private HashMap<String, String> hm_roles(String c, String r)
     {
         HashMap<String, String> hm2 = new HashMap<String, String>();
         hm2.put("count", c);
         hm2.put("role", r);
         return hm2;
     }
+
     //кнопка
     private void add_to_list()
     {
         String name = et_name.getText().toString();
-        if(name.length()==0)
+        if(name.length() == 0)
         {
             say("empty name!");
             return;
@@ -354,29 +446,34 @@ public class Pretreatment extends Activity implements View.OnTouchListener
             name = " (bot)";
         }
         pl_list.add(p);
-        hm.add(addar(p.name+name));
+        hm.add(addar(p.name + name));
         sa.notifyDataSetChanged();
         check_count();
         et_name.setText("");
         et_name.clearFocus();
         cb_bot.setChecked(false);
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        InputMethodManager imm = (InputMethodManager) getSystemService(
+                Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                                    InputMethodManager.HIDE_NOT_ALWAYS);
     }
+
     //кнопка
     public void b_add(View v)
     {
         add_to_list();
     }
+
     //
     public void say(String s)
     {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
+
     //
     public boolean check_count()
     {
-        if(pl_list.size()<5)
+        if(pl_list.size() < 5)
         {
             tv_mess.setText("players < 5");
             return false;
@@ -387,20 +484,21 @@ public class Pretreatment extends Activity implements View.OnTouchListener
         }
         return true;
     }
+
     public boolean check_count_roles()
     {
         String res = "";
         boolean bres = true;
-        if(pl_list.size()>=5)
+        if(pl_list.size() >= 5)
         {
             if(rl_count != pl_list.size())
             {
                 bres = false;
-                if(rl_count<pl_list.size())
+                if(rl_count < pl_list.size())
                 {
-                    res = "осталось выбрать "+(pl_list.size()-rl_count)+" ролей";
+                    res = "осталось выбрать " + (pl_list.size() - rl_count) + " ролей";
                 }
-                else if(rl_count>pl_list.size())
+                else if(rl_count > pl_list.size())
                 {
                     res = "ролей больше чем игроков!";
                 }
