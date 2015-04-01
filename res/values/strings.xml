@@ -6,6 +6,7 @@
     <color name="cnewblue">#0080FF</color>
     <color name="cnewgreen">#31A920</color>
     <color name="cnewye">#FFA500</color>
+    <color name="addname">#ffbc12</color>
     <color name="cwhite">#FFFFFF</color>
     <color name="cblack">#000000</color>
     <color name="cnight">#2C2C2C</color>
@@ -14,6 +15,7 @@
     <color name="cgrey">#708090</color>
     <color name="cdgrey">#2F2F2F</color>
     <color name="transparent">#92C3EB</color>
+
     <!-- Строки -->
     <string name="app_name">Presenter</string>
     <string name="pret">Pretreatment</string>

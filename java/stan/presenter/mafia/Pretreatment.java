@@ -18,6 +18,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.NumberPicker;
@@ -36,19 +38,23 @@ public class Pretreatment
 //        implements View.OnTouchListener
 {
     ViewFlipper    flipper;
+    ViewFlipper    flipper_mess;
     LayoutInflater inflater;
-    private float    fromPosition;
-    private Activity ac;
+    private float          fromPosition;
+    private Activity       ac;
     private RelativeLayout rl_roles;
     private RelativeLayout rl_names;
     //
-    private ListView n_lv;
-    private EditText et_name;
-    private CheckBox cb_bot;
-    private TextView tv_to;
-    private TextView tv_mess;
+    private ListView       n_lv;
+    private EditText       et_name;
+    private CheckBox       cb_bot;
+    private TextView       tv_to;
+    private ImageView      iv_arr;
+    private TextView       tv_mess;
+    private TextView       tv_nco;
+    private TextView       tv_rco;
     //
-    private ListView r_lv;
+    private ListView       r_lv;
     //private TextView r_tv_mess;
     //
     private ArrayList<HashMap<String, String>> hm = new ArrayList<HashMap<String, String>>();
@@ -92,24 +98,29 @@ public class Pretreatment
             }
             startActivityForResult(new Intent(Pretreatment.this, Day.class), 0);
         }
-        else
-        {
-            say("players != roles");
-        }
     }
 
-    private void flipnext()
+    private void flipmess(String m)
     {
-        flipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.left));
-        flipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.left_out));
-        flipper.showNext();
+        flipper_mess.setDisplayedChild(0);
+        flipnext(flipper_mess);
+        tv_mess.setText(m);
     }
-    private void flipprev()
+
+    private void flipnext(ViewFlipper f)
     {
-        flipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.right_out));
-        flipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.right));
-        flipper.showPrevious();
+        f.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.left));
+        f.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.left_out));
+        f.showNext();
     }
+
+    private void flipprev(ViewFlipper f)
+    {
+        f.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.right_out));
+        f.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.right));
+        f.showPrevious();
+    }
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev)
     {
@@ -125,23 +136,24 @@ public class Pretreatment
             {
                 if(fromPosition > toPosition + 200)
                 {
-                    tv_to.setText("<-- к добавлению игроков");
-                    tv_to.setGravity(Gravity.END);
-                    flipnext();
+                    tv_to.setText("к добавлению игроков");
+                    iv_arr.setImageResource(R.drawable.arrowback);
+                    flipnext(flipper);
                 }
             }
             else
             {
                 if(fromPosition < toPosition - 200)
                 {
-                    tv_to.setText("к выбору ролей -->");
-                    tv_to.setGravity(Gravity.START);
-                    flipprev();
+                    tv_to.setText("к выбору ролей");
+                    iv_arr.setImageResource(R.drawable.arrowfront);
+                    flipprev(flipper);
                 }
             }
         }
         return super.dispatchTouchEvent(ev);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -156,62 +168,14 @@ public class Pretreatment
         inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         flipper.addView(inflater.inflate(R.layout.names, null));
         flipper.addView(inflater.inflate(R.layout.roles, null));
-//        Button b = (Button) findViewById(R.id.n_b_add);
-//        b.setOnTouchListener(new View.OnTouchListener()
-//        {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event)
-//            {
-//                return false;
-//            }
-//        });
-//        RelativeLayout rl = (RelativeLayout) findViewById(R.id.rl_names);
-//        rl.setOnTouchListener(new View.OnTouchListener()
-//        {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event)
-//            {
-//                return false;
-//            }
-//        });
-//        View v = (View) findViewById(R.id.flip);
-//        v.setOnTouchListener(new View.OnTouchListener()
-//        {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event)
-//            {
-//                int t = event.getAction();
-//                if(t == MotionEvent.ACTION_DOWN)
-//                {
-//                    fromPosition = event.getX();
-////                    return true;
-//                }
-//                else if(t == MotionEvent.ACTION_UP)
-//                {
-//                    float toPosition = event.getX();
-//                    if(flipper.getDisplayedChild() == 0)
-//                    {
-//                        if(fromPosition > toPosition + 200)
-//                        {
-//                            tv_to.setText("<-- к добавлению игроков");
-//                            tv_to.setGravity(Gravity.END);
-//                            flipnext();
-//                        }
-//                    }
-//                    else
-//                    {
-//                        if(fromPosition < toPosition - 200)
-//                        {
-//                            tv_to.setText("к выбору ролей -->");
-//                            tv_to.setGravity(Gravity.START);
-//                            flipprev();
-//                        }
-//                    }
-//                }
-//                return false;
-////                return true;
-//            }
-//        });
+        //
+        flipper_mess = (ViewFlipper) findViewById(R.id.flipper_mess);
+        LayoutInflater inf = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        flipper_mess.addView(inf.inflate(R.layout.null_lay, null));
+        flipper_mess.addView(inf.inflate(R.layout.pret_mess, null));
+        //
+        tv_nco = (TextView) findViewById(R.id.ncount);
+        tv_rco = (TextView) findViewById(R.id.rcount);
         //
         init_players();
         init_roles();
@@ -225,17 +189,15 @@ public class Pretreatment
         sa = new SimpleAdapter(this,
                                hm,
                                R.layout.n_list_item, new String[]{
-                "name",
-                "del"
+                "name"
         }, new int[]{
-                R.id.text2,
-                R.id.button})
+                R.id.text2})
         {
             public View getView(int position, View convertView, ViewGroup parent)
             {
                 View view = super.getView(position, convertView, parent);
-                Button b1;
-                b1 = (Button) view.findViewById(R.id.button);
+                ImageButton b1;
+                b1 = (ImageButton) view.findViewById(R.id.n_li_ib_x);
                 final int p = position;
                 b1.setOnClickListener(new View.OnClickListener()
                 {
@@ -255,20 +217,22 @@ public class Pretreatment
         };
         n_lv.setAdapter(sa);
         et_name = (EditText) findViewById(R.id.n_et_name);
-        et_name.setOnEditorActionListener(new TextView.OnEditorActionListener()
-        {
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
-            {
-                return false;
-            }
-        });
+//        et_name.setOnEditorActionListener(new TextView.OnEditorActionListener()
+//        {
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+//            {
+//                return false;
+//            }
+//        });
         cb_bot = (CheckBox) findViewById(R.id.n_cb_bot);
-        tv_mess = (TextView) findViewById(R.id.p_tv_mess);
+        tv_mess = (TextView) findViewById(R.id.pr_ll_tv_mess);
         tv_to = (TextView) findViewById(R.id.p_tv_to);
-        tv_to.setText("к выбору ролей -->");
+        tv_to.setText("к выбору ролей");
+        iv_arr = (ImageView) findViewById(R.id.arrow);
+        iv_arr.setImageResource(R.drawable.arrowfront);
         //
         pl_list = new ArrayList<Player>();
-        check_count();
+//        check_count();
     }
 
     public void add_role(Role r)
@@ -346,22 +310,50 @@ public class Pretreatment
                 final int p = position;
 //                NumberPicker np = (NumberPicker) view.findViewById(R.id.r_li_np);
 //                np.setMinValue(0);
-//                np.setOnScrollListener(new NumberPicker.OnScrollListener()
+//                np.setMaxValue(10);
+//                np.setWrapSelectorWheel(false);
+//                np.setFocusableInTouchMode(true);
+//                np.setFocusable(true);
+//                np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener()
 //                {
 //                    @Override
-//                    public void onScrollStateChange(NumberPicker numberPicker, int i)
+//                    public void onValueChange(NumberPicker picker, int oldVal, int newVal)
 //                    {
-//                        int c = 0;
-//                        String tmp = hm_roles.get(p).values().toArray()[0].toString();
-//                        c = Integer.parseInt(tmp);
-//                        rl_count = i;
-//                        hm_roles.set(p,hm_roles((c-1)+"",hm_roles.get(p).values().toArray()[1].toString()));
+//                        rl_count = newVal;
+//                        hm_roles.set(p,hm_roles(rl_count+"",hm_roles.get(p).values().toArray()[1].toString()));
 //                        sa_roles.notifyDataSetChanged();
 //                        check_count_roles();
 //                    }
 //                });
-                Button b_min = (Button) view.findViewById(R.id.r_li_b_minus);
-                Button b_plus = (Button) view.findViewById(R.id.r_li_b_plus);
+//                np.setOnTouchListener(new View.OnTouchListener()
+//                {
+//                    @Override
+//                    public boolean onTouch(View v, MotionEvent ev)
+//                    {
+//                        int t = ev.getAction();
+//                        if(t == MotionEvent.ACTION_DOWN)
+//                        {
+//                            v.getParent().requestDisallowInterceptTouchEvent(true);
+//                        }
+//                        else if(t == MotionEvent.ACTION_MOVE)
+//                        {
+//
+//                        }
+//                        //else
+//                        else if(t == MotionEvent.ACTION_UP)
+//                        {
+//                            v.getParent().requestDisallowInterceptTouchEvent(false);
+//                        }
+//                        else if(t == MotionEvent.ACTION_CANCEL)
+//                        {
+//                        }
+//                        v.onTouchEvent(ev);
+//                        return true;
+//                    }
+//                });
+
+                ImageButton b_min = (ImageButton) view.findViewById(R.id.r_li_b_minus);
+                ImageButton b_plus = (ImageButton) view.findViewById(R.id.r_li_b_plus);
                 b_min.setOnClickListener(new View.OnClickListener()
                 {
                     @Override
@@ -388,11 +380,15 @@ public class Pretreatment
                         int c = 0;
                         String tmp = hm_roles.get(p).values().toArray()[0].toString();
                         c = Integer.parseInt(tmp);
-                        rl_count++;
-                        hm_roles.set(p, hm_roles((c + 1) + "",
-                                                 hm_roles.get(p).values().toArray()[1].toString()));
-                        sa_roles.notifyDataSetChanged();
-                        check_count_roles();
+                        if(c < 9)
+                        {
+                            rl_count++;
+                            hm_roles.set(p, hm_roles((c + 1) + "",
+                                                     hm_roles.get(
+                                                             p).values().toArray()[1].toString()));
+                            sa_roles.notifyDataSetChanged();
+                            check_count_roles();
+                        }
                     }
                 });
                 return view;
@@ -409,7 +405,7 @@ public class Pretreatment
         //
         //r_tv_mess = (TextView) findViewById(R.id.r_tv_mess);
         rl_count = 0;
-        check_count_roles();
+//        check_count_roles();
     }
 
     //
@@ -417,7 +413,6 @@ public class Pretreatment
     {
         HashMap<String, String> hm2 = new HashMap<String, String>();
         hm2.put("name", s);
-        hm2.put("del", "X");
         return hm2;
     }
 
@@ -435,7 +430,7 @@ public class Pretreatment
         String name = et_name.getText().toString();
         if(name.length() == 0)
         {
-            say("empty name!");
+            flipmess("empty name!");
             return;
         }
         Player p = new Player(name);
@@ -450,12 +445,12 @@ public class Pretreatment
         sa.notifyDataSetChanged();
         check_count();
         et_name.setText("");
-        et_name.clearFocus();
+//        et_name.clearFocus();
         cb_bot.setChecked(false);
-        InputMethodManager imm = (InputMethodManager) getSystemService(
-                Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
-                                    InputMethodManager.HIDE_NOT_ALWAYS);
+//        InputMethodManager imm = (InputMethodManager) getSystemService(
+//                Context.INPUT_METHOD_SERVICE);
+//        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+//                                    InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
     //кнопка
@@ -464,23 +459,19 @@ public class Pretreatment
         add_to_list();
     }
 
-    //
-    public void say(String s)
-    {
-        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
-    }
-
-    //
     public boolean check_count()
     {
+        tv_nco.setText(pl_list.size() + "");
         if(pl_list.size() < 5)
         {
-            tv_mess.setText("players < 5");
+            tv_nco.setTextColor(getResources().getColor(R.color.cred));
+            flipmess("players < 5");
             return false;
         }
         else
         {
-            tv_mess.setText("");
+            tv_nco.setTextColor(getResources().getColor(R.color.cnewgreen));
+            flipper_mess.setDisplayedChild(0);
         }
         return true;
     }
@@ -488,28 +479,35 @@ public class Pretreatment
     public boolean check_count_roles()
     {
         String res = "";
-        boolean bres = true;
-        if(pl_list.size() >= 5)
+        tv_rco.setText(rl_count + "");
+        if(rl_count == pl_list.size())
         {
-            if(rl_count != pl_list.size())
-            {
-                bres = false;
-                if(rl_count < pl_list.size())
-                {
-                    res = "осталось выбрать " + (pl_list.size() - rl_count) + " ролей";
-                }
-                else if(rl_count > pl_list.size())
-                {
-                    res = "ролей больше чем игроков!";
-                }
-            }
+            tv_rco.setTextColor(getResources().getColor(R.color.cnewgreen));
         }
         else
         {
-            res = "players < 5";
-            bres = false;
+            tv_rco.setTextColor(getResources().getColor(R.color.cred));
         }
-        tv_mess.setText(res);
-        return bres;
+        if(check_count())
+        {
+            if(rl_count == pl_list.size())
+            {
+                return true;
+            }
+            if(rl_count < pl_list.size())
+            {
+                res = "осталось выбрать " + (pl_list.size() - rl_count) + " ролей";
+            }
+            else if(rl_count > pl_list.size())
+            {
+                res = "ролей больше чем игроков!";
+            }
+            flipmess(res);
+            return false;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

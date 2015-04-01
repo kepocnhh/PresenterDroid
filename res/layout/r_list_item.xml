@@ -2,28 +2,50 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ll"
-    android:layout_width="fill_parent"
     android:orientation="horizontal"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content">
-    <Button
-        android:id="@+id/r_li_b_plus"
+    <!--<NumberPicker-->
+        <!--android:id="@+id/r_li_np"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content">-->
+        <!--</NumberPicker>-->
+    <LinearLayout
+        android:id="@+id/mypicker"
+        android:orientation="horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="+"/>
-    <Button
-        android:id="@+id/r_li_b_minus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="-"/>
-    <TextView
-        android:id="@+id/r_li_tv_rcount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=" 0 "
-        android:textSize="29sp" />
+        android:layout_height="wrap_content">
+        <ImageButton
+            android:id="@+id/r_li_b_minus"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:src="@drawable/minus"
+            android:adjustViewBounds="true"
+            android:background="@null"/>
+        <TextView
+            android:id="@+id/r_li_tv_rcount"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:textColor="@color/cblue"
+            android:text=" 0 "
+            android:textSize="29sp" />
+        <ImageButton
+            android:id="@+id/r_li_b_plus"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:src="@drawable/plus"
+            android:adjustViewBounds="true"
+            android:background="@null"/>
+    </LinearLayout>
     <TextView
         android:id="@+id/r_li_tv_rname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:textColor="@color/cblue"
+        android:gravity="center_vertical|end"
         android:text="This is text2"/>
 </LinearLayout>
