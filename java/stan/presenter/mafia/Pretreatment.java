@@ -83,7 +83,7 @@ public class Pretreatment
     //кнопка
     public void play_game(View v)
     {
-        if(check_count() && check_count_roles())
+        if(check())
         {
             while(rl_to_play.size() > 0)
             {
@@ -207,7 +207,7 @@ public class Pretreatment
                         pl_list.remove(p);
                         hm.remove(p);
                         sa.notifyDataSetChanged();
-                        check_count();
+                        check();
                     }
                 });
                 return view;
@@ -368,7 +368,7 @@ public class Pretreatment
                             hm_roles.set(p, hm_roles((c - 1) + "", hm_roles.get(
                                     p).values().toArray()[1].toString()));
                             sa_roles.notifyDataSetChanged();
-                            check_count_roles();
+                            check();
                         }
                     }
                 });
@@ -387,7 +387,7 @@ public class Pretreatment
                                                      hm_roles.get(
                                                              p).values().toArray()[1].toString()));
                             sa_roles.notifyDataSetChanged();
-                            check_count_roles();
+                            check();
                         }
                     }
                 });
@@ -443,7 +443,7 @@ public class Pretreatment
         pl_list.add(p);
         hm.add(addar(p.name + name));
         sa.notifyDataSetChanged();
-        check_count();
+        check();
         et_name.setText("");
 //        et_name.clearFocus();
         cb_bot.setChecked(false);
@@ -459,55 +459,108 @@ public class Pretreatment
         add_to_list();
     }
 
-    public boolean check_count()
+//    public boolean check_count()
+//    {
+//        tv_nco.setText(pl_list.size() + "");
+//        if(pl_list.size() < 5)
+//        {
+//            tv_nco.setTextColor(getResources().getColor(R.color.cred));
+//            flipmess("players < 5");
+//            return false;
+//        }
+//        tv_nco.setTextColor(getResources().getColor(R.color.cnewgreen));
+//        flipper_mess.setDisplayedChild(0);
+//        check_count_roles();
+//        return true;
+//    }
+//
+//    public boolean check_count_roles()
+//    {
+//        String res = "";
+//        tv_rco.setText(rl_count + "");
+//        if(rl_count == pl_list.size())
+//        {
+//            tv_rco.setTextColor(getResources().getColor(R.color.cnewgreen));
+//        }
+//        else
+//        {
+//            tv_rco.setTextColor(getResources().getColor(R.color.cred));
+//        }
+//        if(rl_count >= 5)
+//        {
+//            if(rl_count == pl_list.size())
+//            {
+//                check_count();
+//                return true;
+//            }
+//            if(rl_count < pl_list.size())
+//            {
+//                res = "осталось выбрать " + " ролей:" + (pl_list.size() - rl_count);
+//            }
+//            else if(rl_count > pl_list.size())
+//            {
+//                res = "ролей больше чем игроков!";
+//            }
+//        }
+//        else
+//        {
+//            res = "roles < 5";
+//        }
+//        flipmess(res);
+//        return false;
+//    }
+    public boolean check()
     {
-        tv_nco.setText(pl_list.size() + "");
-        if(pl_list.size() < 5)
-        {
-            tv_nco.setTextColor(getResources().getColor(R.color.cred));
-            flipmess("players < 5");
-            return false;
-        }
-        else
-        {
-            tv_nco.setTextColor(getResources().getColor(R.color.cnewgreen));
-            flipper_mess.setDisplayedChild(0);
-        }
-        return true;
-    }
-
-    public boolean check_count_roles()
-    {
-        String res = "";
-        tv_rco.setText(rl_count + "");
-        if(rl_count == pl_list.size())
-        {
-            tv_rco.setTextColor(getResources().getColor(R.color.cnewgreen));
-        }
-        else
-        {
-            tv_rco.setTextColor(getResources().getColor(R.color.cred));
-        }
-        if(check_count())
-        {
-            if(rl_count == pl_list.size())
+        boolean p = true;
+        boolean r = false;
+        //
+            tv_nco.setText(pl_list.size() + "");
+            if(pl_list.size() < 5)
             {
-                return true;
+                tv_nco.setTextColor(getResources().getColor(R.color.cred));
+                flipmess("players < 5");
+                p = false;
             }
-            if(rl_count < pl_list.size())
+            else
             {
-                res = "осталось выбрать " + (pl_list.size() - rl_count) + " ролей";
+                tv_nco.setTextColor(getResources().getColor(R.color.cnewgreen));
+                flipper_mess.setDisplayedChild(0);
             }
-            else if(rl_count > pl_list.size())
+        //
+            tv_rco.setText(rl_count + "");
+            if(rl_count == pl_list.size() && rl_count >= 5)
             {
-                res = "ролей больше чем игроков!";
+                tv_rco.setTextColor(getResources().getColor(R.color.cnewgreen));
             }
-            flipmess(res);
-            return false;
-        }
-        else
-        {
-            return false;
-        }
+            else
+            {
+                tv_rco.setTextColor(getResources().getColor(R.color.cred));
+            }
+            if(p)
+            {
+                String res = "";
+                if(rl_count >= 5)
+                {
+                    if(rl_count == pl_list.size())
+                    {
+                        r = true;
+                    }
+                    else if(rl_count < pl_list.size())
+                    {
+                        res = "осталось выбрать " + " ролей:" + (pl_list.size() - rl_count);
+                    }
+                    else if(rl_count > pl_list.size())
+                    {
+                        res = "ролей больше чем игроков!";
+                    }
+                }
+                else
+                {
+                    res = "roles < 5";
+                }
+                flipmess(res);
+            }
+        //
+        return p && r;
     }
 }
