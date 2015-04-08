@@ -1,15 +1,22 @@
 package stan.presenter.mafia;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 import org.w3c.dom.Text;
 
@@ -22,17 +29,43 @@ public class Night
         extends Activity
         implements View.OnClickListener
 {
+    private ViewFlipper flipper_mess;
+    private TextView       tv_mess;
+    //
+    private Night_dlg nd;
+    //
     private ListView n_lv;
+    private LinearLayout nightbot;
     private ArrayList<HashMap<String, String>> hm = new ArrayList<HashMap<String, String>>();
     private SimpleAdapter sa;
-    private int player_num;
-    private Button btnok;
-    private SeekBar seekBarok;
-    private TextView asleeptv;
-    TextView pl_name;
+    private int           player_num;
+    private Button        btnok;
+    private SeekBar       seekBarok;
+    private TextView      asleeptv;
+    private ImageView     back;
+    TextView     pl_name;
     List<Player> tmp_list;
-    Random rand;
+    Random       rand;
     public static List<Action> act_list;
+
+//
+    private void flipmess(String m)
+    {
+        flipper_mess.setDisplayedChild(0);
+        flipnext(flipper_mess);
+        tv_mess.setText(m);
+    }
+    private void flipnext(ViewFlipper f)
+    {
+        f.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.left));
+        f.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.left_out));
+        f.showNext();
+    }
+//
+    @Override
+    public void onBackPressed()
+    {
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -43,15 +76,15 @@ public class Night
         n_lv = (ListView) findViewById(R.id.nig_lv);
         hm = new ArrayList<HashMap<String, String>>();
         sa = new SimpleAdapter(this,
-                hm,
-                R.layout.night_list_item,
-                new String[]
-                {
-                    "name"
-                },
-                new int[]
-                {
-                    R.id.nli_tv_name,
+                               hm,
+                               R.layout.night_list_item,
+                               new String[]
+                                       {
+                                               "name"
+                                       },
+                               new int[]
+                                       {
+                                               R.id.nli_tv_name,
                 });
         n_lv.setAdapter(sa);
         //
@@ -65,11 +98,16 @@ public class Night
         rand = new Random();
         player_num = next_player();
         //
+        nightbot = (LinearLayout) findViewById(R.id.night_bot);
+        nightbot.setVisibility(View.VISIBLE);
+        //
         btnok = (Button) findViewById(R.id.nig_b_engage);
         btnok.setOnClickListener(this);
         btnok.setVisibility(View.INVISIBLE);
         asleeptv = (TextView) findViewById(R.id.nig_tv_asleep);
         seekBarok = (SeekBar) findViewById(R.id.nig_sb_engage);
+        back = (ImageView) findViewById(R.id.night_back);
+        back.setImageResource(R.drawable.sleep0);
         SeekBar.OnSeekBarChangeListener sbcl = new SeekBar.OnSeekBarChangeListener()
         {
             int originalProgress;
@@ -83,31 +121,84 @@ public class Night
                 else
                 {
                     seekBar.setProgress( originalProgress);
+                    return;
+                }
+                if(progress>95)
+                {
+                    back.setImageResource(R.drawable.normal_night);
+                    return;
+                }
+                if(progress>76)
+                {
+                    back.setImageResource(R.drawable.sleep4);
+                    return;
+                }
+                if(progress>57)
+                {
+                    back.setImageResource(R.drawable.sleep3);
+                    return;
+                }
+                if(progress>38)
+                {
+                    back.setImageResource(R.drawable.sleep2);
+                    return;
+                }
+                if(progress>19)
+                {
+                    back.setImageResource(R.drawable.sleep1);
+                    return;
+                }
+                if(progress>0)
+                {
+                    back.setImageResource(R.drawable.sleep0);
+                    return;
                 }
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar)
             {
                 originalProgress = seekBar.getProgress();
+                int i = 0;
+                i = seekBar.getProgress();
             }
             @Override
             public void onStopTrackingTouch(SeekBar seekBar)
             {
-                if(seekBar.getProgress() >= seekBar.getMax())
+                if(seekBar.getProgress() >= seekBar.getMax()-10)
                 {
                     wakeup();
                 }
+                back.setImageResource(R.drawable.sleep0);
                 originalProgress = 0;
                 seekBar.setProgress(originalProgress);
-                if(tmp_list.size()==0)
-                {
-                    seekBarok.setVisibility(View.GONE);
-                    asleeptv.setVisibility(View.GONE);
-                    btnok.setVisibility(View.VISIBLE);
-                }
             }
         };
         seekBarok.setOnSeekBarChangeListener(sbcl);
+        //
+        flipper_mess = (ViewFlipper) findViewById(R.id.night_mess);
+        LayoutInflater inf = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        flipper_mess.addView(inf.inflate(R.layout.null_lay, null));
+        flipper_mess.addView(inf.inflate(R.layout.pret_mess, null));
+        tv_mess = (TextView) findViewById(R.id.pr_ll_tv_mess);
+        flipmess("Пролистните вправо чтобы проснуться");
+        //
+        nd = new Night_dlg(this);
+        nd.setOnDismissListener(new DialogInterface.OnDismissListener()
+        {
+            @Override
+            public void onDismiss(DialogInterface dialog)
+            {
+                nightbot.setVisibility(View.VISIBLE);
+                player_num = next_player();
+                flipmess("Пролистните вправо чтобы проснуться");
+                if(tmp_list.size()==0)
+                {
+                    nightbot.setVisibility(View.GONE);
+                    btnok.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        //
     }
     private HashMap<String, String> add_hm(String n)
     {
@@ -185,18 +276,18 @@ public class Night
         pl_name.setText(Pretreatment.pl_list.get(ri).name);
         return ri;
     }
-    public void say(String s)
-    {
-        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
-    }
+//    public void say(String s)
+//    {
+//        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+//    }
     public void wakeup()
     {
-        Night_dlg nd = new Night_dlg(this);
+        flipper_mess.setDisplayedChild(0);
+        nightbot.setVisibility(View.INVISIBLE);
         nd.init(player_num);
         nd.show();
         hm.add(add_hm(Pretreatment.pl_list.get(player_num).name));
         sa.notifyDataSetChanged();
-        player_num = next_player();
     }
     public void wakeupAll()
     {

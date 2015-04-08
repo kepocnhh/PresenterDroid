@@ -6,6 +6,8 @@ import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filterable;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -49,20 +51,33 @@ public class MyAdapter
     public View getView(int p, View convertView, ViewGroup parent)
     {
         View rowView = super.getView(p, convertView, parent);
-        RelativeLayout rl       = (RelativeLayout)  rowView.findViewById(R.id.dli_rl);
+        LinearLayout ll       = (LinearLayout)  rowView.findViewById(R.id.dli_ll);
         TextView tvDate         = (TextView)        rowView.findViewById(R.id.dli_tv_date);
         TextView tvEvent        = (TextView)        rowView.findViewById(R.id.dli_tv_event);
+        ImageView ivEvent        = (ImageView)        rowView.findViewById(R.id.dli_iv);
         //
         int textc = R.color.cblack;
         int background;
+        int image;
+        image = R.drawable.sun;
         if(values.get(p).get(COLKEY).toString().equals(NIGHTKEY))
         {
             textc = R.color.cwhite;
+            image = R.drawable.night;
+        }
+        else if(values.get(p).get(COLKEY).toString().equals(ENDGOODKEY))
+        {
+            image = R.drawable.normal;
+        }
+        else if(values.get(p).get(COLKEY).toString().equals(ENDBADKEY))
+        {
+            image = R.drawable.bad;
         }
         background = Integer.parseInt(values.get(p).get(COLKEY).toString());
+        ivEvent.setImageResource(image);
         tvDate.setTextColor(activity.getResources().getColor(textc));
         tvEvent.setTextColor(activity.getResources().getColor(textc));
-        rl.setBackgroundResource(background);
+        ll.setBackgroundResource(background);
         return rowView;
     }
 }

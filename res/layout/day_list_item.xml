@@ -1,22 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/dli_rl"
+    android:id="@+id/dli_ll"
+    android:orientation="horizontal"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@color/cblue">
-    <TextView
-        android:id="@+id/dli_tv_date"
+    android:background="@color/cwhite">
+    <LinearLayout
+        android:id="@+id/dli_ll_ll"
+        android:layout_weight="1"
+        android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=" 0 "
-        android:textSize="29sp" />
-    <TextView
-        android:id="@+id/dli_tv_event"
+        android:layout_height="fill_parent">
+        <TextView
+            android:id="@+id/dli_tv_date"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text=" 0 "
+            android:textSize="29sp" />
+        <TextView
+            android:id="@+id/dli_tv_event"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical"
+            android:text="This is text2"/>
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/dli_iv"
+        android:src="@drawable/night"
+        android:scaleType="fitCenter"
+        android:paddingTop="6dp"
+        android:paddingLeft="6dp"
+        android:paddingRight="6dp"
+        android:paddingBottom="6dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="This is text2"
-        android:layout_below="@+id/dli_tv_date"/>
-
-
-</RelativeLayout>
+        android:layout_height="wrap_content"/>
+</LinearLayout>

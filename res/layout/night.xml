@@ -3,13 +3,24 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@color/cblack">
+    <ImageView
+        android:id="@+id/night_back"
+        android:layout_above="@+id/night_bot"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="fitCenter"
+        android:paddingTop="22dp"
+        android:paddingLeft="22dp"
+        android:paddingRight="22dp"
+        android:paddingBottom="22dp"
+        android:src="@drawable/sleep0"/>
     <ListView
         android:id="@+id/nig_lv"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_above="@+id/nig_tv_name">
+        android:layout_above="@+id/night_bot">
     </ListView>
     <Button
         android:id="@+id/nig_b_engage"
@@ -19,30 +30,34 @@
         android:textColor="@color/text_button"
         android:background="@drawable/enter_button"
         android:layout_alignParentBottom="true"/>
-    <TextView
-        android:id="@+id/nig_tv_asleep"
+    <LinearLayout
+        android:id="@+id/night_bot"
+        android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/cwhite"
-        android:text="Проснуться"
-        android:gravity="center"
-        android:layout_above="@+id/nig_sb_engage"/>
-    <SeekBar
-        android:id="@+id/nig_sb_engage"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"/>
-
-    <TextView
-        android:id="@+id/nig_tv_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/cblue"
-        android:textSize="29sp"
-        android:text="player"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/nig_b_engage"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentBottom="true">
+        <TextView
+            android:id="@+id/nig_tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/cblue"
+            android:textSize="29sp"
+            android:text="player"/>
+        <TextView
+            android:id="@+id/nig_tv_asleep"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/cwhite"
+            android:text="Проснуться"
+            android:gravity="center"/>
+        <SeekBar
+            android:id="@+id/nig_sb_engage"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"/>
+        <ViewFlipper
+            android:id="@+id/night_mess"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+        </ViewFlipper>
+    </LinearLayout>
 </RelativeLayout>

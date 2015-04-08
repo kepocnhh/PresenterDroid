@@ -180,6 +180,25 @@ public class Pretreatment
         init_players();
         init_roles();
         //
+        //TEST
+//            Player p;
+//            p = new Player("Принтер");
+//            pl_list.add(p);
+//            hm.add(addar(p.name));
+//            p = new Player("Чеков");
+//            pl_list.add(p);
+//            hm.add(addar(p.name));
+//            p = new Player("Бургер");
+//            pl_list.add(p);
+//            hm.add(addar(p.name));
+//            p = new Player("Кинг");
+//            pl_list.add(p);
+//            hm.add(addar(p.name));
+//            p = new Player("Технологический");
+//            pl_list.add(p);
+//            hm.add(addar(p.name));
+//            sa.notifyDataSetChanged();
+        //TEST
     }
 
     private void init_players()
@@ -217,13 +236,6 @@ public class Pretreatment
         };
         n_lv.setAdapter(sa);
         et_name = (EditText) findViewById(R.id.n_et_name);
-//        et_name.setOnEditorActionListener(new TextView.OnEditorActionListener()
-//        {
-//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
-//            {
-//                return false;
-//            }
-//        });
         cb_bot = (CheckBox) findViewById(R.id.n_cb_bot);
         tv_mess = (TextView) findViewById(R.id.pr_ll_tv_mess);
         tv_to = (TextView) findViewById(R.id.p_tv_to);
@@ -232,7 +244,6 @@ public class Pretreatment
         iv_arr.setImageResource(R.drawable.arrowfront);
         //
         pl_list = new ArrayList<Player>();
-//        check_count();
     }
 
     public void add_role(Role r)
@@ -308,49 +319,6 @@ public class Pretreatment
             {
                 View view = super.getView(position, convertView, parent);
                 final int p = position;
-//                NumberPicker np = (NumberPicker) view.findViewById(R.id.r_li_np);
-//                np.setMinValue(0);
-//                np.setMaxValue(10);
-//                np.setWrapSelectorWheel(false);
-//                np.setFocusableInTouchMode(true);
-//                np.setFocusable(true);
-//                np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener()
-//                {
-//                    @Override
-//                    public void onValueChange(NumberPicker picker, int oldVal, int newVal)
-//                    {
-//                        rl_count = newVal;
-//                        hm_roles.set(p,hm_roles(rl_count+"",hm_roles.get(p).values().toArray()[1].toString()));
-//                        sa_roles.notifyDataSetChanged();
-//                        check_count_roles();
-//                    }
-//                });
-//                np.setOnTouchListener(new View.OnTouchListener()
-//                {
-//                    @Override
-//                    public boolean onTouch(View v, MotionEvent ev)
-//                    {
-//                        int t = ev.getAction();
-//                        if(t == MotionEvent.ACTION_DOWN)
-//                        {
-//                            v.getParent().requestDisallowInterceptTouchEvent(true);
-//                        }
-//                        else if(t == MotionEvent.ACTION_MOVE)
-//                        {
-//
-//                        }
-//                        //else
-//                        else if(t == MotionEvent.ACTION_UP)
-//                        {
-//                            v.getParent().requestDisallowInterceptTouchEvent(false);
-//                        }
-//                        else if(t == MotionEvent.ACTION_CANCEL)
-//                        {
-//                        }
-//                        v.onTouchEvent(ev);
-//                        return true;
-//                    }
-//                });
 
                 ImageButton b_min = (ImageButton) view.findViewById(R.id.r_li_b_minus);
                 ImageButton b_plus = (ImageButton) view.findViewById(R.id.r_li_b_plus);
@@ -402,10 +370,7 @@ public class Pretreatment
             hm_roles.add(hm_roles("0", rl_to_play.get(i).name));
         }
         sa_roles.notifyDataSetChanged();
-        //
-        //r_tv_mess = (TextView) findViewById(R.id.r_tv_mess);
         rl_count = 0;
-//        check_count_roles();
     }
 
     //
@@ -445,12 +410,7 @@ public class Pretreatment
         sa.notifyDataSetChanged();
         check();
         et_name.setText("");
-//        et_name.clearFocus();
         cb_bot.setChecked(false);
-//        InputMethodManager imm = (InputMethodManager) getSystemService(
-//                Context.INPUT_METHOD_SERVICE);
-//        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
-//                                    InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
     //кнопка
@@ -459,56 +419,6 @@ public class Pretreatment
         add_to_list();
     }
 
-//    public boolean check_count()
-//    {
-//        tv_nco.setText(pl_list.size() + "");
-//        if(pl_list.size() < 5)
-//        {
-//            tv_nco.setTextColor(getResources().getColor(R.color.cred));
-//            flipmess("players < 5");
-//            return false;
-//        }
-//        tv_nco.setTextColor(getResources().getColor(R.color.cnewgreen));
-//        flipper_mess.setDisplayedChild(0);
-//        check_count_roles();
-//        return true;
-//    }
-//
-//    public boolean check_count_roles()
-//    {
-//        String res = "";
-//        tv_rco.setText(rl_count + "");
-//        if(rl_count == pl_list.size())
-//        {
-//            tv_rco.setTextColor(getResources().getColor(R.color.cnewgreen));
-//        }
-//        else
-//        {
-//            tv_rco.setTextColor(getResources().getColor(R.color.cred));
-//        }
-//        if(rl_count >= 5)
-//        {
-//            if(rl_count == pl_list.size())
-//            {
-//                check_count();
-//                return true;
-//            }
-//            if(rl_count < pl_list.size())
-//            {
-//                res = "осталось выбрать " + " ролей:" + (pl_list.size() - rl_count);
-//            }
-//            else if(rl_count > pl_list.size())
-//            {
-//                res = "ролей больше чем игроков!";
-//            }
-//        }
-//        else
-//        {
-//            res = "roles < 5";
-//        }
-//        flipmess(res);
-//        return false;
-//    }
     public boolean check()
     {
         boolean p = true;

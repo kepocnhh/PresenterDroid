@@ -3,6 +3,7 @@ package stan.presenter.mafia;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -39,7 +40,7 @@ public class Day extends Activity
         {
             s = "не стало ";
             s+=tmp.get(0).name;
-            for (int i = 0; i<tmp.size()-1; i++)
+            for (int i = 1; i<tmp.size()-1; i++)
             {
                 s+=", " + tmp.get(i).name;
             }
@@ -72,6 +73,21 @@ public class Day extends Activity
             return;
         }
         set_Spinner();
+    }
+    @Override
+    public void onBackPressed()
+    {
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if(keyCode == KeyEvent.KEYCODE_BACK)
+        {
+        }
+        else if(keyCode == KeyEvent.KEYCODE_HOME)
+        {
+        }
+        return super.onKeyDown(keyCode, event);
     }
     @Override
     protected void onCreate(Bundle savedInstanceState)
