@@ -98,6 +98,7 @@ public class Night_dlg
         {
             role += " - ранг " + Pretreatment.pl_list.get(p).role.rang;
             show_role_group(p);
+            group_tv.setVisibility(View.VISIBLE);
         }
         else
         {
@@ -141,7 +142,7 @@ public class Night_dlg
             llact.setVisibility(View.GONE);
             btnok.setVisibility(View.GONE);
             tvnoact.setVisibility(View.VISIBLE);
-            tvnoact.setText(Pretreatment.pl_list.get(p).role.name + " ничего не делает");
+            tvnoact.setText(role + " ничего не делает");
         }
         player = p;
     }

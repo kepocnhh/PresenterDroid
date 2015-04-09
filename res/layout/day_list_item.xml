@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/dli_ll"
@@ -11,7 +10,7 @@
         android:layout_weight="1"
         android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="fill_parent">
+        android:layout_height="wrap_content">
         <TextView
             android:id="@+id/dli_tv_date"
             android:layout_width="fill_parent"
@@ -21,9 +20,9 @@
         <TextView
             android:id="@+id/dli_tv_event"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:text="This is text2"/>
+            android:text="This is text\ndfdgf\ndfgdfgdf\nasda!!!!!!!!!!\nsdfsdf"/>
     </LinearLayout>
     <ImageView
         android:id="@+id/dli_iv"
@@ -34,5 +33,5 @@
         android:paddingRight="6dp"
         android:paddingBottom="6dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="fill_parent"/>
 </LinearLayout>

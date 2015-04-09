@@ -89,7 +89,7 @@ public class Pretreatment
             {
                 int roles = 0;
                 roles = Integer.parseInt(hm_roles.get(
-                        hm_roles.size() - rl_to_play.size()).values().toArray()[0].toString());
+                        hm_roles.size() - rl_to_play.size()).get("count"));
                 for(int i = 0; i < roles; i++)
                 {
                     add_role(rl_to_play.get(0));
@@ -181,23 +181,23 @@ public class Pretreatment
         init_roles();
         //
         //TEST
-//            Player p;
-//            p = new Player("Принтер");
-//            pl_list.add(p);
-//            hm.add(addar(p.name));
-//            p = new Player("Чеков");
-//            pl_list.add(p);
-//            hm.add(addar(p.name));
-//            p = new Player("Бургер");
-//            pl_list.add(p);
-//            hm.add(addar(p.name));
-//            p = new Player("Кинг");
-//            pl_list.add(p);
-//            hm.add(addar(p.name));
-//            p = new Player("Технологический");
-//            pl_list.add(p);
-//            hm.add(addar(p.name));
-//            sa.notifyDataSetChanged();
+            Player p;
+            p = new Player("Принтер");
+            pl_list.add(p);
+            hm.add(addar(p.name));
+            p = new Player("Чеков");
+            pl_list.add(p);
+            hm.add(addar(p.name));
+            p = new Player("Бургер");
+            pl_list.add(p);
+            hm.add(addar(p.name));
+            p = new Player("Кинг");
+            pl_list.add(p);
+            hm.add(addar(p.name));
+            p = new Player("Технологический");
+            pl_list.add(p);
+            hm.add(addar(p.name));
+            sa.notifyDataSetChanged();
         //TEST
     }
 
@@ -272,6 +272,10 @@ public class Pretreatment
                 newrole.rang++;
             }
         }
+        else if(r.act != null)
+        {
+            newrole = r.clone();
+        }
         else
         {
             newrole = r;
@@ -328,13 +332,13 @@ public class Pretreatment
                     public void onClick(View view)
                     {
                         int c = 0;
-                        String tmp = hm_roles.get(p).values().toArray()[0].toString();
+                        String tmp = hm_roles.get(p).get("count");
                         c = Integer.parseInt(tmp);
                         if(c > 0)
                         {
                             rl_count--;
                             hm_roles.set(p, hm_roles((c - 1) + "", hm_roles.get(
-                                    p).values().toArray()[1].toString()));
+                                    p).get("role")));
                             sa_roles.notifyDataSetChanged();
                             check();
                         }
@@ -346,14 +350,14 @@ public class Pretreatment
                     public void onClick(View view)
                     {
                         int c = 0;
-                        String tmp = hm_roles.get(p).values().toArray()[0].toString();
+                        String tmp = hm_roles.get(p).get("count");
                         c = Integer.parseInt(tmp);
                         if(c < 9)
                         {
                             rl_count++;
                             hm_roles.set(p, hm_roles((c + 1) + "",
                                                      hm_roles.get(
-                                                             p).values().toArray()[1].toString()));
+                                                             p).get("role")));
                             sa_roles.notifyDataSetChanged();
                             check();
                         }
@@ -438,7 +442,16 @@ public class Pretreatment
             }
         //
             tv_rco.setText(rl_count + "");
-            if(rl_count == pl_list.size() && rl_count >= 5)
+        int mafnum = 0;
+        for(int i=0; i<rl_to_play.size(); i++)
+        {
+            if(rl_to_play.get(i).Get_TV() == Role.TypeVisibility.mafia)
+            {
+                mafnum = Integer.parseInt(hm_roles.get(i).get("count"));
+                break;
+            }
+        }
+            if(rl_count == pl_list.size() && rl_count >= 5 && mafnum > 0)
             {
                 tv_rco.setTextColor(getResources().getColor(R.color.cnewgreen));
             }
@@ -451,7 +464,15 @@ public class Pretreatment
                 String res = "";
                 if(rl_count >= 5)
                 {
-                    if(rl_count == pl_list.size())
+                    if(mafnum == 0)
+                    {
+                        res = "mafia = 0";
+                    }
+                    else if(mafnum >= (rl_count/2))
+                    {
+                        res = "слишком много мафии";
+                    }
+                    else if(rl_count == pl_list.size())
                     {
                         r = true;
                     }

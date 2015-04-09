@@ -276,10 +276,6 @@ public class Night
         pl_name.setText(Pretreatment.pl_list.get(ri).name);
         return ri;
     }
-//    public void say(String s)
-//    {
-//        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
-//    }
     public void wakeup()
     {
         flipper_mess.setDisplayedChild(0);

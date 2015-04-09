@@ -29,50 +29,41 @@ public class Day extends Activity
     private boolean day_time;
     private Date cur_date;
     Spinner plrs;
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        List<Player> tmp = Kills();
-        String d = "";
-        d = cur_date.getDate() +"."+ (cur_date.getMonth()+1) +"."+ (cur_date.getYear()+1900)+" НОЧЬ";
         String s = "";
+        List<Integer> tmp = Kills();
         if(tmp.size()>0)
         {
             s = "не стало ";
-            s+=tmp.get(0).name;
-            for (int i = 1; i<tmp.size()-1; i++)
+            int i = tmp.size()-1;
+            s+=Pretreatment.pl_list.get(tmp.get(i)).name;
+            Pretreatment.pl_list.remove(tmp.get(i).intValue());
+            tmp.remove(i);
+            while(tmp.size()>1)
             {
-                s+=", " + tmp.get(i).name;
+                i = tmp.size()-1;
+                s+=", " + Pretreatment.pl_list.get(tmp.get(i)).name;
+                Pretreatment.pl_list.remove(tmp.get(i).intValue());
+                tmp.remove(i);
             }
-            if(tmp.size()>1)
+            if(tmp.size()>0)
             {
-                s+=" и " + tmp.get(tmp.size()-1).name + ".";
+                s+=" и " + Pretreatment.pl_list.get(tmp.get(0)).name + ".";
+                Pretreatment.pl_list.remove(tmp.get(0).intValue());
+                tmp.remove(0);
             }
         }
         else
         {
             s = "никто не умер.";
         }
-        hm.add(add_hm(d,"Этой ночью " + s, MyAdapter.NIGHTKEY));
-        sa.notifyDataSetChanged();
-        short st = check_win();
-        if(st!=0)
+        if(!endStep(s, "Этой ночью", "НОЧЬ", MyAdapter.NIGHTKEY))
         {
-            d = "ИГРА ОКОНЧЕНА";
-            win = true;
-            if(st<0)
-            {
-                hm.add(add_hm(d,"Этой ночью " + "мафия побеждает город", MyAdapter.ENDBADKEY));
-            }
-            else
-            {
-                hm.add(add_hm(d,"Этой ночью " + "город побеждает мафию", MyAdapter.ENDGOODKEY));
-            }
-            sa.notifyDataSetChanged();
-            setDayTime(false, " ВЫЙТИ ",View.GONE);
-            return;
+            set_Spinner();
         }
-        set_Spinner();
     }
     @Override
     public void onBackPressed()
@@ -111,15 +102,46 @@ public class Day extends Activity
         cur_date = new Date();
         Begin_Game();
     }
+    private boolean endStep(String corpse, String thistime, String time, String key)
+    {
+        String d = "";
+        d = cur_date.getDate() +"."+ (cur_date.getMonth()+1) +"."+ (cur_date.getYear()+1900) + " " + time;
+        //
+        hm.add(add_hm(d,thistime + " " + corpse, key));
+        sa.notifyDataSetChanged();
+        short st = check_win();
+        if(st!=0)
+        {
+            d = "ИГРА ОКОНЧЕНА";
+            win = true;
+            if(st == -1)
+            {
+                hm.add(add_hm(d,thistime + " " + "мафия побеждает город", MyAdapter.ENDBADKEY));
+            }
+            else if(st == 1)
+            {
+                hm.add(add_hm(d,thistime + " " + "город побеждает мафию", MyAdapter.ENDGOODKEY));
+            }
+            else if(st == 2)
+            {
+                hm.add(add_hm(d,thistime + " " + "никого не осталось. Ничья...", MyAdapter.ENDNEUTRAL));
+            }
+            sa.notifyDataSetChanged();
+            setDayTime(false, " ВЫЙТИ ",View.GONE);
+            return true;
+        }
+        return false;
+    }
     private void setDayTime(boolean b, String bt, int sv)
     {
         day_time = b;
         b_kill.setText(bt);
         plrs.setVisibility(sv);
     }
-    private List<Player> Kills()
+    private List<Integer> Kills()
     {
-        List<Player> tmp = new ArrayList<Player>();
+//        List<Player> tmp = new ArrayList<Player>();
+        List<Integer> tmp = new ArrayList<Integer>();
         for(int i=0; i<Pretreatment.pl_list.size(); i++)
         {
             if(!Pretreatment.pl_list.get(i).life)
@@ -127,7 +149,8 @@ public class Day extends Activity
                 if(!Pretreatment.pl_list.get(i).heal_night)
                 {
                     Main.to_Debug(Main.p_t_p(Pretreatment.pl_list.get(i)), "умирает");
-                    tmp.add(Pretreatment.pl_list.get(i));
+//                    tmp.add(Pretreatment.pl_list.get(i));
+                    tmp.add(i);
                     if(Pretreatment.pl_list.get(i).role.rang>0)
                     {
                         for(int k=0; k<Pretreatment.pl_list.size(); k++)
@@ -145,7 +168,7 @@ public class Day extends Activity
                             }
                         }
                     }
-                    Pretreatment.pl_list.remove(i);
+//                    Pretreatment.pl_list.remove(i);
                 }
             }
         }
@@ -176,14 +199,16 @@ public class Day extends Activity
     {
         List<Role> tmp_list = Pretreatment.rl_list;
         Random rand = new Random();
-        Main.to_Debug("Ведущий",  "Сегодня играют:");
+        String begin = "Сегодня играют:";
         for(int i=0; i<Pretreatment.pl_list.size(); i++)
         {
             int ri = rand.nextInt(tmp_list.size());
             Pretreatment.pl_list.get(i).role = tmp_list.get(ri);
             tmp_list.remove(ri);
-            Main.to_Debug(Main.p_t_p(Pretreatment.pl_list.get(i)),  "");
+            begin += "\n" + Main.p_t_p(Pretreatment.pl_list.get(i));
         }
+        begin += "\n";
+        Main.to_Debug("Ведущий", begin);
         Night();
     }
     private void Night()
@@ -199,9 +224,6 @@ public class Day extends Activity
             Night();
             return;
         }
-        String d = "";
-        d = cur_date.getDate() +"."+ (cur_date.getMonth()+1) +"."+ (cur_date.getYear()+1900)+" ДЕНЬ";
-        cur_date.setDate(cur_date.getDate()+1);
         String s = "";
         int n = plrs.getSelectedItemPosition();
         if(Pretreatment.pl_list.get(n).heal_day)
@@ -231,28 +253,12 @@ public class Day extends Activity
             }
             Pretreatment.pl_list.remove(n);
         }
-        hm.add(add_hm(d,"Этим днём " + s, MyAdapter.DAYKEY));
-        sa.notifyDataSetChanged();
-        short st = check_win();
-        //windows
-        if(st!=0)
+        if(!endStep(s, "Этим днём", "ДЕНЬ", MyAdapter.DAYKEY))
         {
-            d = "ИГРА ОКОНЧЕНА";
-            win = true;
-            if(st<0)
-            {
-                hm.add(add_hm(d,"Этим днём " + "мафия побеждает город", MyAdapter.ENDBADKEY));
-            }
-            else
-            {
-                hm.add(add_hm(d,"Этим днём " + "город побеждает мафию", MyAdapter.ENDGOODKEY));
-            }
-            sa.notifyDataSetChanged();
-            setDayTime(false, " ВЫЙТИ ",View.GONE);
-            return;
+            cur_date.setDate(cur_date.getDate()+1);
+            null_players();
+            setDayTime(false, "Город засыпает",View.GONE);
         }
-        null_players();
-        setDayTime(false, "Город засыпает",View.GONE);
     }
     private static void null_players()
     {
@@ -263,6 +269,10 @@ public class Day extends Activity
     }
     private short check_win()
     {
+        if(Pretreatment.pl_list.size()==0)
+        {
+            return 2;
+        }
         int m = 0;
         int p = 0;
         for(int i=0; i<Pretreatment.pl_list.size(); i++)

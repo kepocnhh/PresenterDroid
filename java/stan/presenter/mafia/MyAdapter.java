@@ -29,6 +29,7 @@ public class MyAdapter
     static final String     DAYKEY          = R.color.cnewye + "";
     static final String     ENDGOODKEY      = R.color.cnewgreen + "";
     static final String     ENDBADKEY       = R.color.cred + "";
+    static final String     ENDNEUTRAL      = R.color.cblue + "";
 
     private final Activity activity;
     private ArrayList<HashMap<String, Object>> values;
@@ -72,6 +73,10 @@ public class MyAdapter
         else if(values.get(p).get(COLKEY).toString().equals(ENDBADKEY))
         {
             image = R.drawable.bad;
+        }
+        else if(values.get(p).get(COLKEY).toString().equals(ENDNEUTRAL))
+        {
+            image = R.drawable.neutral;
         }
         background = Integer.parseInt(values.get(p).get(COLKEY).toString());
         ivEvent.setImageResource(image);
