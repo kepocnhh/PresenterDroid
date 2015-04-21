@@ -7,6 +7,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.Toast;
+
+import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.google.analytics.tracking.android.MapBuilder;
+import com.google.analytics.tracking.android.Tracker;
+import com.google.android.gms.ads.*;
+import com.google.analytics.tracking.android.EasyTracker;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,6 +27,38 @@ public class Main extends Activity
 {
     Button buttest;//тестовая кнопка
     static String Dir = "/mnt/sdcard/Mafia";
+    //
+    private static final String AD_UNIT_ID =
+            //"ca-app-pub-6916191358710501";
+            "ca-app-pub-6916191358710501/3703876071";
+    private static final String TEST_ID = "E1225DC326BAD8F88523050107F7D2E4";
+    private InterstitialAd interstitialAd = null;
+    public AdView adView = null;
+    //
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+        EasyTracker.getInstance(this).activityStart(this);
+    }
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+        EasyTracker.getInstance(this).activityStop(this);
+    }
+    public void track(String id, String action)
+    {
+        Tracker t = GoogleAnalytics.getInstance(Main.this).getTracker(getResources().getString(R.string.ga_trackingId));
+        t.set("&uid", id);
+        t.send(MapBuilder
+                        .createEvent("UX",       // Event category (required)
+                                action,  // Event action (required)
+                                null,       // Event label
+                                null)       // Event value
+                        .build()
+        );
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -40,10 +80,103 @@ public class Main extends Activity
         {
             System.exit(0);
         }
+        //
+            adView = new AdView(this);
+            adView.setAdSize(AdSize.BANNER);
+            adView.setAdUnitId(AD_UNIT_ID);
+        adView.setAdListener(new AdListener()
+        {
+            @Override
+            public void onAdClosed() {
+                Toast.makeText(Main.this, "onAdClosed", Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onAdFailedToLoad(int error) {
+                String message = "onAdFailedToLoad: " + getErrorReason(error);
+                Toast.makeText(Main.this, message, Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onAdLeftApplication() {
+                Toast.makeText(Main.this, "onAdLeftApplication", Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onAdOpened()
+            {
+                Toast.makeText(Main.this, "onAdOpened", Toast.LENGTH_SHORT).show();
+                track( "0", "onAdOpened");
+            }
+            @Override
+            public void onAdLoaded() {
+                Toast.makeText(Main.this, "onAdLoaded", Toast.LENGTH_SHORT).show();
+            }
+        });
+        LinearLayout layout = (LinearLayout) findViewById(R.id.ll_main);
+        layout.addView(adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                //.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                //.addTestDevice(TEST_ID)
+                .build();
+        adView.loadAd(adRequest);
+        //
+            Tracker t = GoogleAnalytics.getInstance(this).getTracker(getResources().getString(R.string.ga_trackingId));
+            t.set("&uid", "0");
+            t.send(MapBuilder
+                            .createEvent("UX",       // Event category (required)
+                                    "Sign In",  // Event action (required)
+                                    null,       // Event label
+                                    null)       // Event value
+                            .build()
+            );
+        //
         System.setErr(st);
         System.setOut(st);
         System.out.println("\n\t------------------------------------");
     }
+    private String getErrorReason(int errorCode)
+    {
+        String errorReason = "";
+        switch(errorCode) {
+            case AdRequest.ERROR_CODE_INTERNAL_ERROR:
+                errorReason = "Internal error";
+                break;
+            case AdRequest.ERROR_CODE_INVALID_REQUEST:
+                errorReason = "Invalid request";
+                break;
+            case AdRequest.ERROR_CODE_NETWORK_ERROR:
+                errorReason = "Network Error";
+                break;
+            case AdRequest.ERROR_CODE_NO_FILL:
+                errorReason = "No fill";
+                break;
+        }
+        return errorReason;
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (adView != null) {
+            adView.resume();
+        }
+    }
+    @Override
+    public void onPause() {
+        if (adView != null) {
+            adView.pause();
+        }
+        super.onPause();
+    }
+    @Override
+    public void onDestroy() {
+        if (adView != null) {
+            // Destroy the AdView.
+            adView.destroy();
+        }
+        super.onDestroy();
+    }
+
+
+
+
     //функции тестовой кнопки
     public void buttest(View v)
     {
@@ -52,6 +185,7 @@ public class Main extends Activity
     //кнопка Начать игру
     public void butenter(View v)
     {
+        track( "0", "begin game");
         startActivity(new Intent(this,Pretreatment.class));
     }
     //кнопка Настройки приложения
