@@ -96,7 +96,7 @@ public class Night_dlg
         String role = Pretreatment.pl_list.get(p).role.name;
         if(Pretreatment.pl_list.get(p).role.rang > 0)
         {
-            role += " - ранг " + Pretreatment.pl_list.get(p).role.rang;
+            role += " - " +getStringR(R.string.rang)+ " " + Pretreatment.pl_list.get(p).role.rang;
             show_role_group(p);
             group_tv.setVisibility(View.VISIBLE);
         }
@@ -138,11 +138,11 @@ public class Night_dlg
         }
         else
         {
-            Main.to_Debug(Main.p_t_p(Pretreatment.pl_list.get(p)), "ничего не делает\n");
+            Main.to_Debug(Main.p_t_p(Pretreatment.pl_list.get(p)), getStringR(R.string.doing_nothing)+ "\n");
             llact.setVisibility(View.GONE);
             btnok.setVisibility(View.GONE);
             tvnoact.setVisibility(View.VISIBLE);
-            tvnoact.setText(role + " ничего не делает");
+            tvnoact.setText(role + " " + getStringR(R.string.doing_nothing));
         }
         player = p;
     }
@@ -159,7 +159,7 @@ public class Night_dlg
             if(Pretreatment.pl_list.get(k).role.UI == Pretreatment.pl_list.get(me).role.UI &&
                     Pretreatment.pl_list.get(k).role.rang > -1)
             {
-                String m = Pretreatment.pl_list.get(k).name + " - ранг " + Pretreatment.pl_list.get(
+                String m = Pretreatment.pl_list.get(k).name + " - " +getStringR(R.string.rang)+ " " + Pretreatment.pl_list.get(
                         k).role.rang + " ";
                 if(res.length() > 0)
                 {
@@ -169,7 +169,7 @@ public class Night_dlg
                 if(Pretreatment.pl_list.get(me).role.rang_shot || Pretreatment.pl_list.get(
                         k).role.rang == 1)
                 {
-                    String m2 = " ещё не сделал выбор";
+                    String m2 = " " + getStringR(R.string.not_made_choice);
                     if(Pretreatment.pl_list.get(k).role.act != null)
                     {
                         for(int q = 0; q < Pretreatment.pl_list.get(k).role.act.length; q++)
@@ -185,7 +185,7 @@ public class Night_dlg
                     }
                     else
                     {
-                        m2 = " ничего не делает";
+                        m2 = " " + getStringR(R.string.doing_nothing);
                     }
                     res += "\n" + m2;
                 }
@@ -224,14 +224,17 @@ public class Night_dlg
             int act = sp_act.getSelectedItemPosition();
             if(n == player && !Pretreatment.pl_list.get(player).role.act[act].selfie)
             {
-                say(Pretreatment.pl_list.get(player).role.name + " не может действовать на себя!");
+                say(Pretreatment.pl_list.get(player).role.name + " " + getStringR(R.string.can_not_act));
                 return;
             }
             result(n, act);
         }
         cancel();
     }
-
+    private String getStringR(int n)
+    {
+        return activity.getResources().getString(n);
+    }
     @Override
     public void onClick(View v)
     {

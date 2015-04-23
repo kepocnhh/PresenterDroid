@@ -89,7 +89,6 @@ public class Night
         n_lv.setAdapter(sa);
         //
         act_list = new ArrayList<Action>();
-        //startActivityForResult(new Intent(Night.this, Night_dlg.class), 0);
         tmp_list = new ArrayList<Player>();
         for(int i=0;i<Pretreatment.pl_list.size();i++)
         {
@@ -180,7 +179,7 @@ public class Night
         flipper_mess.addView(inf.inflate(R.layout.null_lay, null));
         flipper_mess.addView(inf.inflate(R.layout.pret_mess, null));
         tv_mess = (TextView) findViewById(R.id.pr_ll_tv_mess);
-        flipmess("Пролистните вправо чтобы проснуться");
+        flipmess(getStringR(R.string.wake_up_slide));
         //
         nd = new Night_dlg(this);
         nd.setOnDismissListener(new DialogInterface.OnDismissListener()
@@ -190,7 +189,7 @@ public class Night
             {
                 nightbot.setVisibility(View.VISIBLE);
                 player_num = next_player();
-                flipmess("Пролистните вправо чтобы проснуться");
+                flipmess(getStringR(R.string.wake_up_slide));
                 if(tmp_list.size()==0)
                 {
                     nightbot.setVisibility(View.GONE);
@@ -199,6 +198,10 @@ public class Night
             }
         });
         //
+    }
+    private String getStringR(int n)
+    {
+        return getResources().getString(n);
     }
     private HashMap<String, String> add_hm(String n)
     {
@@ -264,7 +267,7 @@ public class Night
             tmp_list.remove(tmp_list.size()-1);
             if(tmp_list.size() == 0)
             {
-                pl_name.setText("Город просыпается");
+                pl_name.setText(getStringR(R.string.city_wakesup));
                 return -1;
             }
         }

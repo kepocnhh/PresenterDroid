@@ -29,6 +29,8 @@
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:background="@color/addname">
         <LinearLayout
             android:layout_weight="1"
@@ -39,7 +41,8 @@
                 android:id="@+id/n_cb_bot"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="bot"/>
+                android:visibility="gone"
+                android:text="@string/bot"/>
             <EditText
                 android:id="@+id/n_et_name"
                 android:layout_width="fill_parent"
@@ -47,7 +50,7 @@
                 android:inputType="textCapWords"
                 android:text=""
                 android:textColorHint="@color/cgrey"
-                android:hint="Имя игрока"
+                android:hint="@string/name_player"
                 android:ems="10"/>
         </LinearLayout>
         <ImageButton

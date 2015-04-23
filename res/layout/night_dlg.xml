@@ -40,7 +40,7 @@
             android:id="@+id/ndlg_tv_pl"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Выберите, как вы будете действовать"
+            android:text="@string/choose_act"
             android:textColor="@color/cgrey"/>
         <Spinner
             android:id="@+id/nig_dlg_sp_act"
@@ -51,7 +51,7 @@
             android:id="@+id/ndlg_tv_act"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Выберите игрока, на которого будете действовать"
+            android:text="@string/choose_victim"
             android:textColor="@color/cgrey"/>
         <Spinner
             android:id="@+id/nig_dlg_sp_pl"
@@ -64,7 +64,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:onClick="engage"
-        android:text=" Сделать выбор "
+        android:text="@string/make_choice"
         android:textColor="@color/text_button"
         android:background="@drawable/enter_button"/>
     <SeekBar

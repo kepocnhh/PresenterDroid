@@ -33,7 +33,7 @@
             <TextView
                 android:id="@+id/namescount"
                 android:layout_weight="1"
-                android:text=": игроков"
+                android:text="@string/names"
                 android:gravity="center_vertical"
                 android:textColor="@color/cgrey"
                 android:layout_width="fill_parent"
@@ -46,7 +46,7 @@
             <TextView
                 android:id="@+id/rolescount"
                 android:layout_weight="1"
-                android:text="ролей :"
+                android:text="@string/roles"
                 android:gravity="center_vertical|end"
                 android:textColor="@color/cgrey"
                 android:layout_width="fill_parent"
@@ -83,7 +83,7 @@
         android:textColor="@color/text_button"
         android:background="@drawable/enter_button"
         android:onClick="play_game"
-        android:text=" Начать игру "
+        android:text="@string/b_begin_game"
         android:layout_toLeftOf="@+id/mbe"
         android:layout_toStartOf="@+id/mbe"
         android:layout_alignBottom="@+id/mbe" />
@@ -94,7 +94,7 @@
         android:background="@drawable/b_forget"
         android:textColor="@color/text_button"
         android:onClick="b_ret_main"
-        android:text=" Отмена "
+        android:text="@string/b_cancel"
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/flipper"
         android:layout_alignEnd="@+id/flipper" />

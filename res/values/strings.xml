@@ -17,10 +17,63 @@
     <color name="transparent">#92C3EB</color>
 
     <!-- Строки -->
+    <!-- Текст по умолчанию -->
+    <!-- Окна -->
     <string name="app_name">Presenter</string>
     <string name="pret">Pretreatment</string>
     <string name="day">Day</string>
     <string name="night">Night</string>
+    <!-- Надписи -->
+        <!-- Presenter -->
+    <string name="b_begin">BEGIN GAME</string>
+    <string name="b_exit">EXIT</string>
+        <!-- Pretreatment -->
+    <string name="to_roles">to roles</string>
+    <string name="to_names">to names</string>
+    <string name="bot">bot</string>
+    <string name="name_player">Name player</string>
+    <string name="roles">roles :</string>
+    <string name="names">: names</string>
+    <string name="b_begin_game">Begin game</string>
+    <string name="b_cancel">Cancel</string>
+    <string name="slide_left">Swipe left to the choice of roles</string>
+    <string name="slide_right">Swipe right to the choice of players</string>
+        <!-- Errors -->
+    <string name="less"> less than </string>
+    <string name="more"> more than </string>
+    <string name="role_less">Role less than </string>
+    <string name="role_more">Roles more than the players!</string>
+    <string name="players_less">Players less than</string>
+    <string name="empty_name">Empty name!</string>
+    <string name="too_many_mafia">Too many mafia!</string>
+    <string name="zero_mafia">Number mafia is 0!</string>
+    <string name="remains_roles">It remains to choose roles: </string>
+        <!-- Day -->
+    <string name="this_day">This day</string>
+    <string name="death_penalty">Death penalty</string>
+    <string name="nobody_death"> nobody death</string>
+    <string name="and"> and </string>
+    <string name="dies"> dies </string>
+    <string name="died">died </string>
+    <string name="city_sleeps">The city sleeps</string>
+    <string name="game_over">GAME OVER</string>
+    <string name="city_wins"> city wins mafia</string>
+    <string name="mafia_wins"> mafia wins city</string>
+    <string name="dead_heat">nobody left. Dead heat</string>
+    <string name="b_exit_day">EXIT</string>
+        <!-- Night -->
+    <string name="this_night">This night</string>
+    <string name="now_playing">Now playing:</string>
+    <string name="wake_up">Wake up</string>
+    <string name="wake_up_slide">Swipe to right for wake up</string>
+    <string name="doing_nothing">doing nothing</string>
+    <string name="not_made_choice">has not yet made a choice</string>
+    <string name="can_not_act">can not act themselves</string>
+    <string name="make_choice">Make a choice</string>
+    <string name="choose_act">Choose how you act</string>
+    <string name="choose_victim">Choose a player for whom you act</string>
+    <string name="rang">rang</string>
+    <string name="city_wakesup">City wakes up</string>
 
 
 </resources>

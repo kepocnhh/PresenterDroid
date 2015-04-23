@@ -66,6 +66,7 @@ public class Pretreatment
     public static  List<Role>    rl_list;
     private static List<Role>    rl_to_play;
     private static int           rl_count;
+    private final static int    min_players = 5;
 
     ////////////////////////////////////////////////////////////////////////////////////////
     @Override
@@ -106,14 +107,12 @@ public class Pretreatment
         flipnext(flipper_mess);
         tv_mess.setText(m);
     }
-
     private void flipnext(ViewFlipper f)
     {
         f.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.left));
         f.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.left_out));
         f.showNext();
     }
-
     private void flipprev(ViewFlipper f)
     {
         f.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.right_out));
@@ -136,7 +135,8 @@ public class Pretreatment
             {
                 if(fromPosition > toPosition + 200)
                 {
-                    tv_to.setText("к добавлению игроков");
+                    tv_to.setText(getResources().getString(R.string.to_names));
+                    say(getString(R.string.slide_right));
                     iv_arr.setImageResource(R.drawable.arrowback);
                     flipnext(flipper);
                 }
@@ -145,7 +145,8 @@ public class Pretreatment
             {
                 if(fromPosition < toPosition - 200)
                 {
-                    tv_to.setText("к выбору ролей");
+                    tv_to.setText(getResources().getString(R.string.to_roles));
+                    say(getString(R.string.slide_left));
                     iv_arr.setImageResource(R.drawable.arrowfront);
                     flipprev(flipper);
                 }
@@ -179,28 +180,31 @@ public class Pretreatment
         //
         init_players();
         init_roles();
-        //
         //TEST
-            Player p;
-            p = new Player("Принтер");
-            pl_list.add(p);
-            hm.add(addar(p.name));
-            p = new Player("Чеков");
-            pl_list.add(p);
-            hm.add(addar(p.name));
-            p = new Player("Бургер");
-            pl_list.add(p);
-            hm.add(addar(p.name));
-            p = new Player("Кинг");
-            pl_list.add(p);
-            hm.add(addar(p.name));
-            p = new Player("Технологический");
-            pl_list.add(p);
-            hm.add(addar(p.name));
-            sa.notifyDataSetChanged();
+//            Player p;
+//            p = new Player("Принтер");
+//            pl_list.add(p);
+//            hm.add(addar(p.name));
+//            p = new Player("Чеков");
+//            pl_list.add(p);
+//            hm.add(addar(p.name));
+//            p = new Player("Бургер");
+//            pl_list.add(p);
+//            hm.add(addar(p.name));
+//            p = new Player("Кинг");
+//            pl_list.add(p);
+//            hm.add(addar(p.name));
+//            p = new Player("Технологический");
+//            pl_list.add(p);
+//            hm.add(addar(p.name));
+//            sa.notifyDataSetChanged();
         //TEST
+        say(getString(R.string.slide_left));
     }
-
+    public void say(String s)
+    {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+    }
     private void init_players()
     {
         n_lv = (ListView) findViewById(R.id.n_lv1);
@@ -239,7 +243,7 @@ public class Pretreatment
         cb_bot = (CheckBox) findViewById(R.id.n_cb_bot);
         tv_mess = (TextView) findViewById(R.id.pr_ll_tv_mess);
         tv_to = (TextView) findViewById(R.id.p_tv_to);
-        tv_to.setText("к выбору ролей");
+        tv_to.setText(getResources().getString(R.string.to_roles));
         iv_arr = (ImageView) findViewById(R.id.arrow);
         iv_arr.setImageResource(R.drawable.arrowfront);
         //
@@ -399,7 +403,7 @@ public class Pretreatment
         String name = et_name.getText().toString();
         if(name.length() == 0)
         {
-            flipmess("empty name!");
+            flipmess(getResources().getString(R.string.empty_name));
             return;
         }
         Player p = new Player(name);
@@ -407,7 +411,7 @@ public class Pretreatment
         if(cb_bot.isChecked())
         {
             p.bot = true;
-            name = " (bot)";
+            name = " (" +getResources().getString(R.string.bot)+ ")";
         }
         pl_list.add(p);
         hm.add(addar(p.name + name));
@@ -429,10 +433,10 @@ public class Pretreatment
         boolean r = false;
         //
             tv_nco.setText(pl_list.size() + "");
-            if(pl_list.size() < 5)
+            if(pl_list.size() < min_players)
             {
                 tv_nco.setTextColor(getResources().getColor(R.color.cred));
-                flipmess("players < 5");
+                flipmess(getResources().getString(R.string.players_less) + " " + min_players);
                 p = false;
             }
             else
@@ -451,7 +455,7 @@ public class Pretreatment
                 break;
             }
         }
-            if(rl_count == pl_list.size() && rl_count >= 5 && mafnum > 0)
+            if(rl_count == pl_list.size() && rl_count >= min_players && mafnum > 0)
             {
                 tv_rco.setTextColor(getResources().getColor(R.color.cnewgreen));
             }
@@ -462,15 +466,15 @@ public class Pretreatment
             if(p)
             {
                 String res = "";
-                if(rl_count >= 5)
+                if(rl_count >= min_players)
                 {
                     if(mafnum == 0)
                     {
-                        res = "mafia = 0";
+                        res = getResources().getString(R.string.zero_mafia);
                     }
                     else if(mafnum >= (rl_count/2))
                     {
-                        res = "слишком много мафии";
+                        res = getResources().getString(R.string.too_many_mafia);
                     }
                     else if(rl_count == pl_list.size())
                     {
@@ -478,16 +482,16 @@ public class Pretreatment
                     }
                     else if(rl_count < pl_list.size())
                     {
-                        res = "осталось выбрать " + " ролей:" + (pl_list.size() - rl_count);
+                        res = getResources().getString(R.string.remains_roles) + " " + (pl_list.size() - rl_count);
                     }
                     else if(rl_count > pl_list.size())
                     {
-                        res = "ролей больше чем игроков!";
+                        res = getResources().getString(R.string.role_more);
                     }
                 }
                 else
                 {
-                    res = "roles < 5";
+                    res = getResources().getString(R.string.role_less) + " " + min_players;
                 }
                 flipmess(res);
             }

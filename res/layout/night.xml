@@ -26,7 +26,7 @@
         android:id="@+id/nig_b_engage"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Проснуться"
+        android:text="@string/wake_up"
         android:textColor="@color/text_button"
         android:background="@drawable/enter_button"
         android:layout_alignParentBottom="true"/>
@@ -48,7 +48,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/cwhite"
-            android:text="Проснуться"
+            android:text="@string/wake_up"
             android:gravity="center"/>
         <SeekBar
             android:id="@+id/nig_sb_engage"

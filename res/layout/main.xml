@@ -6,15 +6,15 @@
     android:id="@+id/ll_main"
     android:orientation="vertical">
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/butbegin"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/text_button"
         android:background="@drawable/enter_button"
         android:onClick="butenter"
-        android:text=" Начать игру "/>
+        android:text="@string/b_begin"/>
     <Button
-        android:id="@+id/butreg"
+        android:id="@+id/butprop"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/back_button"
@@ -44,5 +44,5 @@
         android:background="@drawable/b_forget"
         android:textColor="@color/text_button"
         android:onClick="butexit"
-        android:text=" ВЫХОД "/>
+        android:text="@string/b_exit"/>
 </LinearLayout>
