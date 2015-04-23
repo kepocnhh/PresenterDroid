@@ -181,23 +181,23 @@ public class Pretreatment
         init_players();
         init_roles();
         //TEST
-//            Player p;
-//            p = new Player("Принтер");
-//            pl_list.add(p);
-//            hm.add(addar(p.name));
-//            p = new Player("Чеков");
-//            pl_list.add(p);
-//            hm.add(addar(p.name));
-//            p = new Player("Бургер");
-//            pl_list.add(p);
-//            hm.add(addar(p.name));
-//            p = new Player("Кинг");
-//            pl_list.add(p);
-//            hm.add(addar(p.name));
-//            p = new Player("Технологический");
-//            pl_list.add(p);
-//            hm.add(addar(p.name));
-//            sa.notifyDataSetChanged();
+            Player p;
+            p = new Player("Принтер");
+            pl_list.add(p);
+            hm.add(addar(p.name));
+            p = new Player("Чеков");
+            pl_list.add(p);
+            hm.add(addar(p.name));
+            p = new Player("Бургер");
+            pl_list.add(p);
+            hm.add(addar(p.name));
+            p = new Player("Кинг");
+            pl_list.add(p);
+            hm.add(addar(p.name));
+            p = new Player("Технологический");
+            pl_list.add(p);
+            hm.add(addar(p.name));
+            sa.notifyDataSetChanged();
         //TEST
         say(getString(R.string.slide_left));
     }

@@ -50,7 +50,7 @@ public class Day extends Activity
             }
             if(tmp.size()>0)
             {
-                s+= getStringR(R.string.and) + Pretreatment.pl_list.get(tmp.get(0)).name + ".";
+                s+= " " + getStringR(R.string.and) +" "+ Pretreatment.pl_list.get(tmp.get(0)).name + ".";
                 Pretreatment.pl_list.remove(tmp.get(0).intValue());
                 tmp.remove(0);
             }
