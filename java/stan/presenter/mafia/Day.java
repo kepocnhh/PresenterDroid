@@ -2,6 +2,7 @@ package stan.presenter.mafia;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -11,6 +12,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
+
+import com.google.analytics.tracking.android.EasyTracker;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,6 +32,20 @@ public class Day extends Activity
     private Date cur_date;
     Spinner plrs;
 
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+        EasyTracker.getInstance(this).activityStart(this);
+//        say("track_start");
+    }
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+        EasyTracker.getInstance(this).activityStop(this);
+//        say("track_stop");
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
@@ -270,6 +287,7 @@ public class Day extends Activity
     {
         if(Pretreatment.pl_list.size()==0)
         {
+            GATracker.track(this, Build.ID, GATracker.CAT_MAFIA, getStringR(R.string.dead_heat), null, null);
             return 2;
         }
         int m = 0;
@@ -287,10 +305,12 @@ public class Day extends Activity
         }
         if(m==0)
         {
+            GATracker.track(this, Build.ID, GATracker.CAT_MAFIA, getStringR(R.string.city_wins), null, null);
             return 1;
         }
         if(m==p)
         {
+            GATracker.track(this, Build.ID, GATracker.CAT_MAFIA, getStringR(R.string.mafia_wins), null, null);
             return -1;
         }
         return 0;
@@ -300,10 +320,12 @@ public class Day extends Activity
     {
         if(win)
         {
+            GATracker.track(this, Build.ID, GATracker.CAT_MAFIA, "end game", null, null);
             finish();
         }
         else
         {
+            GATracker.track(this, Build.ID, GATracker.CAT_CLICK, "kill day", null, null);
             Day();
         }
     }

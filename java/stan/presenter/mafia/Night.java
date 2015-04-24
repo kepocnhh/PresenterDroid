@@ -18,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
@@ -62,6 +64,20 @@ public class Night
         f.showNext();
     }
 //
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+        EasyTracker.getInstance(this).activityStart(this);
+    //        say("track_start");
+    }
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+        EasyTracker.getInstance(this).activityStop(this);
+//        say("track_stop");
+    }
     @Override
     public void onBackPressed()
     {

@@ -4,10 +4,11 @@
     tools:ignore="TypographyDashes">
     <!--Replace placeholder ID with your tracking ID-->
     <string name="ga_trackingId">UA-62108705-2</string>
-
+    <integer name="ga_dispatchPeriod">10</integer>
     <!--Enable automatic activity tracking-->
     <bool name="ga_autoActivityTracking">true</bool>
 
     <!--Enable automatic exception tracking-->
     <bool name="ga_reportUncaughtExceptions">true</bool>
+
 </resources>

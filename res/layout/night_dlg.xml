@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@color/cdgrey">
+    android:background="@color/transparentblack">
     <TextView
         android:id="@+id/nig_dlg_tv_name"
         android:layout_width="fill_parent"
@@ -42,22 +42,48 @@
             android:layout_height="wrap_content"
             android:text="@string/choose_act"
             android:textColor="@color/cgrey"/>
-        <Spinner
-            android:id="@+id/nig_dlg_sp_act"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
-        </Spinner>
+            <ImageView
+                android:src="@drawable/ic_hand"
+                android:scaleType="fitCenter"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"/>
+            <Spinner
+                android:id="@+id/nig_dlg_sp_act"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+            </Spinner>
+        </LinearLayout>
         <TextView
             android:id="@+id/ndlg_tv_act"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/choose_victim"
             android:textColor="@color/cgrey"/>
-        <Spinner
-            android:id="@+id/nig_dlg_sp_pl"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
-        </Spinner>
+            <ImageView
+                android:src="@drawable/ic_hand"
+                android:scaleType="fitCenter"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"/>
+            <Spinner
+                android:id="@+id/nig_dlg_sp_pl"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+            </Spinner>
+        </LinearLayout>
     </LinearLayout>
     <Button
         android:id="@+id/nig_dlg_b_engage"

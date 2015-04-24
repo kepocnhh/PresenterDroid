@@ -4,16 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.google.analytics.tracking.android.GoogleAnalytics;
-import com.google.analytics.tracking.android.MapBuilder;
-import com.google.analytics.tracking.android.Tracker;
 import com.google.android.gms.ads.*;
 import com.google.analytics.tracking.android.EasyTracker;
 
@@ -33,7 +28,6 @@ public class Main extends Activity
     //
     private static final String AD_UNIT_ID = "ca-app-pub-6916191358710501/3703876071";
     private static final String TEST_ID = "E1225DC326BAD8F88523050107F7D2E4";
-    private InterstitialAd interstitialAd = null;
     //
 
     private void initDEBUGLog()
@@ -62,35 +56,36 @@ public class Main extends Activity
         butprop = (Button)findViewById(R.id.butprop);
         butprop.setVisibility(View.INVISIBLE);//скрытие кнопки настройки
     }
-    private void initAdvert()
+    private void initAdvert(final Activity act)
     {
-        adView = new AdView(this);
+        adView = new AdView(act);
         adView.setAdSize(AdSize.BANNER);
         adView.setAdUnitId(AD_UNIT_ID);
         adView.setAdListener(new AdListener()
         {
             @Override
             public void onAdClosed() {
-                Toast.makeText(Main.this, "onAdClosed", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(Main.this, "onAdClosed", Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onAdFailedToLoad(int error) {
                 String message = "onAdFailedToLoad: " + getErrorReason(error);
-                Toast.makeText(Main.this, message, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(Main.this, message, Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onAdLeftApplication() {
-                Toast.makeText(Main.this, "onAdLeftApplication", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(Main.this, "onAdLeftApplication", Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onAdOpened()
             {
-                Toast.makeText(Main.this, "onAdOpened", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(Main.this, "onAdOpened", Toast.LENGTH_SHORT).show();
 //                track( "0", "onAdOpened");
+                GATracker.track(act, Build.ID, GATracker.CAT_ADMOB, "onAdOpened", null, null);
             }
             @Override
             public void onAdLoaded() {
-                Toast.makeText(Main.this, "onAdLoaded", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(Main.this, "onAdLoaded", Toast.LENGTH_SHORT).show();
             }
         });
         LinearLayout layout = (LinearLayout) findViewById(R.id.ll_main);
@@ -106,20 +101,9 @@ public class Main extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         //
-        //
             initViews();
-            initAdvert();
+            initAdvert(this);
             initDEBUGLog();
-        //
-//            Tracker t = GoogleAnalytics.getInstance(this).getTracker(getResources().getString(R.string.ga_trackingId));
-//            t.set("&uid", "0");
-//            t.send(MapBuilder
-//                            .createEvent("UX",       // Event category (required)
-//                                    "Sign In",  // Event action (required)
-//                                    null,       // Event label
-//                                    null)       // Event value
-//                            .build()
-//            );
         //
     }
     @Override
@@ -154,14 +138,14 @@ public class Main extends Activity
     public void onStart()
     {
         super.onStart();
-//        EasyTracker.getInstance(this).activityStart(this);
+        EasyTracker.getInstance(this).activityStart(this);
 //        say("track_start");
     }
     @Override
     public void onStop()
     {
         super.onStop();
-//        EasyTracker.getInstance(this).activityStop(this);
+        EasyTracker.getInstance(this).activityStop(this);
 //        say("track_stop");
     }
 
@@ -176,8 +160,9 @@ public class Main extends Activity
     public void butenter(View v)
     {
 //        track( "0", "begin game");
+        GATracker.track(this, Build.ID, GATracker.CAT_CLICK, "begin game (to pretretment)", null, null);
 
-        say(Build.USER+ "  " + Build.ID);
+//        say(Build.USER+ "  " + Build.ID);
         startActivity(new Intent(this,Pretreatment.class));
     }
     //кнопка Настройки приложения
@@ -188,6 +173,7 @@ public class Main extends Activity
     //кнопка Выход
     public void butexit(View v)
     {
+        GATracker.track(this, Build.ID, GATracker.CAT_CLICK, "exit", null, null);
         System.exit(0);
     }
 
@@ -218,18 +204,6 @@ public class Main extends Activity
             s = "0" + s;
         }
         return s;
-    }
-    public void track(String id, String action)
-    {
-        Tracker t = GoogleAnalytics.getInstance(Main.this).getTracker(getResources().getString(R.string.ga_trackingId));
-        t.set("&uid", id);
-        t.send(MapBuilder
-                        .createEvent("UX",       // Event category (required)
-                                action,  // Event action (required)
-                                null,       // Event label
-                                null)       // Event value
-                        .build()
-        );
     }
     private String getErrorReason(int errorCode)
     {

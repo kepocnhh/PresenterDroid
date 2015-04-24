@@ -93,6 +93,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/b_forget"
         android:textColor="@color/text_button"
+        android:layout_marginLeft="5dp"
         android:onClick="b_ret_main"
         android:text="@string/b_cancel"
         android:layout_alignParentBottom="true"

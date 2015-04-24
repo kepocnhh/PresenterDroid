@@ -3,6 +3,7 @@ package stan.presenter.mafia;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -28,6 +29,8 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
+
+import com.google.analytics.tracking.android.EasyTracker;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -75,9 +78,25 @@ public class Pretreatment
         finish();
     }
 
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+        EasyTracker.getInstance(this).activityStart(this);
+//        say("track_start");
+    }
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+        EasyTracker.getInstance(this).activityStop(this);
+//        say("track_stop");
+    }
+
     //кнопка
     public void b_ret_main(View v)
     {
+        GATracker.track(this, Build.ID, GATracker.CAT_CLICK, "cancel to main", null, null);
         finish();
     }
 
@@ -97,6 +116,8 @@ public class Pretreatment
                 }
                 rl_to_play.remove(0);
             }
+            GATracker.track(this, Build.ID, GATracker.CAT_CLICK, "begin game", null, null);
+            GATracker.track(this, Build.ID, GATracker.CAT_MAFIA, GATracker.CAT_PL_COUNT, null, (long)pl_list.size());
             startActivityForResult(new Intent(Pretreatment.this, Day.class), 0);
         }
     }
@@ -180,7 +201,12 @@ public class Pretreatment
         //
         init_players();
         init_roles();
-        //TEST
+        //
+//        test();
+        say(getString(R.string.slide_left));
+    }
+    private void test()
+    {
             Player p;
             p = new Player("Принтер");
             pl_list.add(p);
@@ -198,8 +224,6 @@ public class Pretreatment
             pl_list.add(p);
             hm.add(addar(p.name));
             sa.notifyDataSetChanged();
-        //TEST
-        say(getString(R.string.slide_left));
     }
     public void say(String s)
     {
@@ -424,7 +448,10 @@ public class Pretreatment
     //кнопка
     public void b_add(View v)
     {
-        add_to_list();
+        if(pl_list.size()<15)
+        {
+            add_to_list();
+        }
     }
 
     public boolean check()

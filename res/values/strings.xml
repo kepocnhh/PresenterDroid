@@ -14,7 +14,7 @@
     <color name="cfon">#92C3EB</color>
     <color name="cgrey">#708090</color>
     <color name="cdgrey">#2F2F2F</color>
-    <color name="transparent">#92C3EB</color>
+    <color name="transparentblack">#55000000</color>
 
     <!-- Строки -->
     <!-- Текст по умолчанию -->
@@ -39,8 +39,6 @@
     <string name="slide_left">Swipe left to the choice of roles</string>
     <string name="slide_right">Swipe right to the choice of players</string>
         <!-- Errors -->
-    <string name="less"> less than </string>
-    <string name="more"> more than </string>
     <string name="role_less">Role less than </string>
     <string name="role_more">Roles more than the players!</string>
     <string name="players_less">Players less than</string>
