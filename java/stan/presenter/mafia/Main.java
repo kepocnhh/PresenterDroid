@@ -1,9 +1,13 @@
 package stan.presenter.mafia;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -17,6 +21,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.util.Date;
+import java.util.UUID;
+
+import stan.db.DBHelper;
 
 
 public class Main extends Activity
@@ -25,10 +32,12 @@ public class Main extends Activity
     private Button butprop;//кнопка Настройки приложения
     private AdView adView = null;
     static String Dir = "/mnt/sdcard/Mafia";
+    static String DBname = "mafiadb";
     //
     private static final String AD_UNIT_ID = "ca-app-pub-6916191358710501/3703876071";
     private static final String TEST_ID = "E1225DC326BAD8F88523050107F7D2E4";
     //
+    DBHelper dbHelper;
 
     private void initDEBUGLog()
     {
@@ -95,15 +104,46 @@ public class Main extends Activity
                 .build();
         adView.loadAd(adRequest);
     }
+    private void initDB()
+    {
+        dbHelper = new DBHelper(this, DBname);
+        dbHelper.initTableTypes();
+        dbHelper.initTableRoles();
+        dbHelper.initTableActions();
+
+        String[] valuesForRole = DBHelper.getValuesRole(
+                UUID.randomUUID().toString(),//UI
+                "Мирный житель",//NAME
+                "Ничего не делает",//DESCRIPTION
+                "0",//TYPEVISIBILITY
+                "0"//TYPEROLE
+        );
+        dbHelper.insert(DBHelper.TABLEROLES, DBHelper.setContentValues(DBHelper.namesRoles, valuesForRole));
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Cursor c = db.query(DBHelper.TABLEROLES, null, null, null, null, null, null);
+        if (c.moveToFirst())
+        {
+            int idColIndex = c.getColumnIndex("id");
+            int nameColIndex = c.getColumnIndex(DBHelper.NAME);
+            do
+            {
+                Log.d("mafia_info",
+                        "ID = " + c.getInt(idColIndex) +
+                                ", name = " + c.getString(nameColIndex));
+            } while (c.moveToNext());
+        } else
+            Log.d("mafia_info", "0 rows");
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         //
-            initViews();
+        initViews();
             initAdvert(this);
             initDEBUGLog();
+            initDB();
         //
     }
     @Override
