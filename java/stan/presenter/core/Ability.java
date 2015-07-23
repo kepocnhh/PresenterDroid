@@ -1,24 +1,77 @@
 package stan.presenter.core;
 
+import android.content.res.Resources;
+
+import stan.presenter.mafia.R;
+
 public class Ability
         extends Mafia
 {
     public boolean try_stop = false;
 
-    public static class Kill
+    //__________________ACTIVE__________________//
+    public static class Active
             extends Ability
     {
-        public Kill()
+        public Active(String n)
         {
-            super("Убить");
-        }
-        @Override
-        public Player engage(Player p)
-        {
-            p.life = false;
-            return p;
+            super(n);
         }
     }
+        public static class Kill
+                extends Active
+        {
+            public Kill()
+            {
+                super(Resources.getSystem().getString(R.string.kill));
+            }
+            @Override
+            public Player engage(Player p)
+            {
+                p.life = false;
+                return p;
+            }
+        }
+        public static class Block
+                extends Active
+        {
+            public Block()
+            {
+                super(Resources.getSystem().getString(R.string.block));
+                try_stop = true;
+            }
+            @Override
+            public Player engage(Player p)
+            {
+                p.stop = true;
+                return p;
+            }
+        }
+
+    //__________________PASSIVE_________________//
+    public static class Passive
+            extends Ability
+    {
+        public Passive(String n)
+        {
+            super(n);
+        }
+    }
+        public static class ProtectSelf
+                extends Passive
+        {
+            public ProtectSelf()
+            {
+                super(Resources.getSystem().getString(R.string.protect_self));
+            }
+            @Override
+            public Player engage(Player p)
+            {
+                p.heal_night = true;
+                return p;
+            }
+        }
+
     public static class ProtectDay
             extends Ability
     {
