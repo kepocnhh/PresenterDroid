@@ -6,14 +6,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.Spinner;
-
-import com.google.analytics.tracking.android.EasyTracker;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,20 +28,6 @@ public class Day extends Activity
     private Date cur_date;
     Spinner plrs;
 
-    @Override
-    public void onStart()
-    {
-        super.onStart();
-        EasyTracker.getInstance(this).activityStart(this);
-//        say("track_start");
-    }
-    @Override
-    public void onStop()
-    {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
-//        say("track_stop");
-    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {

@@ -1,7 +1,6 @@
 package stan.presenter.mafia;
 
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -14,7 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.*;
-import com.google.analytics.tracking.android.EasyTracker;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -174,20 +172,6 @@ public class Main extends Activity
         super.onDestroy();
     }
 
-    @Override
-    public void onStart()
-    {
-        super.onStart();
-        EasyTracker.getInstance(this).activityStart(this);
-//        say("track_start");
-    }
-    @Override
-    public void onStop()
-    {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
-//        say("track_stop");
-    }
 
 
 

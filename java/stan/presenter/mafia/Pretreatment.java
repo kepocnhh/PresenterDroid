@@ -5,32 +5,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.view.animation.AnimationUtils;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
-
-import com.google.analytics.tracking.android.EasyTracker;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -76,21 +65,6 @@ public class Pretreatment
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         finish();
-    }
-
-    @Override
-    public void onStart()
-    {
-        super.onStart();
-        EasyTracker.getInstance(this).activityStart(this);
-//        say("track_start");
-    }
-    @Override
-    public void onStop()
-    {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
-//        say("track_stop");
     }
 
     //кнопка
