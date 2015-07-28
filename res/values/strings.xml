@@ -74,11 +74,17 @@
     <string name="city_wakesup">City wakes up</string>
 
     <!-- Ability -->
-    <string name="kill">Try kill</string>
+        <!-- Active -->
+            <!-- ChangeProperty -->
+                <string name="kill">Try kill</string>
+                <string name="block">Block action role</string>
+            <!-- NotifyTown -->
+    <string name="try_kill">Try kill</string>
+    <string name="try_stop">Try block</string>
+
     <string name="protect_self">Protect self</string>
     <string name="protect_day">Protect day</string>
     <string name="protect_night">Protect night</string>
-    <string name="block">Block action role</string>
     <string name="check">Check for belonging to the Mafia</string>
     <string name="in_response_to">In response to</string>
 

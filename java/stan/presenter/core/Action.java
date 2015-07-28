@@ -8,6 +8,11 @@ public class Action
     public int to;
     public int from;
     public boolean try_stop;
+    public void clear()
+    {
+        this.from = -1;
+        this.to = -1;
+    }
 
     public Player engage(Player p)
     {
