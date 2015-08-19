@@ -79,8 +79,16 @@
                 <string name="kill">Try kill</string>
                 <string name="block">Block action role</string>
             <!-- NotifyTown -->
-    <string name="try_kill">Try kill</string>
-    <string name="try_stop">Try block</string>
+                <string name="try_kill">Try kill</string>
+                <string name="try_stop">Try block</string>
+        <!-- Now -->
+            <!-- CheckProperty -->
+                <string name="check_role">Check role</string>
+        <!-- CheckTwoPlayers -->
+                <string name="check_command">Check command</string>
+        <!-- Passive -->
+            <!-- Selfie -->
+                <string name="self_medication">Self-medication</string>
 
     <string name="protect_self">Protect self</string>
     <string name="protect_day">Protect day</string>
