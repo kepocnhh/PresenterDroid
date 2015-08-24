@@ -1,5 +1,7 @@
 package stan.presenter.core;
 
+import stan.presenter.core.ability.Ability;
+
 public class Action
         extends Mafia
 {
@@ -16,13 +18,14 @@ public class Action
 
     public Player engage(Player p)
     {
+        //TODO remake engage method for new other actions
         if(abilities == null || abilities.length==0)
         {
             return p;
         }
         for(int i=0; i<abilities.length; i++)
         {
-            p = abilities[i].engage(p);
+//            p = abilities[i].engage(p);
         }
         return p;
     }
