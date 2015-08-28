@@ -4,6 +4,21 @@ public class Role
         extends Mafia
 {
     public Action[] act;//
+    public Action getCurrentAction()
+    {
+        if(act == null)
+        {
+            return null;
+        }
+        for(Action anAct : act)
+        {
+            if(anAct.from != -1)
+            {
+                return anAct;
+            }
+        }
+        return null;
+    }
     //
     public static enum TypeVisibility//тип видимости для ролей со способностью проверки
     {

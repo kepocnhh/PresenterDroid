@@ -7,24 +7,24 @@ public class Player
         extends Mafia
 {
     public Role role;
-    public Properties tries;
+    public Tries tries;
     public Properties prop;
     public boolean bot;//бот или нет
 
     public Player(String n)
     {
         super(n);
-        init(new Properties(), new Properties(), false);
+        init(false);
     }
     public Player(String n, boolean b)
     {
         super(n);
-        init(new Properties(), new Properties(), b);
+        init(b);
     }
-    private void init(Properties p, Properties t, boolean b)
+    private void init(boolean b)
     {
-        this.prop = p;
-        this.tries = t;
+        this.prop = new Properties();
+        this.tries = new Tries();
         this.bot = b;
         clear();
     }

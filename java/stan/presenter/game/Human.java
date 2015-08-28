@@ -1,4 +1,4 @@
-package stan.presenter.people;
+package stan.presenter.game;
 
 import java.util.Date;
 

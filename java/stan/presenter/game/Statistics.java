@@ -1,4 +1,4 @@
-package stan.presenter.people;
+package stan.presenter.game;
 
 import stan.presenter.core.Role;
 

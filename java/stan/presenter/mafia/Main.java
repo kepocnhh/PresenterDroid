@@ -141,7 +141,7 @@ public class Main extends Activity
         initViews();
             initAdvert(this);
             initDEBUGLog();
-            initDB();
+//            initDB();
         //
     }
     @Override
