@@ -16,6 +16,6 @@ public class TryKill
     @Override
     public boolean engage(Player p)
     {
-        return p.tries.life;
+        return p.tries.tryKill();
     }
 }

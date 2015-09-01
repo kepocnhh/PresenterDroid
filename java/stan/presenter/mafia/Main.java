@@ -252,4 +252,9 @@ public class Main extends Activity
     {
         Toast.makeText(Main.this, s, Toast.LENGTH_SHORT).show();
     }
+
+    public void constructor(View view)
+    {
+        startActivityForResult(new Intent(this, Constructor.class), 0);
+    }
 }

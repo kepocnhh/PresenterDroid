@@ -33,6 +33,17 @@ public class Tries
         clear();
     }
 
+    public boolean tryKill()
+    {
+        for(int i=0; i<leverages.size(); i++)
+        {
+            if(!leverages.get(i).how.life)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
     public boolean tryStop()
     {
         for(int i=0; i<leverages.size(); i++)

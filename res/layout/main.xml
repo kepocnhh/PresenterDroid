@@ -13,6 +13,12 @@
         android:onClick="butenter"
         android:text="@string/b_begin"/>
     <Button
+        android:id="@+id/constructor"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="constructor"
+        android:text="constructor"/>
+    <Button
         android:id="@+id/butprop"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
