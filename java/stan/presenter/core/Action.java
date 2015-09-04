@@ -1,15 +1,19 @@
 package stan.presenter.core;
 
+import java.util.List;
+
 import stan.presenter.core.ability.Ability;
+import stan.presenter.core.player.Player;
 
 public class Action
         extends Mafia
 {
     public Ability[] abilities;//
+    public String description;
     public boolean selfie;//возможность действовать на себя
     public int to;
     public int from;
-    public boolean try_stop;
+
     public void clear()
     {
         this.from = -1;
@@ -29,46 +33,39 @@ public class Action
         }
         return p;
     }
-    //
-    private void init(Ability[] abs, boolean ts, int t, int f, boolean s)
-    {
-        abilities = abs;
-        try_stop = ts;
-        to = t;
-        from = f;
-        selfie = s;
-    }
-    private void init(Ability[] abs, boolean ts, boolean s)
-    {
-        init(abs, ts, -1, -1, s);
-    }
-    private void init(Ability abs, boolean ts, int t, int f, boolean s)
-    {
-        abilities = new Ability[1];
-        abilities[0] = abs;
-        try_stop = ts;
-        to = t;
-        from = f;
-        selfie = s;
-    }
-    public Action(String n, Ability[] abs)
+
+    /**
+     *          for role without actions
+     * @param n name action
+     * @param d descriptions action
+     */
+    public Action(String n, String d)
     {
         super(n);
-        init(abs, false, false);
+        init(d, false, -1, -1, null);
     }
-    private Action(String n, Ability[] abs, boolean ts, int t, int f, boolean s)
+    public Action(String n, String d, boolean s, Ability[] abs)
     {
         super(n);
-        init(abs, ts, t, f, s);
+        init(d, s, -1, -1, abs);
     }
-    private Action(String n, Ability abs, boolean ts, int t, int f, boolean s)
+    private Action(String n, String d, boolean s, int t, int f, Ability[] abs)
     {
         super(n);
-        init(abs, ts, t, f, s);
+        init(d, s, t, f, abs);
     }
-    //
+
+    private void init(String d, boolean s, int t, int f, Ability[] abs)
+    {
+        this.description = d;
+        this.selfie = s;
+        this.to = t;
+        this.from = f;
+        this.description = d;
+        this.abilities = abs;
+    }
     public Action clone()
     {
-        return new Action(this.name, this.abilities, this.try_stop, this.to, this.from, this.selfie);
+        return new Action(this.name,this.description,this.selfie,this.to,this.from,this.abilities);
     }
 }

@@ -1,43 +1,67 @@
 package stan.presenter.mafia;
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-
-import stan.presenter.mafia.fragments.FragmentTransactionPattern;
+import stan.presenter.core.Action;
+import stan.presenter.core.Role;
+import stan.presenter.mafia.fragments.constructor.ConstructorAction;
 import stan.presenter.mafia.fragments.constructor.ConstructorMenu;
+import stan.presenter.mafia.fragments.constructor.ConstructorRole;
 
 public class Constructor
-        extends AppCompatActivity
-        implements ConstructorMenu.IConstructorMenuClick
+        extends MafiaActivity
+        implements ConstructorMenu.IConstructorMenuClick, ConstructorAction.IConstructorActionClick, ConstructorRole.IConstructorRoleClick
 {
     //__________FRAGMENTS
-    private FragmentTransactionPattern fTP;
     private ConstructorMenu constructorMenu;
+    private ConstructorRole constructorRole;
+    private ConstructorAction constructorAction;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
+    public Constructor()
     {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.constructor);
-        //
-        initFragments();
+        super(R.layout.constructor, R.id.constructorframe);
     }
 
+    @Override
     public void initFragments()
     {
-        fTP = new FragmentTransactionPattern(this, R.id.constructorframe);
         constructorMenu = new ConstructorMenu();
-        fTP.add(constructorMenu);
+        constructorRole = new ConstructorRole();
+        constructorAction = new ConstructorAction();
+        addFragment(constructorMenu);
+//        addFragmentWithTag(constructorMenu);
+    }
+
+    @Override
+    public void initViews()
+    {
+
     }
 
     @Override
     public void toRole()
     {
-
+        addFragmentWithTag(constructorRole);
     }
 
     @Override
     public void toAction()
+    {
+        addFragmentWithTag(constructorAction);
+    }
+
+    @Override
+    public void backFromConstructorMenu()
+    {
+        finish();
+    }
+
+    @Override
+    public void saveNewAction(Action r)
+    {
+
+    }
+
+    @Override
+    public void saveNewRole(Role r)
     {
 
     }

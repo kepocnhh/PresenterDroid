@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
+              android:background="@color/cwhite"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
     <ScrollView
@@ -29,6 +30,7 @@
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <EditText
+                    android:id="@+id/nameaction"
                     android:hint="name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
@@ -51,6 +53,7 @@
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <EditText
+                    android:id="@+id/descriptionaction"
                     android:hint="descr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
@@ -64,6 +67,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <CheckBox
+                    android:id="@+id/selfiecheck"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <TextView
@@ -89,10 +93,16 @@
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <Spinner
+                    android:id="@+id/listabilities"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 </Spinner>
             </LinearLayout>
+            <Button
+                android:id="@+id/constructoractionsave"
+                android:text="save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

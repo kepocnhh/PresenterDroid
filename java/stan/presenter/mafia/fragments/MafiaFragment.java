@@ -11,17 +11,24 @@ public abstract class MafiaFragment
         extends Fragment
 {
     protected View container;
+    private String fragmentTag;
+
+    public String getFragmentTag()
+    {
+        return this.fragmentTag;
+    }
 
     protected interface IMafiaFragmentClick
     {
     }
     protected IMafiaFragmentClick clickListener;
 
-    public MafiaFragment(int lay)
+    public MafiaFragment(int lay, String tag)
     {
         Bundle args = new Bundle();
         args.putInt("layout", lay);
         setArguments(args);
+        fragmentTag = tag;
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
