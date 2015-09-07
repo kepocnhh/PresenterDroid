@@ -17,6 +17,8 @@
     <color name="transparentblack">#55000000</color>
 
     <!-- Строки -->
+    <string name="mafia">Mafia</string>
+    <string name="peace">Peace</string>
     <!-- Текст по умолчанию -->
     <!-- Окна -->
     <string name="app_name">Presenter</string>

@@ -61,7 +61,6 @@ public class Action
         this.selfie = s;
         this.to = t;
         this.from = f;
-        this.description = d;
         this.abilities = abs;
     }
     public Action clone()

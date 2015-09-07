@@ -16,6 +16,6 @@ public class CheckCommand
     @Override
     public boolean engage(Player p1, Player p2)
     {
-        return p1.role.Get_TR().equals(p2.role.Get_TR());
+        return p1.role.getTypeRole().equals(p2.role.getTypeRole());
     }
 }

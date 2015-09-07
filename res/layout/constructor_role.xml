@@ -30,6 +30,7 @@
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <EditText
+                    android:id="@+id/nameRole"
                     android:hint="name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
@@ -52,6 +53,7 @@
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <EditText
+                    android:id="@+id/descrRole"
                     android:hint="descr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
@@ -78,10 +80,25 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
                     </LinearLayout>
-                    <Spinner
+                    <!--<Spinner-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content">-->
+                    <!--</Spinner>-->
+                    <RadioGroup
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-                    </Spinner>
+                        <RadioButton
+                            android:id="@+id/radioMafia"
+                            android:text="@string/mafia"
+                            android:checked="true"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                        <RadioButton
+                            android:id="@+id/radioPeace"
+                            android:text="@string/peace"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                    </RadioGroup>
                 </LinearLayout>
                 <LinearLayout
                     android:orientation="vertical"
@@ -102,8 +119,9 @@
                             android:layout_height="wrap_content"/>
                     </LinearLayout>
                     <Spinner
+                        android:id="@+id/spinTypeRole"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="match_parent">
                     </Spinner>
                 </LinearLayout>
             </LinearLayout>
@@ -125,6 +143,7 @@
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <Spinner
+                    android:id="@+id/spinActions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 </Spinner>

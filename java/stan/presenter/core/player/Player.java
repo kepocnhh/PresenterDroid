@@ -37,13 +37,13 @@ public class Player
         clear();
         if(role!=null)
         {
-            if(role.act!=null)
+            if(role.actions!=null)
             {
-                for(int i = 0; i < role.act.length; i++)
+                for(int i = 0; i < role.actions.length; i++)
                 {
-                    if(role.act[i]!=null)
+                    if(role.actions[i]!=null)
                     {
-                        role.act[i].clear();
+                        role.actions[i].clear();
                     }
                 }
             }
