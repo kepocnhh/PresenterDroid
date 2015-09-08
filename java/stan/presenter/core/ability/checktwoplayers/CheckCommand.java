@@ -16,6 +16,8 @@ public class CheckCommand
     @Override
     public boolean engage(Player p1, Player p2)
     {
-        return p1.role.getTypeRole().equals(p2.role.getTypeRole());
+        //TODO remake method because need create players command
+//        return p1.role.getTypeRole().equals(p2.role.getTypeRole());
+        return false;
     }
 }

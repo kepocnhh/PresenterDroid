@@ -1,16 +1,23 @@
 package stan.presenter.mafia.fragments.constructor;
 
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import stan.presenter.core.Action;
-import stan.presenter.core.Role;
+import stan.presenter.core.role.Command;
+import stan.presenter.core.role.Role;
 import stan.presenter.core.ability.Ability;
+import stan.presenter.core.role.typegrouprole.IndividualsGroup;
+import stan.presenter.core.role.typegrouprole.RangGroup;
+import stan.presenter.core.role.typegrouprole.TypeGroup;
 import stan.presenter.mafia.R;
 
 public class ConstructorRole
@@ -26,6 +33,10 @@ public class ConstructorRole
     private EditText nameRole;
     private EditText descriptionRole;
     private RadioButton mafiaRadio;
+    private Spinner typeGroup;
+    private CheckBox checkVisibleRang;
+
+    private int typeGroupPosition = 0;
 
     public ConstructorRole()
     {
@@ -39,6 +50,8 @@ public class ConstructorRole
         nameRole = (EditText) v.findViewById(R.id.nameRole);
         descriptionRole = (EditText) v.findViewById(R.id.descrRole);
         mafiaRadio = (RadioButton) v.findViewById(R.id.radioMafia);
+        checkVisibleRang = (CheckBox) v.findViewById(R.id.checkVisibleRang);
+        initTypeGroupSpinner((Spinner) v.findViewById(R.id.spinTypeGroupRole));
         v.findViewById(R.id.constructorrolesave).setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -49,6 +62,40 @@ public class ConstructorRole
                 {
                     ((IConstructorRoleClick) clickListener).saveNewRole(r);
                 }
+            }
+        });
+    }
+    private void initTypeGroupSpinner(Spinner s)
+    {
+        typeGroup = s;
+        String[] data = {getActivity().getResources().getString(R.string.individuals),
+                getActivity().getResources().getString(R.string.organized),
+                getActivity().getResources().getString(R.string.clan),
+                getActivity().getResources().getString(R.string.sect)};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.type_group_item, data);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        typeGroup.setAdapter(adapter);
+        typeGroup.setSelection(typeGroupPosition);
+
+        typeGroup.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                typeGroupPosition = position;
+                if(position < 2)
+                {
+                    checkVisibleRang.setVisibility(View.GONE);
+                } else
+                {
+                    checkVisibleRang.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+
             }
         });
     }
@@ -94,10 +141,30 @@ public class ConstructorRole
         }
         return tv;
     }
-    private Role.TypeRole getTypeRole()
+    private TypeGroup getTypeGroup()
     {
-        Role.TypeRole tr = null;
-        return tr;
+        TypeGroup tg = null;
+        if(typeGroupPosition == 0)
+        {
+            tg = new IndividualsGroup.Individuals();
+        }
+        else if(typeGroupPosition == 1)
+        {
+
+        }
+        else if(typeGroupPosition == 2)
+        {
+            tg = new RangGroup.Clan(checkVisibleRang.isChecked());
+        }
+        else if(typeGroupPosition == 3)
+        {
+
+        }
+        else
+        {
+
+        }
+        return tg;
     }
     private Action[] getActions()
     {
@@ -130,8 +197,8 @@ public class ConstructorRole
         {
             return null;
         }
-        Role.TypeRole tr = getTypeRole();
-        if(tv == null)
+        TypeGroup tg = getTypeGroup();
+        if(tg == null)
         {
             return null;
         }
@@ -140,7 +207,8 @@ public class ConstructorRole
         {
             return null;
         }
-        Role r = new Role(name, description, tv, tr, acts);
+        Command cmd = null;
+        Role r = new Role(name, description, tv, tg, cmd, acts);
         return null;
     }
 }

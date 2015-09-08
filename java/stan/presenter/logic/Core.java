@@ -3,7 +3,7 @@ package stan.presenter.logic;
 import java.util.List;
 
 import stan.presenter.core.player.Player;
-import stan.presenter.core.Role;
+import stan.presenter.core.role.Role;
 
 public class Core
 {

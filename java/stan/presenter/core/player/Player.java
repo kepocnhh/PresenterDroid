@@ -1,7 +1,7 @@
 package stan.presenter.core.player;
 
 import stan.presenter.core.Mafia;
-import stan.presenter.core.Role;
+import stan.presenter.core.role.Role;
 
 public class Player
         extends Mafia

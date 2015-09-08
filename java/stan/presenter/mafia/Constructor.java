@@ -1,7 +1,7 @@
 package stan.presenter.mafia;
 
 import stan.presenter.core.Action;
-import stan.presenter.core.Role;
+import stan.presenter.core.role.Role;
 import stan.presenter.mafia.fragments.constructor.ConstructorAction;
 import stan.presenter.mafia.fragments.constructor.ConstructorMenu;
 import stan.presenter.mafia.fragments.constructor.ConstructorRole;

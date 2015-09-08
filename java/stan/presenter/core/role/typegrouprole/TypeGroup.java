@@ -1,0 +1,17 @@
+package stan.presenter.core.role.typegrouprole;
+
+import stan.presenter.core.Mafia;
+
+public abstract class TypeGroup
+    extends Mafia
+{
+    boolean visible_in_group;
+    String description;
+
+    public TypeGroup(String n, String d, boolean vig)
+    {
+        super(n);
+        this.description = d;
+        this.visible_in_group = vig;
+    }
+}

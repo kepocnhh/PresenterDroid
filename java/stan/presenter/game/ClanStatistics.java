@@ -1,6 +1,6 @@
 package stan.presenter.game;
 
-import stan.presenter.core.Role;
+import stan.presenter.core.role.Role;
 
 public class ClanStatistics
 {
