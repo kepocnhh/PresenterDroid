@@ -6,7 +6,11 @@ public abstract class TypeGroup
     extends Mafia
 {
     boolean visible_in_group;
-    String description;
+    private String description;
+    public String getDescription()
+    {
+        return this.description;
+    }
 
     public TypeGroup(String n, String d, boolean vig)
     {

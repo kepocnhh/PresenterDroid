@@ -28,7 +28,13 @@
     <string name="organized_descr">знают друг другга в лицо и могут действовать сообща, каждый по своему</string>
     <string name="clan_descr">знают о существовании друг друга и понимают, кто есть их предводитель. И только он может действовать от лица всего клана</string>
     <string name="sect_descr">не знают о существовании друг друга, и даже о существовании предводителя. И только он может действовать в тайне от всех</string>
-    <!-- Текст по умолчанию -->
+    <!-- Constructor -->
+    <string name="constructor">Constructor</string>
+        <string name="constructor_role">Constructor role</string>
+            <string name="constructor_role_side">Change side</string>
+            <string name="constructor_role_typegroup">Change type group</string>
+            <string name="constructor_role_command">Change command</string>
+        <string name="constructor_actions">Constructor actions</string>
     <!-- Окна -->
     <string name="app_name">Presenter</string>
     <string name="pret">Pretreatment</string>

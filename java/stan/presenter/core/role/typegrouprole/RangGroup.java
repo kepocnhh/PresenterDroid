@@ -23,8 +23,11 @@ public abstract class RangGroup
     {
         public Clan(boolean vr)
         {
-            super(Resources.getSystem().getString(R.string.clan),
-                    Resources.getSystem().getString(R.string.clan_descr),
+//            super(Resources.getSystem().getString(R.string.clan),
+//                    Resources.getSystem().getString(R.string.clan_descr),
+//                    true, false, vr);
+            super("Клан во главе с боссом",
+                    "знают о существовании друг друга и понимают, кто есть их предводитель. И только он может действовать от лица всего клана",
                     true, false, vr);
         }
     }

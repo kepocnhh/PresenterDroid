@@ -22,6 +22,8 @@ import java.util.Date;
 import java.util.UUID;
 
 import stan.db.DBHelper;
+import stan.presenter.core.ability.Ability;
+import stan.presenter.core.ability.active.changeproperty.Kill;
 
 
 public class Main extends Activity
@@ -141,6 +143,9 @@ public class Main extends Activity
         initViews();
             initAdvert(this);
             initDEBUGLog();
+        //
+//        Ability a = new Kill();
+        //
 //            initDB();
         //
     }
