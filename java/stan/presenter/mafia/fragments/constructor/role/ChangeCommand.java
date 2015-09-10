@@ -25,7 +25,7 @@ public class ChangeCommand
 
     public ChangeCommand()
     {
-        super(R.layout.constructor_role_command, "constructor_role_command");
+        super(R.layout.constructor_role_command, R.string.ChangeCommand);
         command = new Command("Город");
     }
 

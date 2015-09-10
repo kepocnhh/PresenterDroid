@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import stan.presenter.core.role.Command;
 import stan.presenter.core.role.typegrouprole.TypeGroup;
-import stan.presenter.mafia.MafiaActivity;
+import stan.presenter.mafia.activities.MafiaActivity;
 import stan.presenter.mafia.R;
 import stan.presenter.mafia.fragments.MafiaFragment;
 import stan.presenter.mafia.fragments.constructor.role.ChangeCommand;
@@ -19,7 +19,7 @@ import stan.presenter.mafia.fragments.transaction.FragmentTransactionPattern;
 
 public class ConstructorRole
         extends MafiaActivity
-    implements ChangeSide.IChangeSideClick, ChangeTypeGroup.IChangeTypeGroupClick, ChangeCommand.IChangeCommandClick
+        implements ChangeSide.IChangeSideClick, ChangeTypeGroup.IChangeTypeGroupClick, ChangeCommand.IChangeCommandClick
 {
     //__________FRAGMENTS
     private ChangeSide constructorChangeSide;
@@ -46,6 +46,25 @@ public class ConstructorRole
     @Override
     public void onBackPressed()
     {
+        stateChange((MafiaFragment) getConstructorTransaction().getCurrentFragment());
+        //        String tag = ((MafiaFragment)getConstructorTransaction().getCurrentFragment()).getFragmentTag();
+        //        if(tag == null)
+        //        {
+        //            super.onBackPressed();
+        //            return;
+        //        }
+        //        if(tag.equals(ChangeSide.getFragmentTag()))
+        //        {
+        //
+        //        }
+        //        else if(tag.equals(ChangeTypeGroup.getFragmentTag()))
+        //        {
+        //
+        //        }
+        //        else if(tag.equals(ChangeCommand.getFragmentTag()))
+        //        {
+        //
+        //        }
         super.onBackPressed();
     }
 
@@ -56,6 +75,7 @@ public class ConstructorRole
         constructorChangeTypeGroup = new ChangeTypeGroup();
         constructorChangeCommand = new ChangeCommand();
         addFragment(constructorChangeSide);
+        stateChange(constructorChangeSide);
     }
 
     @Override
@@ -64,10 +84,10 @@ public class ConstructorRole
         lableConstructor = (TextView) findViewById(R.id.lableConstructor);
         lableConstructor.setText(R.string.constructor);
         constructorWhyText = (TextView) findViewById(R.id.constructorWhyText);
-//        constructorWhyText.setVisibility(View.GONE);
+        //        constructorWhyText.setVisibility(View.GONE);
         constructorNext = (Button) findViewById(R.id.constructorNext);
-//        constructorFooter = (LinearLayout) findViewById(R.id.constructorFooter);
-//        constructorFooter.setVisibility(View.GONE);
+        //        constructorFooter = (LinearLayout) findViewById(R.id.constructorFooter);
+        //        constructorFooter.setVisibility(View.GONE);
     }
 
     @Override
@@ -79,14 +99,12 @@ public class ConstructorRole
     @Override
     public void sideNext(boolean peace_side)
     {
-        lableConstructor.setText(R.string.constructor_role_typegroup);
         addFragmentWithHideTag(constructorChangeTypeGroup);
     }
 
     @Override
     public void typeGroupNext(TypeGroup tg)
     {
-        lableConstructor.setText(R.string.constructor_role_command);
         addFragmentWithHideTag(constructorChangeCommand);
     }
 
@@ -95,12 +113,48 @@ public class ConstructorRole
     {
     }
 
-    public void addFragmentWithHideTag(Fragment f, String tag)
+    private void addFragmentWithHideTag(Fragment f, String tag)
     {
-        ((ConstructorTransaction)getFragmentTransaction()).addHideTag(f, tag);
+        getConstructorTransaction().addHideTag(f, tag);
     }
-    public void addFragmentWithHideTag(MafiaFragment f)
+
+    private void addFragmentWithHideTag(MafiaFragment f)
     {
         addFragmentWithHideTag(f, f.getFragmentTag());
+        stateChange(f);
+    }
+
+    private ConstructorTransaction getConstructorTransaction()
+    {
+        return ((ConstructorTransaction) getFragmentTransaction());
+    }
+
+    private void stateChange(MafiaFragment mf)
+    {
+        if(mf instanceof ChangeSide)
+        {
+            lableConstructor.setText(R.string.constructor_role_side);
+        } else if(mf instanceof ChangeTypeGroup)
+        {
+            lableConstructor.setText(R.string.constructor_role_typegroup);
+        } else if(mf instanceof ChangeCommand)
+        {
+            lableConstructor.setText(R.string.constructor_role_command);
+        } else
+        {
+        }
+
+        //        if(mf.equals(constructorChangeSide))
+        //        {
+        //            lableConstructor.setText(R.string.constructor_role_side);
+        //        }
+        //        else if(mf.equals(constructorChangeTypeGroup))
+        //        {
+        //            lableConstructor.setText(R.string.constructor_role_typegroup);
+        //        }
+        //        else if(mf.equals(constructorChangeCommand))
+        //        {
+        //            lableConstructor.setText(R.string.constructor_role_command);
+        //        }
     }
 }

@@ -113,5 +113,16 @@
     <string name="check">Check for belonging to the Mafia</string>
     <string name="in_response_to">In response to</string>
 
+    <!-- Fragment tags-->
+    <!-- Constructor-->
+    <!-- ConstructorMenu-->
+    <string name="ConstructorMenu">constructor_menu</string>
+    <string name="ConstructorAction">constructor_action</string>
+    <string name="ConstructorRoleList">constructor_role_list</string>
+    <!-- ConstructorRole-->
+    <string name="ChangeSide">constructor_role_side</string>
+    <string name="ChangeTypeGroup">constructor_role_typegroup</string>
+    <string name="ChangeCommand">constructor_role_command</string>
+
 
 </resources>

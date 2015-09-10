@@ -1,8 +1,9 @@
-package stan.presenter.mafia.fragments.constructor;
+package stan.presenter.mafia.fragments.constructor.menu;
 
 import android.view.View;
 
 import stan.presenter.mafia.R;
+import stan.presenter.mafia.fragments.constructor.ConstructorMenuFragment;
 
 public class ConstructorMenu
     extends ConstructorMenuFragment
@@ -16,7 +17,7 @@ public class ConstructorMenu
 
     public ConstructorMenu()
     {
-        super(R.layout.constructor_menu, "constructor_menu");
+        super(R.layout.constructor_menu, R.string.ConstructorMenu);
     }
 
     @Override

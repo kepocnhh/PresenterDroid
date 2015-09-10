@@ -4,11 +4,11 @@ import android.content.Intent;
 import android.widget.TextView;
 
 import stan.presenter.core.Action;
-import stan.presenter.mafia.MafiaActivity;
+import stan.presenter.mafia.activities.MafiaActivity;
 import stan.presenter.mafia.R;
-import stan.presenter.mafia.fragments.constructor.ConstructorAction;
-import stan.presenter.mafia.fragments.constructor.ConstructorMenu;
-import stan.presenter.mafia.fragments.constructor.ConstructorRoleList;
+import stan.presenter.mafia.fragments.constructor.menu.ConstructorAction;
+import stan.presenter.mafia.fragments.constructor.menu.ConstructorMenu;
+import stan.presenter.mafia.fragments.constructor.menu.ConstructorRoleList;
 
 public class Constructor
         extends MafiaActivity

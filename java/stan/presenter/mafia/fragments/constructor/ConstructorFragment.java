@@ -32,7 +32,7 @@ public abstract class ConstructorFragment
         setViewNext();
     }
 
-    public ConstructorFragment(int lay, String tag)
+    public ConstructorFragment(int lay, int tag)
     {
         super(lay, tag);
         nextClickListener = setNextClickListener();

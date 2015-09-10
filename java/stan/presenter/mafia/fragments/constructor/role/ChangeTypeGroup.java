@@ -31,7 +31,7 @@ public class ChangeTypeGroup
 
     public ChangeTypeGroup()
     {
-        super(R.layout.constructor_role_typegroup, "constructor_role_typegroup");
+        super(R.layout.constructor_role_typegroup, R.string.ChangeTypeGroup);
         typeGroup = new IndividualsGroup.Individuals();
     }
 

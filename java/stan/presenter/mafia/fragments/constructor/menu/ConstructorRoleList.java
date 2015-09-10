@@ -1,4 +1,4 @@
-package stan.presenter.mafia.fragments.constructor;
+package stan.presenter.mafia.fragments.constructor.menu;
 
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +13,7 @@ import stan.presenter.core.role.typegrouprole.RangGroup;
 import stan.presenter.mafia.R;
 import stan.presenter.mafia.adapters.constructor.ConstructorRoleListAdapter;
 import stan.presenter.mafia.fragments.constructor.ConstructorFragment;
+import stan.presenter.mafia.fragments.constructor.ConstructorMenuFragment;
 
 public class ConstructorRoleList
         extends ConstructorMenuFragment
@@ -31,7 +32,7 @@ public class ConstructorRoleList
 
     public ConstructorRoleList()
     {
-        super(R.layout.constructor_role_list, "constructor_role_list");
+        super(R.layout.constructor_role_list, R.string.ConstructorRoleList);
     }
 
     @Override

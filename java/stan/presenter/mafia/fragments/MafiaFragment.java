@@ -12,10 +12,11 @@ public abstract class MafiaFragment
 {
     protected View container;
     private String fragmentTag;
+    private int fragmentTagId;
 
     public String getFragmentTag()
     {
-        return this.fragmentTag;
+        return fragmentTag;
     }
 
     protected interface IMafiaFragmentClick
@@ -23,12 +24,19 @@ public abstract class MafiaFragment
     }
     protected IMafiaFragmentClick clickListener;
 
-    public MafiaFragment(int lay, String tag)
+//    public MafiaFragment(int lay, String tag)
+//    {
+//        Bundle args = new Bundle();
+//        args.putInt("layout", lay);
+//        setArguments(args);
+//        fragmentTag = tag;
+//    }
+    public MafiaFragment(int lay, int id)
     {
         Bundle args = new Bundle();
         args.putInt("layout", lay);
         setArguments(args);
-        fragmentTag = tag;
+        fragmentTagId = id;
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -42,6 +50,7 @@ public abstract class MafiaFragment
     {
         super.onAttach(activity);
         clickListener = (IMafiaFragmentClick) activity;
+        fragmentTag = getActivity().getResources().getString(fragmentTagId);
     }
 
     public void setVisibility(boolean visibility)

@@ -22,7 +22,7 @@ public class ConstructorTransaction
         });
     }
 
-    private Fragment getCurrentFragment()
+    public Fragment getCurrentFragment()
     {
         return fragmentManager.getFragments().get(fragmentManager.getBackStackEntryCount());
     }

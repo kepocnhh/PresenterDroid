@@ -18,7 +18,7 @@ public abstract class ConstructorMenuFragment
         super.findViews(v);
     }
 
-    public ConstructorMenuFragment(int lay, String tag)
+    public ConstructorMenuFragment(int lay, int tag)
     {
         super(lay, tag);
     }

@@ -1,4 +1,4 @@
-package stan.presenter.mafia;
+package stan.presenter.mafia.activities;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -27,8 +27,8 @@ public abstract class MafiaActivity
         super.onCreate(savedInstanceState);
         setContentView(contentView);
         fTP = setFragmentTransactionPattern();
-        initFragments();
         initViews();
+        initFragments();
     }
 
     protected int getFrameView()

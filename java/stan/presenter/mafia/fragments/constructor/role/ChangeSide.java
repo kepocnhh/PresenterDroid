@@ -25,7 +25,7 @@ public class ChangeSide
 
     public ChangeSide()
     {
-        super(R.layout.constructor_role_side, "constructor_role_side");
+        super(R.layout.constructor_role_side, R.string.ChangeSide);
     }
 
     @Override
