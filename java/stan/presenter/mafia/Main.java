@@ -22,8 +22,7 @@ import java.util.Date;
 import java.util.UUID;
 
 import stan.db.DBHelper;
-import stan.presenter.core.ability.Ability;
-import stan.presenter.core.ability.active.changeproperty.Kill;
+import stan.presenter.mafia.activities.constructor.Constructor;
 
 
 public class Main extends Activity

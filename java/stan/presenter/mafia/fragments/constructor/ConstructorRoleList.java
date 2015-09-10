@@ -1,4 +1,4 @@
-package stan.presenter.mafia.fragments.constructor.role;
+package stan.presenter.mafia.fragments.constructor;
 
 import android.view.View;
 import android.widget.Button;
@@ -14,7 +14,7 @@ import stan.presenter.mafia.R;
 import stan.presenter.mafia.adapters.constructor.ConstructorRoleListAdapter;
 import stan.presenter.mafia.fragments.constructor.ConstructorFragment;
 
-public class ConstructorRole
+public class ConstructorRoleList
         extends ConstructorFragment
 {
     public interface IConstructorRoleClick
@@ -29,9 +29,9 @@ public class ConstructorRole
 
     private ConstructorRoleListAdapter adapter;
 
-    public ConstructorRole()
+    public ConstructorRoleList()
     {
-        super(R.layout.constructor_role, "constructorrole");
+        super(R.layout.constructor_role_list, "constructor_role_list");
     }
 
     @Override

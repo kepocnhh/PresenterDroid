@@ -12,12 +12,11 @@ public class ConstructorMenu
     {
         void toRole();
         void toAction();
-        void backFromConstructorMenu();
     }
 
     public ConstructorMenu()
     {
-        super(R.layout.constructor_menu, "constructormenu");
+        super(R.layout.constructor_menu, "constructor_menu");
     }
 
     @Override
@@ -38,14 +37,6 @@ public class ConstructorMenu
             public void onClick(View v)
             {
                 ((IConstructorMenuClick) clickListener).toAction();
-            }
-        });
-        v.findViewById(R.id.constructormenuback).setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                ((IConstructorMenuClick) clickListener).backFromConstructorMenu();
             }
         });
     }

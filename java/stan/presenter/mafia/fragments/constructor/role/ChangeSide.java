@@ -11,10 +11,8 @@ public class ChangeSide
         extends ConstructorFragment
 {
     public interface IChangeSideClick
-            extends IMafiaFragmentClick
+            extends IConstructorClick
     {
-        void peaceSide();
-        void mafiaSide();
         void sideNext(boolean peace_side);
     }
 
@@ -22,7 +20,6 @@ public class ChangeSide
     private Button peaceSide;
     private Button mafiaSide;
     private TextView constructorWhatText;
-    private Button constructorNext;
 
     private boolean peace_side = true;
 
@@ -42,7 +39,6 @@ public class ChangeSide
             public void onClick(View v)
             {
                 peaceSide();
-                ((IChangeSideClick) clickListener).peaceSide();
             }
         });
         mafiaSide = (Button) v.findViewById(R.id.mafiaSide);
@@ -52,12 +48,10 @@ public class ChangeSide
             public void onClick(View v)
             {
                 mafiaSide();
-                ((IChangeSideClick) clickListener).mafiaSide();
             }
         });
         constructorWhatText = (TextView) v.findViewById(R.id.constructorWhatText);
-        constructorNext = (Button) v.findViewById(R.id.constructorNext);
-        constructorNext.setOnClickListener(new View.OnClickListener()
+        ((IChangeSideClick) clickListener).getViewNext().setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)

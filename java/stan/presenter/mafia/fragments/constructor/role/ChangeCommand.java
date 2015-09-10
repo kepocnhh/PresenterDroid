@@ -12,7 +12,7 @@ public class ChangeCommand
         extends ConstructorFragment
 {
     public interface IChangeCommandClick
-            extends IMafiaFragmentClick
+            extends IConstructorClick
     {
         void commandNext(Command command);
     }
@@ -34,13 +34,14 @@ public class ChangeCommand
     {
         super.findViews(v);
         constructorNext = (Button) v.findViewById(R.id.constructorNext);
-        constructorNext.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                ((IChangeCommandClick) clickListener).commandNext(command);
-            }
-        });
+        ((IChangeCommandClick) clickListener).getViewNext().setOnClickListener(
+                new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        ((IChangeCommandClick) clickListener).commandNext(command);
+                    }
+                });
     }
 }

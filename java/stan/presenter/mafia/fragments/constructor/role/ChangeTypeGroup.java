@@ -13,7 +13,7 @@ public class ChangeTypeGroup
         extends ConstructorFragment
 {
     public interface IChangeTypeGroupClick
-            extends IMafiaFragmentClick
+            extends IConstructorClick
     {
         void typeGroupNext(TypeGroup tg);
     }
@@ -25,7 +25,6 @@ public class ChangeTypeGroup
     private Button sect;
     private TextView constructorWhatText;
     private TextView constructorWhatDescription;
-    private Button constructorNext;
 
     private TypeGroup typeGroup;
 
@@ -50,12 +49,9 @@ public class ChangeTypeGroup
         });
         constructorWhatText = (TextView) v.findViewById(R.id.constructorWhatText);
         constructorWhatDescription = (TextView) v.findViewById(R.id.constructorWhatDescription);
-        constructorNext = (Button) v.findViewById(R.id.constructorNext);
-        constructorNext.setOnClickListener(new View.OnClickListener()
-        {
+        ((IChangeTypeGroupClick) clickListener).getViewNext().setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 ((IChangeTypeGroupClick) clickListener).typeGroupNext(typeGroup);
             }
         });

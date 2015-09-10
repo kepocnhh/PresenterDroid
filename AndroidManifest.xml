@@ -23,7 +23,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Constructor"
+            android:name=".activities.constructor.Constructor"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
+        <activity
+            android:name=".activities.constructor.ConstructorRole"
             android:windowSoftInputMode="adjustPan">
         </activity>
         <activity

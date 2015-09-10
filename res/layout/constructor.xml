@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
+    android:background="@color/cnewgreen"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
     <LinearLayout
@@ -8,6 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button
+            android:id="@+id/constructorBack"
+            android:text="back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
@@ -18,6 +21,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <Button
+            android:id="@+id/constructorCancel"
+            android:text="cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </LinearLayout>
@@ -30,11 +35,17 @@
         android:id="@+id/constructorframe"
         android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp">
     </FrameLayout>
     <LinearLayout
+        android:id="@+id/constructorFooter"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/constructorNext"
+            android:text="next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 </LinearLayout>
