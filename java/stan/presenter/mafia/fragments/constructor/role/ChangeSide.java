@@ -51,14 +51,19 @@ public class ChangeSide
             }
         });
         constructorWhatText = (TextView) v.findViewById(R.id.constructorWhatText);
-        ((IChangeSideClick) clickListener).getViewNext().setOnClickListener(new View.OnClickListener()
+    }
+
+    @Override
+    protected View.OnClickListener setNextClickListener()
+    {
+        return new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
                 ((IChangeSideClick) clickListener).sideNext(peace_side);
             }
-        });
+        };
     }
 
     private void peaceSide()
@@ -66,6 +71,7 @@ public class ChangeSide
         peace_side = true;
         constructorWhatText.setText(R.string.peace);
     }
+
     private void mafiaSide()
     {
         peace_side = false;

@@ -1,4 +1,4 @@
-package stan.presenter.mafia.fragments;
+package stan.presenter.mafia.fragments.transaction;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -20,10 +20,7 @@ public class FragmentTransactionPattern
     {
         fragmentManager.beginTransaction().add(this.ID, f).commit();
     }
-//    public void add(Fragment f)
-//    {
-//        add(f, this.ID);
-//    }
+
     public void add(Fragment f, int id)
     {
         if(fragmentManager.findFragmentById(id) == null)
@@ -35,6 +32,14 @@ public class FragmentTransactionPattern
     {
         fragmentManager.beginTransaction().
                 add( this.ID, f).
+                addToBackStack(tag).
+                commit();
+    }
+    public void add(Fragment oldF, Fragment newF, String tag)
+    {
+        fragmentManager.beginTransaction().
+                add(this.ID, newF).
+                hide(oldF).
                 addToBackStack(tag).
                 commit();
     }

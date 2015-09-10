@@ -15,7 +15,7 @@ import stan.presenter.mafia.adapters.constructor.ConstructorRoleListAdapter;
 import stan.presenter.mafia.fragments.constructor.ConstructorFragment;
 
 public class ConstructorRoleList
-        extends ConstructorFragment
+        extends ConstructorMenuFragment
 {
     public interface IConstructorRoleClick
             extends IMafiaFragmentClick

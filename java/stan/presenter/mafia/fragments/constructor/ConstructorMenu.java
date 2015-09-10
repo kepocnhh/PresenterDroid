@@ -5,7 +5,7 @@ import android.view.View;
 import stan.presenter.mafia.R;
 
 public class ConstructorMenu
-    extends ConstructorFragment
+    extends ConstructorMenuFragment
 {
     public interface IConstructorMenuClick
             extends IMafiaFragmentClick

@@ -1,5 +1,6 @@
 package stan.presenter.mafia.activities.constructor;
 
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -9,9 +10,12 @@ import stan.presenter.core.role.Command;
 import stan.presenter.core.role.typegrouprole.TypeGroup;
 import stan.presenter.mafia.MafiaActivity;
 import stan.presenter.mafia.R;
+import stan.presenter.mafia.fragments.MafiaFragment;
 import stan.presenter.mafia.fragments.constructor.role.ChangeCommand;
 import stan.presenter.mafia.fragments.constructor.role.ChangeSide;
 import stan.presenter.mafia.fragments.constructor.role.ChangeTypeGroup;
+import stan.presenter.mafia.fragments.transaction.ConstructorTransaction;
+import stan.presenter.mafia.fragments.transaction.FragmentTransactionPattern;
 
 public class ConstructorRole
         extends MafiaActivity
@@ -31,6 +35,12 @@ public class ConstructorRole
     public ConstructorRole()
     {
         super(R.layout.constructor, R.id.constructorframe);
+    }
+
+    @Override
+    protected FragmentTransactionPattern setFragmentTransactionPattern()
+    {
+        return new ConstructorTransaction(this, getFrameView());
     }
 
     @Override
@@ -61,28 +71,36 @@ public class ConstructorRole
     }
 
     @Override
-    public void commandNext(Command command)
+    public View getViewNext()
     {
-
+        return constructorNext;
     }
 
     @Override
     public void sideNext(boolean peace_side)
     {
         lableConstructor.setText(R.string.constructor_role_typegroup);
-        addFragmentWithTag(constructorChangeTypeGroup);
+        addFragmentWithHideTag(constructorChangeTypeGroup);
     }
 
     @Override
     public void typeGroupNext(TypeGroup tg)
     {
         lableConstructor.setText(R.string.constructor_role_command);
-        addFragmentWithTag(constructorChangeCommand);
+        addFragmentWithHideTag(constructorChangeCommand);
     }
 
     @Override
-    public View getViewNext()
+    public void commandNext(Command command)
     {
-        return constructorNext;
+    }
+
+    public void addFragmentWithHideTag(Fragment f, String tag)
+    {
+        ((ConstructorTransaction)getFragmentTransaction()).addHideTag(f, tag);
+    }
+    public void addFragmentWithHideTag(MafiaFragment f)
+    {
+        addFragmentWithHideTag(f, f.getFragmentTag());
     }
 }

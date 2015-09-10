@@ -34,14 +34,18 @@ public class ChangeCommand
     {
         super.findViews(v);
         constructorNext = (Button) v.findViewById(R.id.constructorNext);
-        ((IChangeCommandClick) clickListener).getViewNext().setOnClickListener(
-                new View.OnClickListener()
-                {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        ((IChangeCommandClick) clickListener).commandNext(command);
-                    }
-                });
+    }
+
+    @Override
+    protected View.OnClickListener setNextClickListener()
+    {
+        return new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                ((IChangeCommandClick) clickListener).commandNext(command);
+            }
+        };
     }
 }

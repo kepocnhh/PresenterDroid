@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
-import stan.presenter.mafia.fragments.FragmentTransactionPattern;
+import stan.presenter.mafia.fragments.transaction.FragmentTransactionPattern;
 import stan.presenter.mafia.fragments.MafiaFragment;
 
 public abstract class MafiaActivity
@@ -12,6 +12,7 @@ public abstract class MafiaActivity
 {
     //__________FRAGMENTS
     private FragmentTransactionPattern fTP;
+
     private int contentView;
     private int frameView;
 
@@ -25,10 +26,23 @@ public abstract class MafiaActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(contentView);
-        fTP = new FragmentTransactionPattern(this, frameView);
-        //
+        fTP = setFragmentTransactionPattern();
         initFragments();
         initViews();
+    }
+
+    protected int getFrameView()
+    {
+        return frameView;
+    }
+    protected FragmentTransactionPattern getFragmentTransaction()
+    {
+        return fTP;
+    }
+
+    protected FragmentTransactionPattern setFragmentTransactionPattern()
+    {
+        return new FragmentTransactionPattern(this, getFrameView());
     }
 
     private void initActivity(int content, int frame)

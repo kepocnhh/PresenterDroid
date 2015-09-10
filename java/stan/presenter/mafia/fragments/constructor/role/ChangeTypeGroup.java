@@ -12,6 +12,7 @@ import stan.presenter.mafia.fragments.constructor.ConstructorFragment;
 public class ChangeTypeGroup
         extends ConstructorFragment
 {
+
     public interface IChangeTypeGroupClick
             extends IConstructorClick
     {
@@ -49,12 +50,17 @@ public class ChangeTypeGroup
         });
         constructorWhatText = (TextView) v.findViewById(R.id.constructorWhatText);
         constructorWhatDescription = (TextView) v.findViewById(R.id.constructorWhatDescription);
-        ((IChangeTypeGroupClick) clickListener).getViewNext().setOnClickListener(new View.OnClickListener() {
+    }
+
+    @Override
+    protected View.OnClickListener setNextClickListener()
+    {
+        return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((IChangeTypeGroupClick) clickListener).typeGroupNext(typeGroup);
             }
-        });
+        };
     }
 
     private void individuals()

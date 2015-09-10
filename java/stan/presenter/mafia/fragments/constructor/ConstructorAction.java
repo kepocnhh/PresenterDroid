@@ -13,7 +13,7 @@ import stan.presenter.core.ability.Ability;
 import stan.presenter.mafia.R;
 
 public class ConstructorAction
-        extends ConstructorFragment
+        extends ConstructorMenuFragment
 {
     public interface IConstructorActionClick
             extends IMafiaFragmentClick
