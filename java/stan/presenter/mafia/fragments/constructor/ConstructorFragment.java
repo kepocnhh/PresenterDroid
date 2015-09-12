@@ -11,6 +11,7 @@ public abstract class ConstructorFragment
             extends IMafiaFragmentClick
     {
         View getViewNext();
+        void back(ConstructorFragment from);
     }
 
     protected View.OnClickListener nextClickListener;
@@ -22,6 +23,7 @@ public abstract class ConstructorFragment
         if(!hidden)
         {
             setViewNext();
+            back();
         }
     }
 
@@ -46,6 +48,10 @@ public abstract class ConstructorFragment
     private void getNextClickListener()
     {
         nextClickListener = setNextClickListener();
+    }
+    private void back()
+    {
+        ((IConstructorClick) clickListener).back(this);
     }
 
     protected abstract View.OnClickListener setNextClickListener();

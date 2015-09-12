@@ -11,6 +11,7 @@ import stan.presenter.core.role.typegrouprole.TypeGroup;
 import stan.presenter.mafia.activities.MafiaActivity;
 import stan.presenter.mafia.R;
 import stan.presenter.mafia.fragments.MafiaFragment;
+import stan.presenter.mafia.fragments.constructor.ConstructorFragment;
 import stan.presenter.mafia.fragments.constructor.role.ChangeCommand;
 import stan.presenter.mafia.fragments.constructor.role.ChangeSide;
 import stan.presenter.mafia.fragments.constructor.role.ChangeTypeGroup;
@@ -30,6 +31,8 @@ public class ConstructorRole
     private TextView lableConstructor;
     private TextView constructorWhyText;
     private Button constructorNext;
+    private Button constructorBack;
+    private Button constructorCancel;
     private LinearLayout constructorFooter;
 
     public ConstructorRole()
@@ -46,7 +49,8 @@ public class ConstructorRole
     @Override
     public void onBackPressed()
     {
-        stateChange((MafiaFragment) getConstructorTransaction().getCurrentFragment());
+//        stateChange((MafiaFragment) getConstructorTransaction().getCurrentFragment());
+        //
         //        String tag = ((MafiaFragment)getConstructorTransaction().getCurrentFragment()).getFragmentTag();
         //        if(tag == null)
         //        {
@@ -88,12 +92,20 @@ public class ConstructorRole
         constructorNext = (Button) findViewById(R.id.constructorNext);
         //        constructorFooter = (LinearLayout) findViewById(R.id.constructorFooter);
         //        constructorFooter.setVisibility(View.GONE);
+        constructorBack = (Button) findViewById(R.id.constructorBack);
+        constructorCancel = (Button) findViewById(R.id.constructorCancel);
     }
 
     @Override
     public View getViewNext()
     {
         return constructorNext;
+    }
+
+    @Override
+    public void back(ConstructorFragment from)
+    {
+        stateChange(from);
     }
 
     @Override
@@ -156,5 +168,15 @@ public class ConstructorRole
         //        {
         //            lableConstructor.setText(R.string.constructor_role_command);
         //        }
+    }
+
+    public void constructorBack(View view)
+    {
+        onBackPressed();
+    }
+
+    public void constructorCancel(View view)
+    {
+        finish();
     }
 }

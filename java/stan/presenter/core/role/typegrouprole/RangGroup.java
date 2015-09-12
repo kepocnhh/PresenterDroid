@@ -1,19 +1,18 @@
 package stan.presenter.core.role.typegrouprole;
 
-import android.content.res.Resources;
-
-import stan.presenter.mafia.R;
-
 public abstract class RangGroup
     extends TypeGroup
 {
+    static public final String CLAN_TAG = "clan";
+    static public final String SECT_TAG = "sect";
+    //
     int rang;
     boolean rangShot;
     boolean visibleRang;
 
-    public RangGroup(String n, String d, boolean vig, boolean rs, boolean vr)
+    public RangGroup(String n, String d, String t, boolean vig, boolean rs, boolean vr)
     {
-        super(n, d, vig);
+        super(n, d, t, vig);
         this.rangShot = rs;
         this.visibleRang = vr;
     }
@@ -21,14 +20,9 @@ public abstract class RangGroup
     public static class Clan
             extends RangGroup
     {
-        public Clan(boolean vr)
+        public Clan(String n, String d, boolean vr)
         {
-//            super(Resources.getSystem().getString(R.string.clan),
-//                    Resources.getSystem().getString(R.string.clan_descr),
-//                    true, false, vr);
-            super("Клан во главе с боссом",
-                    "знают о существовании друг друга и понимают, кто есть их предводитель. И только он может действовать от лица всего клана",
-                    true, false, vr);
+            super(n, d, CLAN_TAG, true, false, vr);
         }
     }
 

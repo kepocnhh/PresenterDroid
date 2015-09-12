@@ -32,7 +32,7 @@ public class ChangeTypeGroup
     public ChangeTypeGroup()
     {
         super(R.layout.constructor_role_typegroup, R.string.ChangeTypeGroup);
-        typeGroup = new IndividualsGroup.Individuals();
+        typeGroup = new IndividualsGroup.Individuals("","");
     }
 
     @Override
@@ -65,7 +65,7 @@ public class ChangeTypeGroup
 
     private void individuals()
     {
-        typeGroup = new IndividualsGroup.Individuals();
+        typeGroup = new IndividualsGroup.Individuals("","");
         constructorWhatText.setText(typeGroup.name);
         constructorWhatDescription.setText(typeGroup.getDescription());
     }

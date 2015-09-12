@@ -1,26 +1,22 @@
 package stan.presenter.core.role.typegrouprole;
 
-import android.content.res.Resources;
-
-import stan.presenter.mafia.R;
-
 public abstract class IndividualsGroup
     extends TypeGroup
 {
-    public IndividualsGroup(String n, String d, boolean vig)
+    static public final String INDIVIDUALS_TAG = "individuals";
+    static public final String SECT_TAG = "sect";
+
+    public IndividualsGroup(String n, String d, String t, boolean vig)
     {
-        super(n, d, vig);
+        super(n, d, t, vig);
     }
 
     public static class Individuals
             extends IndividualsGroup
     {
-        public Individuals()
+        public Individuals(String n, String d)
         {
-//            super(Resources.getSystem().getString(R.string.individuals),
-//                    Resources.getSystem().getString(R.string.individuals_descr),
-//                    false);
-            super("Группа одиночек", "не знают о существовании друг друга и действует каждый сам за себя", false);
+            super(n,d,INDIVIDUALS_TAG, false);
         }
     }
 }

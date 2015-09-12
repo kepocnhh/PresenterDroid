@@ -19,6 +19,10 @@
     <!-- Строки -->
     <string name="mafia">Mafia</string>
     <string name="peace">Peace</string>
+
+    <string name="commandGood">Good</string>
+    <string name="commandBad">Bad</string>
+    <string name="commandNeutral">Neutral</string>
     <!-- Группы ролей -->
     <string name="individuals">Группа одиночек</string>
     <string name="organized">Организованная группировка</string>

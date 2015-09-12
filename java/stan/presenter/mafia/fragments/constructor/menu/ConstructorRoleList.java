@@ -55,9 +55,9 @@ public class ConstructorRoleList
     {
         listRoles = (ListView) v.findViewById(R.id.listRoles);
         ArrayList<Role> d = new ArrayList<>();
-        d.add(new Role("Коммисар", "Сажает в тюрьму или убивает подозреваемого", Role.TypeVisibility.peace, new IndividualsGroup.Individuals(), new Command("Город"), null));
-        d.add(new Role("Мирный житель", "Ничего не делает", Role.TypeVisibility.peace, new IndividualsGroup.Individuals(), new Command("Город"), null));
-        d.add(new Role("Мафия", "Босс мафии убивает одного человека", Role.TypeVisibility.mafia, new RangGroup.Clan(true), new Command("Мафия"), null));
+        d.add(new Role("Коммисар", "Сажает в тюрьму или убивает подозреваемого", Role.TypeVisibility.peace, new IndividualsGroup.Individuals("",""), new Command("Город"), null));
+        d.add(new Role("Мирный житель", "Ничего не делает", Role.TypeVisibility.peace, new IndividualsGroup.Individuals("",""), new Command("Город"), null));
+        d.add(new Role("Мафия", "Босс мафии убивает одного человека", Role.TypeVisibility.mafia, new RangGroup.Clan("","",true), new Command("Мафия"), null));
         adapter = new ConstructorRoleListAdapter(getActivity(), d, new ConstructorRoleListAdapter.IConstructorRoleListListener()
         {
             @Override

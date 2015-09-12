@@ -4,6 +4,7 @@ import java.util.List;
 
 import stan.presenter.core.player.Player;
 import stan.presenter.core.role.Role;
+import stan.presenter.core.role.typegrouprole.RangGroup;
 
 public class Core
 {
