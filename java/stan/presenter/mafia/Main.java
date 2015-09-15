@@ -18,10 +18,19 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
+import stan.db.ContentDriver;
 import stan.db.DBHelper;
+import stan.db.contract.*;
+import stan.db.contract.Action;
+import stan.presenter.core.ability.Ability;
+import stan.presenter.core.ability.active.changeproperty.Block;
+import stan.presenter.core.ability.active.changeproperty.HealDay;
+import stan.presenter.core.ability.active.changeproperty.Kill;
 import stan.presenter.mafia.activities.constructor.Constructor;
 
 
@@ -105,33 +114,15 @@ public class Main extends Activity
     }
     private void initDB()
     {
-        dbHelper = new DBHelper(this, DBname);
-        dbHelper.initTableTypes();
-        dbHelper.initTableRoles();
-        dbHelper.initTableActions();
-
-        String[] valuesForRole = DBHelper.getValuesRole(
-                UUID.randomUUID().toString(),//UI
-                "Мирный житель",//NAME
-                "Ничего не делает",//DESCRIPTION
-                "0",//TYPEVISIBILITY
-                "0"//TYPEROLE
-        );
-        dbHelper.insert(DBHelper.TABLEROLES, DBHelper.setContentValues(DBHelper.namesRoles, valuesForRole));
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        Cursor c = db.query(DBHelper.TABLEROLES, null, null, null, null, null, null);
-        if (c.moveToFirst())
-        {
-            int idColIndex = c.getColumnIndex("id");
-            int nameColIndex = c.getColumnIndex(DBHelper.NAME);
-            do
-            {
-                Log.d("mafia_info",
-                        "ID = " + c.getInt(idColIndex) +
-                                ", name = " + c.getString(nameColIndex));
-            } while (c.moveToNext());
-        } else
-            Log.d("mafia_info", "0 rows");
+        String name = "Посадить в тюрьму";
+        String description = "Игрока, которого посадили в тюрьму, нельзя убить, но и он не выполняет никаких действий";
+        List<Ability> curentAbilities = new ArrayList<>();
+        curentAbilities.add(new HealDay(getResources().getString(R.string.heal_day)));
+        curentAbilities.add(new Block(getResources().getString(R.string.block)));
+        Ability[] abilities = new Ability[curentAbilities.size()];
+        curentAbilities.toArray(abilities);
+        stan.presenter.core.action.Action a = new stan.presenter.core.action.Action(name, description, null, abilities);
+        DBHelper.getInstance(this).insert(Contract.getContract(Contract.TABLE_NAME_ACTION), ContentDriver.getContentValues(a));
     }
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -145,7 +136,7 @@ public class Main extends Activity
         //
 //        Ability a = new Kill();
         //
-//            initDB();
+            initDB();
         //
     }
     @Override

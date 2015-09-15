@@ -20,9 +20,12 @@
     <string name="mafia">Mafia</string>
     <string name="peace">Peace</string>
 
-    <string name="commandGood">Good</string>
-    <string name="commandBad">Bad</string>
-    <string name="commandNeutral">Neutral</string>
+    <string name="teamGood">Good</string>
+    <string name="teamGoodDescription">Good description</string>
+    <string name="teamBad">Bad</string>
+    <string name="teamBadDescription">Bad description</string>
+    <string name="teamNeutral">Neutral</string>
+    <string name="teamNeutralDescription">Neutral description</string>
     <!-- Группы ролей -->
     <string name="individuals">Группа одиночек</string>
     <string name="organized">Организованная группировка</string>
@@ -37,7 +40,7 @@
         <string name="constructor_role">Constructor role</string>
             <string name="constructor_role_side">Change side</string>
             <string name="constructor_role_typegroup">Change type group</string>
-            <string name="constructor_role_command">Change command</string>
+            <string name="constructor_role_command">Change team</string>
         <string name="constructor_actions">Constructor actions</string>
     <!-- Окна -->
     <string name="app_name">Presenter</string>
@@ -99,6 +102,7 @@
             <!-- ChangeProperty -->
                 <string name="kill">Try kill</string>
                 <string name="block">Block action role</string>
+                <string name="heal_day">Heal day</string>
             <!-- NotifyTown -->
                 <string name="try_kill">Try kill</string>
                 <string name="try_stop">Try block</string>
@@ -106,7 +110,7 @@
             <!-- CheckProperty -->
                 <string name="check_role">Check role</string>
         <!-- CheckTwoPlayers -->
-                <string name="check_command">Check command</string>
+                <string name="check_command">Check team</string>
         <!-- Passive -->
             <!-- Selfie -->
                 <string name="self_medication">Self-medication</string>

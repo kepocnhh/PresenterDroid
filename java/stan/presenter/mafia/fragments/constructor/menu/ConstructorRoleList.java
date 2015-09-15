@@ -6,13 +6,12 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import stan.presenter.core.role.Command;
+import stan.presenter.core.role.Team;
 import stan.presenter.core.role.Role;
 import stan.presenter.core.role.typegrouprole.IndividualsGroup;
 import stan.presenter.core.role.typegrouprole.RangGroup;
 import stan.presenter.mafia.R;
 import stan.presenter.mafia.adapters.constructor.ConstructorRoleListAdapter;
-import stan.presenter.mafia.fragments.constructor.ConstructorFragment;
 import stan.presenter.mafia.fragments.constructor.ConstructorMenuFragment;
 
 public class ConstructorRoleList
@@ -55,9 +54,11 @@ public class ConstructorRoleList
     {
         listRoles = (ListView) v.findViewById(R.id.listRoles);
         ArrayList<Role> d = new ArrayList<>();
-        d.add(new Role("Коммисар", "Сажает в тюрьму или убивает подозреваемого", Role.TypeVisibility.peace, new IndividualsGroup.Individuals("",""), new Command("Город"), null));
-        d.add(new Role("Мирный житель", "Ничего не делает", Role.TypeVisibility.peace, new IndividualsGroup.Individuals("",""), new Command("Город"), null));
-        d.add(new Role("Мафия", "Босс мафии убивает одного человека", Role.TypeVisibility.mafia, new RangGroup.Clan("","",true), new Command("Мафия"), null));
+        Team town = new Team("Город", "");
+        Team mafia = new Team("Город", "");
+        d.add(new Role("Коммисар", "Сажает в тюрьму или убивает подозреваемого", Role.TypeVisibility.peace, new IndividualsGroup.Individuals("",""), town, null));
+        d.add(new Role("Мирный житель", "Ничего не делает", Role.TypeVisibility.peace, new IndividualsGroup.Individuals("",""), town, null));
+        d.add(new Role("Мафия", "Босс мафии убивает одного человека", Role.TypeVisibility.mafia, new RangGroup.Clan("","",true), mafia, null));
         adapter = new ConstructorRoleListAdapter(getActivity(), d, new ConstructorRoleListAdapter.IConstructorRoleListListener()
         {
             @Override

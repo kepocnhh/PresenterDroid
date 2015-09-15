@@ -2,6 +2,7 @@ package stan.presenter.core.ability.checktwoplayers;
 
 import android.content.res.Resources;
 
+import stan.presenter.core.ability.Ability;
 import stan.presenter.core.player.Player;
 import stan.presenter.mafia.R;
 
@@ -19,5 +20,11 @@ public class CheckCommand
         //TODO remake method because need create players command
 //        return p1.role.getTypeRole().equals(p2.role.getTypeRole());
         return false;
+    }
+
+    @Override
+    protected TypeAbility setTypeAbility()
+    {
+        return null;
     }
 }

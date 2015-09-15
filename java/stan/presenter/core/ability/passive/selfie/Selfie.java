@@ -1,5 +1,6 @@
 package stan.presenter.core.ability.passive.selfie;
 
+import stan.presenter.core.ability.Ability;
 import stan.presenter.core.ability.passive.Passive;
 import stan.presenter.core.player.Player;
 
@@ -9,6 +10,12 @@ public class Selfie
     public Selfie(String n)
     {
         super(n);
+    }
+
+    @Override
+    protected TypeAbility setTypeAbility()
+    {
+        return null;
     }
 
     public Player engage(Player p)

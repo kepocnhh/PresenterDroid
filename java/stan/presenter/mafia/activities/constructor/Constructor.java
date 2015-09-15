@@ -3,7 +3,7 @@ package stan.presenter.mafia.activities.constructor;
 import android.content.Intent;
 import android.widget.TextView;
 
-import stan.presenter.core.Action;
+import stan.presenter.core.action.Action;
 import stan.presenter.mafia.activities.MafiaActivity;
 import stan.presenter.mafia.R;
 import stan.presenter.mafia.fragments.constructor.menu.ConstructorAction;

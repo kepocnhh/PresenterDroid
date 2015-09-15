@@ -3,37 +3,31 @@ package stan.presenter.core.ability.active.changeproperty;
 import stan.presenter.core.ability.active.Active;
 import stan.presenter.core.player.Player;
 
-public class ChangeProperty
+public abstract class ChangeProperty
         extends Active
 {
-    public enum TypeActive
+    public enum TypeChangeProperty
     {
         Kill,
+        HealDay,
         Block
     }
 
-    private TypeActive typeActive;
-    public boolean try_stop = false;
+    private TypeChangeProperty typeChangeProperty;
 
     public ChangeProperty(String n)
     {
         super(n);
+        typeChangeProperty = setTypeChangeProperty();
     }
 
-    public void setTypeActive(TypeActive ta)
+    protected abstract TypeChangeProperty setTypeChangeProperty();
+
+    @Override
+    protected TypeActive setTypeActive()
     {
-        typeActive = ta;
+        return TypeActive.ChangeProperty;
     }
-    public Player engage(Player p)
-    {
-        if(typeActive == TypeActive.Kill)
-        {
-            p.prop.life = false;
-        }
-        else if(typeActive == TypeActive.Block)
-        {
-            p.prop.stop = true;
-        }
-        return p;
-    }
+
+    public abstract Player engage(Player p);
 }

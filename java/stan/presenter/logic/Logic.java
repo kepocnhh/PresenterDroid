@@ -2,7 +2,7 @@ package stan.presenter.logic;
 
 import java.util.List;
 
-import stan.presenter.core.Action;
+import stan.presenter.core.action.Action;
 import stan.presenter.core.player.Player;
 
 public class Logic

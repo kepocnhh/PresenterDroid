@@ -2,13 +2,14 @@ package stan.presenter.core.role;
 
 import stan.presenter.core.Mafia;
 
-public class Command
+public class Team
     extends Mafia
 {
     String description;
 
-    public Command(String n)
+    public Team(String n, String d)
     {
         super(n);
+        this.description = d;
     }
 }

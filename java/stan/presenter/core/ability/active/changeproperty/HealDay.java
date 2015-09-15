@@ -1,15 +1,11 @@
 package stan.presenter.core.ability.active.changeproperty;
 
-import android.content.res.Resources;
-
 import stan.presenter.core.player.Player;
-import stan.presenter.mafia.R;
 
-public class Block
+public class HealDay
         extends ChangeProperty
 {
-
-    public Block(String n)
+    public HealDay(String n)
     {
         super(n);
     }
@@ -17,13 +13,13 @@ public class Block
     @Override
     protected TypeChangeProperty setTypeChangeProperty()
     {
-        return TypeChangeProperty.Block;
+        return TypeChangeProperty.HealDay;
     }
 
     @Override
     public Player engage(Player p)
     {
-        p.prop.stop = true;
+        p.prop.heal_day = true;
         return p;
     }
 }

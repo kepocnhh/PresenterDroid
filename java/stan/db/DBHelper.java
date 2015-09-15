@@ -2,169 +2,83 @@ package stan.db;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.util.UUID;
+import stan.db.contract.Contract;
 
 public class DBHelper
         extends SQLiteOpenHelper
 {
-    static public String NAME = "name";
-    static public String UI = "ui";
-    static public String DESCRIPTION = "description";
-    static public String TABLEROLES = "roles";
-    static public String ACTIONS = "actions";
-    static public String TYPEVISIBILITY = "typevisibility";
-    static public String TYPEROLE = "typerole";
-    static public String RANGSHOT = "rangshot";
-    static public String RANG = "rang";
-    static public String TABLEACTIONS = "actions";
-    static public String TRYSTOP = "trystop";
-    static public String TO = "whom";
-    static public String FROM = "who";
-    static public String SELFIE = "selfie";
+    private static final int VERSION = 1509151843;
+    private static final String DB_NAME = "mafiadatabase";
 
-    static public String[] namesTYPES = {
-            DBHelper.UI,
-            DBHelper.NAME};
-    static public String[] namesRoles = {
-            DBHelper.UI,
-            DBHelper.NAME,
-            DBHelper.DESCRIPTION,
-            DBHelper.ACTIONS,
-            DBHelper.TYPEVISIBILITY,
-            DBHelper.TYPEROLE,
-            DBHelper.RANGSHOT,
-            DBHelper.RANG};
-    static public String[] namesActions = {
-            DBHelper.UI,
-            DBHelper.NAME,
-            DBHelper.DESCRIPTION,
-            DBHelper.TRYSTOP,
-            DBHelper.TO,
-            DBHelper.FROM,
-            DBHelper.SELFIE};
+    private static DBHelper instance;
 
-    public DBHelper(Context context, String name)
+    public static DBHelper getInstance(Context context)
     {
-        super(context, name, null, 1);
+        if(instance == null)
+        {
+            instance = new DBHelper(context);
+        }
+        return instance;
+    }
+
+    private DBHelper(Context context)
+    {
+        super(context, DB_NAME, null, VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db)
     {
-//        db.execSQL("create table mytable ("
-//                + "id integer primary key autoincrement,"
-//                + "name text,"
-//                + "email text" + ");");
+        createTables(db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
     {
+        if(newVersion > oldVersion)
+        {
+            dropTables(db);
+            createTables(db);
+        }
+    }
 
-    }
-    public void createTable(String name, String[] names, String[] values)
+    private void createTables(SQLiteDatabase db)
     {
-        if(names.length!=values.length)
+        for(int i=0; i< Contract.contracts.length; i++)
         {
-            return;
+            db.execSQL(Contract.contracts[i].createTable());
         }
-        String query = "create table if not exists " + name + " ("
-                + "id integer primary key autoincrement,";
-        for(int i = 0; i<names.length; i++)
+    }
+
+    public void dropTables(SQLiteDatabase db)
+    {
+        for(int i=0; i< Contract.contracts.length; i++)
         {
-            query+= names[i] + " " + values[i];
-            if(i != names.length-1)
-            {
-                query+=",";
-            }
+            db.execSQL(Contract.contracts[i].dropTable());
         }
-        query+=");";
-        getWritableDatabase().execSQL(query);
     }
-    public void initTableTypes()
+
+    public Cursor query(Contract contract, String[] projection, String selection, String[] selectionArgs, String sortOrder)
     {
-        String[] valuesTypes = {
-                "TEXT",
-                "TEXT"};
-        this.createTable(DBHelper.TYPEROLE, DBHelper.namesTYPES, valuesTypes);
+        Cursor cursor = null;
+        SQLiteDatabase db;
+        db = getWritableDatabase();
+        cursor = db.query(contract.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+        return cursor;
     }
-    public void initTableRoles()
+
+    public long insert(Contract contract, ContentValues values)
     {
-        String[] valuesRoles = {
-                "TEXT",//UI
-                "TEXT",//NAME
-                "TEXT",//DESCRIPTION
-                "TEXT",//ACTIONS
-                "INTEGER",//TYPEVISIBILITY
-                "INTEGER",//TYPEROLE
-                "INTEGER",//RANGSHOT
-                "INTEGER"};
-        this.createTable(DBHelper.TABLEROLES, DBHelper.namesRoles, valuesRoles);
-    }
-    static public String[] getValuesRole(String ui,String name,String descr,String tv,String tr)
-    {
-        return getValuesRole(ui, name, descr, "", tv,tr);
-    }
-    static public String[] getValuesRole(String ui,String name,String descr,String actions,String tv,String tr)
-    {
-        return getValuesRole(ui, name, descr, actions, tv,tr, "0", "-1");
-    }
-    static public String[] getValuesRole(String ui,String name,String descr,String actions,String tv,String tr,String rs,String r)
-    {
-        String[] valuesForRole = {
-                ui,//UI
-                name,//NAME
-                descr,//DESCRIPTION
-                actions,//ACTIONS
-                tv,//TYPEVISIBILITY
-                tr,//TYPEROLE
-                rs,//RANGSHOT
-                r};
-        return valuesForRole;
-    }
-    public void initTableActions()
-    {
-        String[] valuesActions = {
-                "TEXT",//UI
-                "TEXT",//NAME
-                "TEXT",//DESCRIPTION
-                "INTEGER",//TRY_STOP
-                "INTEGER",//TO
-                "INTEGER",//FROM
-                "INTEGER",//SELFIE
-        };
-        this.createTable(DBHelper.TABLEACTIONS, DBHelper.namesActions, valuesActions);
-    }
-    static public String[] getValuesAction(String ui,String name, String descr)
-    {
-        return getValuesAction(ui, name, descr, "0", "-1", "-1", "0");
-    }
-    static public String[] getValuesAction(String ui,String name,String descr,String trystop,String to,String from,String selfie)
-    {
-        return new String[]{
-                ui,//UI
-                name,//NAME
-                descr,//DESCRIPTION
-                trystop,//TRY_STOP
-                to,//TO
-                from,//FROM
-                selfie,//SELFIE
-        };
-    }
-    public void insert(String nameTable, ContentValues cv)
-    {
-        getWritableDatabase().insert(nameTable, null, cv);
-    }
-    static public ContentValues setContentValues(String[] names, String[] values)
-    {
-        ContentValues cv = new ContentValues();
-        for(int i=0; i<names.length; i++)
-        {
-            cv.put(names[i], values[i]);
-        }
-        return cv;
+        SQLiteDatabase db;
+        db = getWritableDatabase();
+        db.beginTransaction();
+        long id = db.insert(contract.TABLE_NAME, null, values);
+        db.setTransactionSuccessful();
+        db.endTransaction();
+        return id;
     }
 }

@@ -1,21 +1,20 @@
 package stan.presenter.mafia.fragments.constructor.role;
 
+import android.app.Activity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 
-import stan.presenter.core.role.Command;
-import stan.presenter.mafia.Night;
+import stan.presenter.core.role.Team;
 import stan.presenter.mafia.R;
 import stan.presenter.mafia.fragments.constructor.ConstructorFragment;
 
-public class ChangeCommand
+public class ChangeTeam
         extends ConstructorFragment
 {
     public interface IChangeCommandClick
             extends IConstructorClick
     {
-        void commandNext(Command command);
+        void teamNext(Team team);
     }
 
     //______________Views
@@ -23,20 +22,28 @@ public class ChangeCommand
     private Button bad;
     private Button neutral;
 
-    Command command;
-    Command commandGood;
-    Command commandBad;
-    Command commandNeutral;
+    Team team;
+    Team teamGood;
+    Team teamBad;
+    Team teamNeutral;
 
-    public ChangeCommand()
+    public ChangeTeam()
     {
         super(R.layout.constructor_role_command, R.string.ChangeCommand);
-        commandGood = new Command(getActivity().getResources().getString(R.string.commandGood));
-        commandBad = new Command(getActivity().getResources().getString(R.string.commandBad));
-        commandNeutral = new Command(getActivity().getResources().getString(R.string.commandNeutral));
         setGood();
     }
 
+    @Override
+    public void onAttach(Activity activity)
+    {
+        super.onAttach(activity);
+        teamGood = new Team(getActivity().getResources().getString(R.string.teamGood),
+                getActivity().getResources().getString(R.string.teamGoodDescription));
+        teamBad = new Team(getActivity().getResources().getString(R.string.teamBad),
+                getActivity().getResources().getString(R.string.teamBadDescription));
+        teamNeutral = new Team(getActivity().getResources().getString(R.string.teamNeutral),
+                getActivity().getResources().getString(R.string.teamNeutralDescription));
+    }
     @Override
     protected void findViews(View v)
     {
@@ -72,17 +79,17 @@ public class ChangeCommand
 
     private void setNeutral()
     {
-        command = commandNeutral;
+        team = teamNeutral;
     }
 
     private void setBad()
     {
-        command = commandBad;
+        team = teamBad;
     }
 
     private void setGood()
     {
-        command = commandGood;
+        team = teamGood;
     }
 
     @Override
@@ -93,7 +100,7 @@ public class ChangeCommand
             @Override
             public void onClick(View v)
             {
-                ((IChangeCommandClick) clickListener).commandNext(command);
+                ((IChangeCommandClick) clickListener).teamNext(team);
             }
         };
     }

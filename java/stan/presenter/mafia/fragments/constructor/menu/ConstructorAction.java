@@ -8,8 +8,11 @@ import android.widget.Spinner;
 import java.util.ArrayList;
 import java.util.List;
 
-import stan.presenter.core.Action;
+import stan.presenter.core.ability.active.changeproperty.Block;
+import stan.presenter.core.ability.active.changeproperty.Kill;
+import stan.presenter.core.action.Action;
 import stan.presenter.core.ability.Ability;
+import stan.presenter.core.action.Restrictions;
 import stan.presenter.mafia.R;
 import stan.presenter.mafia.fragments.constructor.ConstructorMenuFragment;
 
@@ -67,13 +70,13 @@ public class ConstructorAction
     {
         String name = "Посадить в тюрьму";
         String description = "Игрока, которого посадили в тюрьму, нельзя убить, но и он не выполняет никаких действий";
-        boolean selfie = selfieCheck.isChecked();
+//        boolean selfie = selfieCheck.isChecked();
         List<Ability> curentAbilities = new ArrayList<>();
-        curentAbilities.add(new Ability("1"));
-        curentAbilities.add(new Ability("2"));
+        curentAbilities.add(new Kill(getActivity().getResources().getString(R.string.kill)));
+        curentAbilities.add(new Block(getActivity().getResources().getString(R.string.block)));
         Ability[] abilities = new Ability[curentAbilities.size()];
         curentAbilities.toArray(abilities);
-        Action a = new Action(name, description, selfie, abilities);
+        Action a = new Action(name, description, null, abilities);
         return null;
     }
 }

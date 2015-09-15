@@ -11,6 +11,12 @@ public class NotifyTown
         super(n);
     }
 
+    @Override
+    protected TypeActive setTypeActive()
+    {
+        return null;
+    }
+
     public boolean engage(Player p)
     {
         return true;

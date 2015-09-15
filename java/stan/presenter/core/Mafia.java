@@ -1,12 +1,26 @@
 package stan.presenter.core;
 
-public class Mafia
+import android.content.ContentValues;
+
+import stan.db.contract.Contract;
+
+public abstract class Mafia
 {
     public String name;
-    public int UI;
+    public int UID;
     public Mafia(String n)
     {
         this.name = n;
-        this.UI = -1;
+        this.UID = -1;
     }
+
+//    protected abstract ContentValues getContentValues(ContentValues cv);
+//    public ContentValues getContentValues()
+//    {
+//        ContentValues cv = new ContentValues();
+//        cv.put(Contract.ID, UID);
+//        cv.put(Contract.NAME, name);
+//        cv = getContentValues(cv);
+//        return cv;
+//    }
 }

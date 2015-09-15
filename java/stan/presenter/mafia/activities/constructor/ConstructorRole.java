@@ -6,13 +6,13 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import stan.presenter.core.role.Command;
+import stan.presenter.core.role.Team;
 import stan.presenter.core.role.typegrouprole.TypeGroup;
 import stan.presenter.mafia.activities.MafiaActivity;
 import stan.presenter.mafia.R;
 import stan.presenter.mafia.fragments.MafiaFragment;
 import stan.presenter.mafia.fragments.constructor.ConstructorFragment;
-import stan.presenter.mafia.fragments.constructor.role.ChangeCommand;
+import stan.presenter.mafia.fragments.constructor.role.ChangeTeam;
 import stan.presenter.mafia.fragments.constructor.role.ChangeSide;
 import stan.presenter.mafia.fragments.constructor.role.ChangeTypeGroup;
 import stan.presenter.mafia.fragments.transaction.ConstructorTransaction;
@@ -20,12 +20,12 @@ import stan.presenter.mafia.fragments.transaction.FragmentTransactionPattern;
 
 public class ConstructorRole
         extends MafiaActivity
-        implements ChangeSide.IChangeSideClick, ChangeTypeGroup.IChangeTypeGroupClick, ChangeCommand.IChangeCommandClick
+        implements ChangeSide.IChangeSideClick, ChangeTypeGroup.IChangeTypeGroupClick, ChangeTeam.IChangeCommandClick
 {
     //__________FRAGMENTS
     private ChangeSide constructorChangeSide;
     private ChangeTypeGroup constructorChangeTypeGroup;
-    private ChangeCommand constructorChangeCommand;
+    private ChangeTeam constructorChangeTeam;
 
     //______________Views
     private TextView lableConstructor;
@@ -65,7 +65,7 @@ public class ConstructorRole
         //        {
         //
         //        }
-        //        else if(tag.equals(ChangeCommand.getFragmentTag()))
+        //        else if(tag.equals(ChangeTeam.getFragmentTag()))
         //        {
         //
         //        }
@@ -77,7 +77,7 @@ public class ConstructorRole
     {
         constructorChangeSide = new ChangeSide();
         constructorChangeTypeGroup = new ChangeTypeGroup();
-        constructorChangeCommand = new ChangeCommand();
+        constructorChangeTeam = new ChangeTeam();
         addFragment(constructorChangeSide);
         stateChange(constructorChangeSide);
     }
@@ -117,11 +117,11 @@ public class ConstructorRole
     @Override
     public void typeGroupNext(TypeGroup tg)
     {
-        addFragmentWithHideTag(constructorChangeCommand);
+        addFragmentWithHideTag(constructorChangeTeam);
     }
 
     @Override
-    public void commandNext(Command command)
+    public void teamNext(Team team)
     {
     }
 
@@ -149,7 +149,7 @@ public class ConstructorRole
         } else if(mf instanceof ChangeTypeGroup)
         {
             lableConstructor.setText(R.string.constructor_role_typegroup);
-        } else if(mf instanceof ChangeCommand)
+        } else if(mf instanceof ChangeTeam)
         {
             lableConstructor.setText(R.string.constructor_role_command);
         } else
@@ -164,7 +164,7 @@ public class ConstructorRole
         //        {
         //            lableConstructor.setText(R.string.constructor_role_typegroup);
         //        }
-        //        else if(mf.equals(constructorChangeCommand))
+        //        else if(mf.equals(constructorChangeTeam))
         //        {
         //            lableConstructor.setText(R.string.constructor_role_command);
         //        }

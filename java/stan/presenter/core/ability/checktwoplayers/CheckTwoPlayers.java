@@ -11,6 +11,12 @@ public class CheckTwoPlayers
         super(n);
     }
 
+    @Override
+    protected TypeAbility setTypeAbility()
+    {
+        return null;
+    }
+
     public boolean engage(Player p1, Player p2)
     {
         return true;
