@@ -7,11 +7,11 @@ import stan.db.contract.Contract;
 public abstract class Mafia
 {
     public String name;
-    public int UID;
+    public String UID;
     public Mafia(String n)
     {
         this.name = n;
-        this.UID = -1;
+//        this.UID = "";
     }
 
 //    protected abstract ContentValues getContentValues(ContentValues cv);

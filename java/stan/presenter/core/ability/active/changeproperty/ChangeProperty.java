@@ -10,6 +10,7 @@ public abstract class ChangeProperty
     {
         Kill,
         HealDay,
+        HealNight,
         Block
     }
 

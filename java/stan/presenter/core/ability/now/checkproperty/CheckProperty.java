@@ -18,6 +18,12 @@ public class CheckProperty
         return null;
     }
 
+    @Override
+    public int[] getMap()
+    {
+        return new int[0];
+    }
+
     public String engage(Player p)
     {
         return null;

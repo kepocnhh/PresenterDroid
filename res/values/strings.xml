@@ -41,6 +41,8 @@
             <string name="constructor_role_side">Change side</string>
             <string name="constructor_role_typegroup">Change type group</string>
             <string name="constructor_role_command">Change team</string>
+            <string name="constructor_role_visiblerole">Change visible role</string>
+            <string name="constructor_role_actions">Change actions</string>
         <string name="constructor_actions">Constructor actions</string>
     <!-- Окна -->
     <string name="app_name">Presenter</string>
@@ -103,6 +105,7 @@
                 <string name="kill">Try kill</string>
                 <string name="block">Block action role</string>
                 <string name="heal_day">Heal day</string>
+                <string name="heal_night">Heal night</string>
             <!-- NotifyTown -->
                 <string name="try_kill">Try kill</string>
                 <string name="try_stop">Try block</string>
@@ -131,6 +134,8 @@
     <string name="ChangeSide">constructor_role_side</string>
     <string name="ChangeTypeGroup">constructor_role_typegroup</string>
     <string name="ChangeCommand">constructor_role_command</string>
+    <string name="ChangeVisibleRole">constructor_role_visiblerole</string>
+    <string name="ChangeActions">constructor_role_actions</string>
 
 
 </resources>

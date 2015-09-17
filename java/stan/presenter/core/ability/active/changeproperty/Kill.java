@@ -16,6 +16,16 @@ public class Kill
         super(n);
     }
 
+    @Override
+    public int[] getMap()
+    {
+        int[] map = new int[3];
+        map[0] = TypeAbility.Active.ordinal();
+        map[1] = TypeActive.ChangeProperty.ordinal();
+        map[2] = TypeChangeProperty.Kill.ordinal();
+        return map;
+    }
+
     public ContentValues getContentValues()
     {
         ContentValues cv = new ContentValues();

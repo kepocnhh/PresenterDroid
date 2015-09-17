@@ -2,19 +2,67 @@ package stan.db;
 
 import android.content.ContentValues;
 
+import org.json.JSONArray;
+
+import java.util.Date;
+
+import stan.db.contract.Action;
 import stan.db.contract.Contract;
 
 public class ContentDriver
 {
-    static private final String ACTION_ABILITIES = "abilities";
-    static public ContentValues getContentValues(stan.presenter.core.action.Action a)
+    static private ContentValues getContentValues(stan.presenter.core.Mafia m)
     {
         ContentValues cv = new ContentValues();
-        cv.put(Contract.ID, a.UID);
-        cv.put(Contract.NAME, a.name);
+        if(m.UID == null)
+        {
+            Date d = new Date();
+            int yea = d.getYear() - 100;
+            int mon = d.getMonth()+1;
+            int day = d.getDate();
+            int hou = d.getHours();
+            int min = d.getMinutes();
+            int sec = d.getSeconds();
+            String ui = yea + getTwoChars(mon) + getTwoChars(day)
+                    + getTwoChars(hou) + getTwoChars(min) + getTwoChars(sec);
+//            m.UID =  Integer.parseInt(ui);
+            m.UID =  ui;
+        }
+            cv.put(Contract.ID, m.UID);
+        cv.put(Contract.NAME, m.name);
+        return cv;
+    }
+    static private String getTwoChars(int i)
+    {
+        if(i<10)
+        {
+            return "0"+i;
+        }
+        return i+"";
+    }
+
+    static public ContentValues getContentValues(stan.presenter.core.action.Action a)
+    {
+        ContentValues cv = getContentValues((stan.presenter.core.Mafia)a);
         cv.put(Contract.DESCRIPTION, a.description);
-        String abilities = "";
-        cv.put(ACTION_ABILITIES, abilities);
+        JSONArray abilitieArray = new JSONArray();
+        for(int i=0; i<a.abilities.length; i++)
+        {
+            JSONArray abilitieMap = new JSONArray();
+            int[] map = a.abilities[i].getMap();
+            for(int j=0; j<map.length; j++)
+            {
+                abilitieMap.put(map[j]);
+            }
+            abilitieArray.put(abilitieMap);
+        }
+        String abilities = abilitieArray.toString();
+        cv.put(Action.ABILITIES, abilities);
+        return cv;
+    }
+    static public ContentValues getContentValues(stan.presenter.core.role.Role r)
+    {
+        ContentValues cv = new ContentValues();
         return cv;
     }
 }

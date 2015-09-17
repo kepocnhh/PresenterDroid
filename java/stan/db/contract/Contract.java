@@ -58,7 +58,8 @@ public abstract class Contract
         String s = "create table "+
                 TABLE_NAME+"("+
                 ID+" "+INTEGER_TYPE+"," +
-                NAME + " "+ TEXT_TYPE;
+                NAME + " "+ TEXT_TYPE+"," +
+                DESCRIPTION + " "+ TEXT_TYPE;
         for(int i=0; i<args.length; i+=2)
         {
             s += ","+args[i]+" "+args[i+1];

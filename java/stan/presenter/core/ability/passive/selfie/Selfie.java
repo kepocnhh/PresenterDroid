@@ -18,6 +18,12 @@ public class Selfie
         return null;
     }
 
+    @Override
+    public int[] getMap()
+    {
+        return new int[0];
+    }
+
     public Player engage(Player p)
     {
         return p;

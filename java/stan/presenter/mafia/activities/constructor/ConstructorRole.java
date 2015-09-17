@@ -12,20 +12,24 @@ import stan.presenter.mafia.activities.MafiaActivity;
 import stan.presenter.mafia.R;
 import stan.presenter.mafia.fragments.MafiaFragment;
 import stan.presenter.mafia.fragments.constructor.ConstructorFragment;
+import stan.presenter.mafia.fragments.constructor.role.ChangeActions;
 import stan.presenter.mafia.fragments.constructor.role.ChangeTeam;
 import stan.presenter.mafia.fragments.constructor.role.ChangeSide;
 import stan.presenter.mafia.fragments.constructor.role.ChangeTypeGroup;
+import stan.presenter.mafia.fragments.constructor.role.ChangeVisibleRole;
 import stan.presenter.mafia.fragments.transaction.ConstructorTransaction;
 import stan.presenter.mafia.fragments.transaction.FragmentTransactionPattern;
 
 public class ConstructorRole
         extends MafiaActivity
-        implements ChangeSide.IChangeSideClick, ChangeTypeGroup.IChangeTypeGroupClick, ChangeTeam.IChangeCommandClick
+        implements ChangeSide.IChangeSideClick, ChangeTypeGroup.IChangeTypeGroupClick, ChangeTeam.IChangeCommandClick, ChangeVisibleRole.IChangeVisibleRoleClick, ChangeActions.IChangeActionsClick
 {
     //__________FRAGMENTS
     private ChangeSide constructorChangeSide;
     private ChangeTypeGroup constructorChangeTypeGroup;
     private ChangeTeam constructorChangeTeam;
+    private ChangeVisibleRole constructorChangeVisibleRole;
+    private ChangeActions constructorChangeActions;
 
     //______________Views
     private TextView lableConstructor;
@@ -49,7 +53,7 @@ public class ConstructorRole
     @Override
     public void onBackPressed()
     {
-//        stateChange((MafiaFragment) getConstructorTransaction().getCurrentFragment());
+        //        stateChange((MafiaFragment) getConstructorTransaction().getCurrentFragment());
         //
         //        String tag = ((MafiaFragment)getConstructorTransaction().getCurrentFragment()).getFragmentTag();
         //        if(tag == null)
@@ -78,6 +82,8 @@ public class ConstructorRole
         constructorChangeSide = new ChangeSide();
         constructorChangeTypeGroup = new ChangeTypeGroup();
         constructorChangeTeam = new ChangeTeam();
+        constructorChangeVisibleRole = new ChangeVisibleRole();
+        constructorChangeActions = new ChangeActions();
         addFragment(constructorChangeSide);
         stateChange(constructorChangeSide);
     }
@@ -123,6 +129,13 @@ public class ConstructorRole
     @Override
     public void teamNext(Team team)
     {
+        addFragmentWithHideTag(constructorChangeVisibleRole);
+    }
+
+    @Override
+    public void visibleRoleNext()
+    {
+        addFragmentWithHideTag(constructorChangeActions);
     }
 
     private void addFragmentWithHideTag(Fragment f, String tag)
@@ -152,6 +165,12 @@ public class ConstructorRole
         } else if(mf instanceof ChangeTeam)
         {
             lableConstructor.setText(R.string.constructor_role_command);
+        } else if(mf instanceof ChangeVisibleRole)
+        {
+            lableConstructor.setText(R.string.constructor_role_visiblerole);
+        } else if(mf instanceof ChangeActions)
+        {
+            lableConstructor.setText(R.string.constructor_role_actions);
         } else
         {
         }
@@ -179,4 +198,5 @@ public class ConstructorRole
     {
         finish();
     }
+
 }

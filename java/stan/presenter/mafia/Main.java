@@ -30,6 +30,7 @@ import stan.db.contract.Action;
 import stan.presenter.core.ability.Ability;
 import stan.presenter.core.ability.active.changeproperty.Block;
 import stan.presenter.core.ability.active.changeproperty.HealDay;
+import stan.presenter.core.ability.active.changeproperty.HealNight;
 import stan.presenter.core.ability.active.changeproperty.Kill;
 import stan.presenter.mafia.activities.constructor.Constructor;
 
@@ -81,27 +82,35 @@ public class Main extends Activity
         adView.setAdListener(new AdListener()
         {
             @Override
-            public void onAdClosed() {
+            public void onAdClosed()
+            {
                 //Toast.makeText(Main.this, "onAdClosed", Toast.LENGTH_SHORT).show();
             }
+
             @Override
-            public void onAdFailedToLoad(int error) {
+            public void onAdFailedToLoad(int error)
+            {
                 String message = "onAdFailedToLoad: " + getErrorReason(error);
                 //Toast.makeText(Main.this, message, Toast.LENGTH_SHORT).show();
             }
+
             @Override
-            public void onAdLeftApplication() {
+            public void onAdLeftApplication()
+            {
                 //Toast.makeText(Main.this, "onAdLeftApplication", Toast.LENGTH_SHORT).show();
             }
+
             @Override
             public void onAdOpened()
             {
                 //Toast.makeText(Main.this, "onAdOpened", Toast.LENGTH_SHORT).show();
-//                track( "0", "onAdOpened");
+                //                track( "0", "onAdOpened");
                 GATracker.track(act, Build.ID, GATracker.CAT_ADMOB, "onAdOpened", null, null);
             }
+
             @Override
-            public void onAdLoaded() {
+            public void onAdLoaded()
+            {
                 //Toast.makeText(Main.this, "onAdLoaded", Toast.LENGTH_SHORT).show();
             }
         });
@@ -114,11 +123,27 @@ public class Main extends Activity
     }
     private void initDB()
     {
+        //        createComissarActionJail();
+        //        createComissarActionKill();
+    }
+    private void createComissarActionJail()
+    {
         String name = "Посадить в тюрьму";
         String description = "Игрока, которого посадили в тюрьму, нельзя убить, но и он не выполняет никаких действий";
         List<Ability> curentAbilities = new ArrayList<>();
-        curentAbilities.add(new HealDay(getResources().getString(R.string.heal_day)));
+        curentAbilities.add(new HealNight(getResources().getString(R.string.heal_night)));
         curentAbilities.add(new Block(getResources().getString(R.string.block)));
+        Ability[] abilities = new Ability[curentAbilities.size()];
+        curentAbilities.toArray(abilities);
+        stan.presenter.core.action.Action a = new stan.presenter.core.action.Action(name, description, null, abilities);
+        DBHelper.getInstance(this).insert(Contract.getContract(Contract.TABLE_NAME_ACTION), ContentDriver.getContentValues(a));
+    }
+    private void createComissarActionKill()
+    {
+        String name = "Убить";
+        String description = "Сделать попытку убить игрока";
+        List<Ability> curentAbilities = new ArrayList<>();
+        curentAbilities.add(new Kill(getResources().getString(R.string.kill)));
         Ability[] abilities = new Ability[curentAbilities.size()];
         curentAbilities.toArray(abilities);
         stan.presenter.core.action.Action a = new stan.presenter.core.action.Action(name, description, null, abilities);
@@ -131,8 +156,8 @@ public class Main extends Activity
         setContentView(R.layout.main);
         //
         initViews();
-            initAdvert(this);
-            initDEBUGLog();
+        initAdvert(this);
+        initDEBUGLog();
         //
 //        Ability a = new Kill();
         //

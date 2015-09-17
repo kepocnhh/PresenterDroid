@@ -22,4 +22,6 @@ public abstract class Ability
     }
 
     protected abstract TypeAbility setTypeAbility();
+
+    public abstract int[] getMap();
 }

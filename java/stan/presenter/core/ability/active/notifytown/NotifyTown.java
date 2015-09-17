@@ -12,6 +12,12 @@ public class NotifyTown
     }
 
     @Override
+    public int[] getMap()
+    {
+        return new int[0];
+    }
+
+    @Override
     protected TypeActive setTypeActive()
     {
         return null;

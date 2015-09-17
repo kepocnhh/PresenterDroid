@@ -1,15 +1,12 @@
 package stan.presenter.core.ability.active.changeproperty;
 
-import android.content.res.Resources;
-
+import stan.presenter.core.ability.Ability;
 import stan.presenter.core.player.Player;
-import stan.presenter.mafia.R;
 
-public class Block
+public class HealNight
         extends ChangeProperty
 {
-
-    public Block(String n)
+    public HealNight(String n)
     {
         super(n);
     }
@@ -20,20 +17,20 @@ public class Block
         int[] map = new int[3];
         map[0] = TypeAbility.Active.ordinal();
         map[1] = TypeActive.ChangeProperty.ordinal();
-        map[2] = TypeChangeProperty.Block.ordinal();
+        map[2] = TypeChangeProperty.HealNight.ordinal();
         return map;
     }
 
     @Override
     protected TypeChangeProperty setTypeChangeProperty()
     {
-        return TypeChangeProperty.Block;
+        return TypeChangeProperty.HealNight;
     }
 
     @Override
     public Player engage(Player p)
     {
-        p.prop.stop = true;
+        p.prop.heal_night = true;
         return p;
     }
 }

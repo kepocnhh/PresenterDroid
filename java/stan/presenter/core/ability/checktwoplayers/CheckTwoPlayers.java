@@ -17,6 +17,12 @@ public class CheckTwoPlayers
         return null;
     }
 
+    @Override
+    public int[] getMap()
+    {
+        return new int[0];
+    }
+
     public boolean engage(Player p1, Player p2)
     {
         return true;
