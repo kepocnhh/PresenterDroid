@@ -123,8 +123,8 @@ public class Main extends Activity
     }
     private void initDB()
     {
-        //        createComissarActionJail();
-        //        createComissarActionKill();
+//                createComissarActionJail();
+//                createComissarActionKill();
     }
     private void createComissarActionJail()
     {

@@ -199,4 +199,9 @@ public class ConstructorRole
         finish();
     }
 
+    @Override
+    public void getActionIDs(int[] actions)
+    {
+
+    }
 }

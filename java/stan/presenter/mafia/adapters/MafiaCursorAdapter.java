@@ -10,28 +10,45 @@ import android.widget.CursorAdapter;
 public abstract class MafiaCursorAdapter
         extends CursorAdapter
 {
-    static class  MafiaCursorHolder
+    public interface IMafiaCursorClick
     {
+        void click();
+    }
+    protected static class  MafiaCursorHolder
+    {
+        public View parent;
         public  MafiaCursorHolder(View v)
         {
+            parent = v;
         }
     }
 
+    protected IMafiaCursorClick clickListener;
     private Context context;
     protected int resourceID;
-    public MafiaCursorAdapter(Context context, Cursor c, int r)
+    public MafiaCursorAdapter(Context context, Cursor c, int r, IMafiaCursorClick click)
     {
         super(context, c, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         this.context = context;
         this.resourceID = r;
+        this.clickListener = click;
     }
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent)
     {
         LayoutInflater inflater= LayoutInflater.from(context);
-        View view=inflater.inflate(resourceID,parent,false);
-        view.setTag(initHolder(view));
+        View view=inflater.inflate(resourceID, parent, false);
+        MafiaCursorHolder holder = initHolder(view);
+        holder.parent.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                clickListener.click();
+            }
+        });
+        view.setTag(holder);
         return newView(view, cursor);
     }
     protected abstract View newView(View view, Cursor cursor);

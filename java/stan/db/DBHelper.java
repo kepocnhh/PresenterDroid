@@ -11,7 +11,7 @@ import stan.db.contract.Contract;
 public class DBHelper
         extends SQLiteOpenHelper
 {
-    private static final int VERSION = 1509171434;
+    private static final int VERSION = 1509172107;
     private static final String DB_NAME = "mafiadatabase";
 
     private static DBHelper instance;
