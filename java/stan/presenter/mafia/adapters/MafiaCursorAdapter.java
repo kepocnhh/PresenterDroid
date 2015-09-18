@@ -12,7 +12,7 @@ public abstract class MafiaCursorAdapter
 {
     public interface IMafiaCursorClick
     {
-        void click();
+//        void click(Cursor cursor);
     }
     protected static class  MafiaCursorHolder
     {
@@ -40,19 +40,21 @@ public abstract class MafiaCursorAdapter
         LayoutInflater inflater= LayoutInflater.from(context);
         View view=inflater.inflate(resourceID, parent, false);
         MafiaCursorHolder holder = initHolder(view);
-        holder.parent.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                clickListener.click();
-            }
-        });
+//        holder.parent.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View v)
+//            {
+////                clickListener.click(cursor);
+//                click(cursor, holder);
+//            }
+//        });
         view.setTag(holder);
         return newView(view, cursor);
     }
     protected abstract View newView(View view, Cursor cursor);
     protected abstract MafiaCursorHolder initHolder(View view);
+//    protected abstract void click(Cursor cursor, MafiaCursorHolder holder);
 
     @Override
     public void bindView(View view, Context context, Cursor cursor)

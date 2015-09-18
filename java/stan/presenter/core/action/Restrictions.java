@@ -2,8 +2,8 @@ package stan.presenter.core.action;
 
 public class Restrictions
 {
-    boolean selfie = true;
-    boolean visibles = true;
+    private boolean selfie = true;
+    private boolean visibles = true;
 
     public void setSelfieRestriction(boolean s)
     {
@@ -12,5 +12,25 @@ public class Restrictions
     public void setVisiblesRestriction(boolean v)
     {
         this.visibles = v;
+    }
+
+    public boolean canSelfie()
+    {
+        return this.selfie;
+    }
+    public boolean canVisibles()
+    {
+        return this.visibles;
+    }
+
+    public boolean changeSelfie()
+    {
+        selfie = !selfie;
+        return selfie;
+    }
+    public boolean changeVisibleRole()
+    {
+        visibles = !visibles;
+        return visibles;
     }
 }

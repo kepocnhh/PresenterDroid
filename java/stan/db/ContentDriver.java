@@ -23,9 +23,11 @@ public class ContentDriver
             int hou = d.getHours();
             int min = d.getMinutes();
             int sec = d.getSeconds();
+            long msec = d.getTime();
             String ui = yea + getTwoChars(mon) + getTwoChars(day)
                     + getTwoChars(hou) + getTwoChars(min) + getTwoChars(sec);
 //            m.UID =  Integer.parseInt(ui);
+            ui = msec + "";
             m.UID =  ui;
         }
             cv.put(Contract.ID, m.UID);

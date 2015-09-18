@@ -4,10 +4,16 @@ import android.database.Cursor;
 import android.view.View;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import stan.db.DBHelper;
 import stan.db.contract.Contract;
+import stan.presenter.core.action.Action;
+import stan.presenter.core.action.Restrictions;
 import stan.presenter.mafia.R;
-import stan.presenter.mafia.adapters.constructor.ConstructorActionsForeRoleListCAdapter;
+import stan.presenter.mafia.adapters.constructor.ConstrActionsFRoleListAdapter;
+import stan.presenter.mafia.adapters.constructor.ConstructorActionsForRoleListCAdapter;
 import stan.presenter.mafia.fragments.constructor.ConstructorFragment;
 
 public class ChangeActions
@@ -16,13 +22,14 @@ public class ChangeActions
     public interface IChangeActionsClick
             extends ConstructorFragment.IConstructorClick
     {
-        void getActionIDs(int[] actions);
+        void getActionIDs(String[] actions);
     }
 
     //______________Views
     ListView listActionsForRole;
 
-    ConstructorActionsForeRoleListCAdapter adapter;
+    ConstructorActionsForRoleListCAdapter adapterCursor;
+    ConstrActionsFRoleListAdapter adapter;
 
     public ChangeActions()
     {
@@ -40,22 +47,53 @@ public class ChangeActions
     {
         listActionsForRole = (ListView) v.findViewById(R.id.listActionsForRole);
         Cursor cursor = DBHelper.getInstance(getActivity()).query(Contract.getContract(Contract.TABLE_NAME_ACTION), null, null, null, null);
-        adapter = new ConstructorActionsForeRoleListCAdapter(getActivity(), cursor,
-                new ConstructorActionsForeRoleListCAdapter.IConstrActionsFRoleClick()
-                {
-                    @Override
-                    public void click()
-                    {
+        adapter = new ConstrActionsFRoleListAdapter(getActivity(), getActions(cursor), new ConstrActionsFRoleListAdapter.IConstrActionsFRoleListener()
+        {
+            @Override
+            public void pressItem(int pos)
+            {
 
-                    }
-                });
+            }
+        });
         listActionsForRole.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+    }
+
+    public List<ConstrActionsFRoleListAdapter.ActionForRole> getActions(Cursor cursor)
+    {
+        cursor.moveToFirst();
+        List<ConstrActionsFRoleListAdapter.ActionForRole> actions = new ArrayList<>();
+        while(!cursor.isAfterLast())
+        {
+            String name = cursor.getString(cursor.getColumnIndex(Contract.NAME));
+            String descr = cursor.getString(cursor.getColumnIndex(Contract.DESCRIPTION));
+            String id = cursor.getString(cursor.getColumnIndex(Contract.ID));
+            Restrictions restrictions = new Restrictions();
+            ConstrActionsFRoleListAdapter.ActionForRole afr = new ConstrActionsFRoleListAdapter.ActionForRole();
+            afr.name = name;
+            afr.description = descr;
+            afr.id = id;
+            afr.restrictions = restrictions;
+//            Action action = new Action(name, descr, restrictions, null);
+//            action.UID = id;
+//            actions.add(action);
+            actions.add(afr);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return actions;
     }
 
     @Override
     protected View.OnClickListener setNextClickListener()
     {
-        return null;
+        return new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+//                ((IChangeActionsClick) clickListener).getActionIDs(adapter.getActionIDs());
+            }
+        };
     }
 }

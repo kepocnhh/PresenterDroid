@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.SimpleAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public abstract class MafiaAdapter
@@ -15,7 +16,7 @@ public abstract class MafiaAdapter
 {
     static public class MafiaHolder
     {
-        View parent;
+        public View parent;
     }
 
     public interface MafiaAdapterListener
@@ -26,11 +27,11 @@ public abstract class MafiaAdapter
     private Activity activity;
     private MafiaAdapterListener listener;
     private LayoutInflater inflater;
-    protected ArrayList data;
+    protected List data;
     protected int resourceID;
 
     public MafiaAdapter(Activity context,
-                        ArrayList d,
+                        List d,
                         MafiaAdapterListener l, int id)
     {
         super(context, d, id, new String[]{}, new int[]{});

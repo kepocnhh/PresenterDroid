@@ -6,9 +6,41 @@
     <TextView
         android:id="@+id/nameAction"
         android:layout_gravity="center"
-        android:layout_margin="15dp"
         android:text="asdasd"
-        android:textSize="15sp"
+        android:layout_margin="10dp"
+        android:textSize="17sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:id="@+id/detailAction"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/descrAction"
+            android:layout_gravity="center"
+            android:text="asdasdafsf\ndsfgdfg\nadsfasdf\nasdfasdfasd\nasdfasdfasdf\nd"
+            android:textSize="15sp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/selfieRestriction"
+                android:text="@string/canselfie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/visibleRoleRestriction"
+                android:text="@string/canvisiblerole"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

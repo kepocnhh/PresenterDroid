@@ -200,7 +200,7 @@ public class ConstructorRole
     }
 
     @Override
-    public void getActionIDs(int[] actions)
+    public void getActionIDs(String[] actions)
     {
 
     }

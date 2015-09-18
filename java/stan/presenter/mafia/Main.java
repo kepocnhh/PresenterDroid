@@ -124,7 +124,19 @@ public class Main extends Activity
     private void initDB()
     {
 //                createComissarActionJail();
-//                createComissarActionKill();
+//        createComissarActionKill();
+//        createsimpleaction();
+//        createsimpleaction();
+//        createsimpleaction();
+//        createsimpleaction();
+//        createsimpleaction();
+//        createsimpleaction();
+//        createsimpleaction();
+//        createsimpleaction();
+//        createsimpleaction();
+//        createsimpleaction();
+//        createsimpleaction();
+//        createsimpleaction();
     }
     private void createComissarActionJail()
     {
@@ -144,6 +156,16 @@ public class Main extends Activity
         String description = "Сделать попытку убить игрока";
         List<Ability> curentAbilities = new ArrayList<>();
         curentAbilities.add(new Kill(getResources().getString(R.string.kill)));
+        Ability[] abilities = new Ability[curentAbilities.size()];
+        curentAbilities.toArray(abilities);
+        stan.presenter.core.action.Action a = new stan.presenter.core.action.Action(name, description, null, abilities);
+        DBHelper.getInstance(this).insert(Contract.getContract(Contract.TABLE_NAME_ACTION), ContentDriver.getContentValues(a));
+    }
+    private void createsimpleaction()
+    {
+        String name = "blabla";
+        String description = "blablabla";
+        List<Ability> curentAbilities = new ArrayList<>();
         Ability[] abilities = new Ability[curentAbilities.size()];
         curentAbilities.toArray(abilities);
         stan.presenter.core.action.Action a = new stan.presenter.core.action.Action(name, description, null, abilities);
