@@ -29,6 +29,18 @@ public class ChangeSide
     }
 
     @Override
+    protected int setWhyString()
+    {
+        return 0;
+    }
+
+    @Override
+    protected int setLabelString()
+    {
+        return R.string.constructor_role_side;
+    }
+
+    @Override
     protected void findViews(View v)
     {
         super.findViews(v);

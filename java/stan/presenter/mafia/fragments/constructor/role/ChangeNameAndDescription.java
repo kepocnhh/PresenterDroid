@@ -5,20 +5,21 @@ import android.view.View;
 import stan.presenter.mafia.R;
 import stan.presenter.mafia.fragments.constructor.ConstructorFragment;
 
-public class ChangeVisibleRole
+public class ChangeNameAndDescription
         extends ConstructorFragment
 {
-    public interface IChangeVisibleRoleClick
-            extends IConstructorClick
+
+    public interface IChangeNameNDescrClick
+            extends ConstructorFragment.IConstructorClick
     {
-        void visibleRoleNext();
+        void getNameAndDescription(String n, String d);
     }
 
     //______________Views
 
-    public ChangeVisibleRole()
+    public ChangeNameAndDescription()
     {
-        super(R.layout.constructor_role_visiblerole, R.string.ChangeVisibleRole);
+        super(R.layout.constructor_role_name_n_descr, R.string.ChangeNameAndDescription);
     }
 
     @Override
@@ -30,7 +31,7 @@ public class ChangeVisibleRole
     @Override
     protected int setLabelString()
     {
-        return R.string.constructor_role_visiblerole;
+        return R.string.constructor_role_name_n_descr;
     }
 
     @Override
@@ -41,7 +42,7 @@ public class ChangeVisibleRole
             @Override
             public void onClick(View v)
             {
-                ((IChangeVisibleRoleClick) clickListener).visibleRoleNext();
+                ((IChangeNameNDescrClick) clickListener).getNameAndDescription(null, null);
             }
         };
     }

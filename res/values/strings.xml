@@ -47,6 +47,11 @@
                 <string name="cantselfie">Can not selfie</string>
                 <string name="canvisiblerole">Can visible role</string>
                 <string name="cantvisiblerole">Can not visible role</string>
+            <string name="constructor_role_name_n_descr">Change name and description</string>
+                <string name="nameRole">name</string>
+                <string name="nameRoleHint">name</string>
+                <string name="descriptionRole">description</string>
+                <string name="descriptionRoleHint">description</string>
         <string name="constructor_actions">Constructor actions</string>
     <!-- Окна -->
     <string name="app_name">Presenter</string>
@@ -140,6 +145,7 @@
     <string name="ChangeCommand">constructor_role_command</string>
     <string name="ChangeVisibleRole">constructor_role_visiblerole</string>
     <string name="ChangeActions">constructor_role_actions</string>
+    <string name="ChangeNameAndDescription">constructor_role_name_n_descr</string>
 
 
 </resources>

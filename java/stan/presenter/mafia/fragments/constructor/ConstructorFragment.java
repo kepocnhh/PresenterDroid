@@ -7,6 +7,19 @@ import stan.presenter.mafia.fragments.MafiaFragment;
 public abstract class ConstructorFragment
         extends MafiaFragment
 {
+    protected int label;
+    protected int why;
+    public int getWhyString()
+    {
+        return this.why;
+    }
+    public int getLabelString()
+    {
+        return this.label;
+    }
+    protected abstract int setWhyString();
+    protected abstract int setLabelString();
+
     public interface IConstructorClick
             extends IMafiaFragmentClick
     {
@@ -38,6 +51,8 @@ public abstract class ConstructorFragment
     {
         super(lay, tag);
         nextClickListener = setNextClickListener();
+        why = setWhyString();
+        label = setLabelString();
     }
 
     protected void setViewNext()

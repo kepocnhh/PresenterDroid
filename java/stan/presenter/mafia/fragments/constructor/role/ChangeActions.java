@@ -37,6 +37,18 @@ public class ChangeActions
     }
 
     @Override
+    protected int setWhyString()
+    {
+        return 0;
+    }
+
+    @Override
+    protected int setLabelString()
+    {
+        return R.string.constructor_role_actions;
+    }
+
+    @Override
     protected void findViews(View v)
     {
         super.findViews(v);
@@ -92,7 +104,7 @@ public class ChangeActions
             @Override
             public void onClick(View v)
             {
-//                ((IChangeActionsClick) clickListener).getActionIDs(adapter.getActionIDs());
+                ((IChangeActionsClick) clickListener).getActionIDs(null);
             }
         };
     }

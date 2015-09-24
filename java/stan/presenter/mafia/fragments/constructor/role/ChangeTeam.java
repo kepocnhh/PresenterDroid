@@ -44,6 +44,19 @@ public class ChangeTeam
         teamNeutral = new Team(getActivity().getResources().getString(R.string.teamNeutral),
                 getActivity().getResources().getString(R.string.teamNeutralDescription));
     }
+
+    @Override
+    protected int setWhyString()
+    {
+        return 0;
+    }
+
+    @Override
+    protected int setLabelString()
+    {
+        return R.string.constructor_role_command;
+    }
+
     @Override
     protected void findViews(View v)
     {
