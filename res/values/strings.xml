@@ -52,6 +52,7 @@
                 <string name="nameRoleHint">name</string>
                 <string name="descriptionRole">description</string>
                 <string name="descriptionRoleHint">description</string>
+            <string name="constructor_role_result">Constructor role result</string>
         <string name="constructor_actions">Constructor actions</string>
     <!-- Окна -->
     <string name="app_name">Presenter</string>
@@ -146,6 +147,7 @@
     <string name="ChangeVisibleRole">constructor_role_visiblerole</string>
     <string name="ChangeActions">constructor_role_actions</string>
     <string name="ChangeNameAndDescription">constructor_role_name_n_descr</string>
+    <string name="ConstructorRoleResult">constructor_role_result</string>
 
 
 </resources>

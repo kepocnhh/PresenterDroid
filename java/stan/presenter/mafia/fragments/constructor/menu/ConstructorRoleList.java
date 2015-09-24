@@ -56,9 +56,9 @@ public class ConstructorRoleList
         ArrayList<Role> d = new ArrayList<>();
         Team town = new Team("Город", "");
         Team mafia = new Team("Город", "");
-        d.add(new Role("Коммисар", "Сажает в тюрьму или убивает подозреваемого", Role.TypeVisibility.peace, new IndividualsGroup.Individuals("",""), town, null));
-        d.add(new Role("Мирный житель", "Ничего не делает", Role.TypeVisibility.peace, new IndividualsGroup.Individuals("",""), town, null));
-        d.add(new Role("Мафия", "Босс мафии убивает одного человека", Role.TypeVisibility.mafia, new RangGroup.Clan("","",true), mafia, null));
+        d.add(new Role("Коммисар", "Сажает в тюрьму или убивает подозреваемого", Role.TypeVisibility.peace, new IndividualsGroup.Individuals("",""), town, null, null));
+        d.add(new Role("Мирный житель", "Ничего не делает", Role.TypeVisibility.peace, new IndividualsGroup.Individuals("",""), town, null, null));
+        d.add(new Role("Мафия", "Босс мафии убивает одного человека", Role.TypeVisibility.mafia, new RangGroup.Clan("","",true), mafia, null, null));
         adapter = new ConstructorRoleListAdapter(getActivity(), d, new ConstructorRoleListAdapter.IConstructorRoleListListener()
         {
             @Override

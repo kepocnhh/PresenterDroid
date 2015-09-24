@@ -7,6 +7,7 @@ import stan.presenter.core.role.typegrouprole.TypeGroup;
 public class Role
         extends Mafia
 {
+    public Role[] visibleRoles;//
     public Action[] actions;//
     public String description;
 
@@ -47,10 +48,10 @@ public class Role
         return this.team;
     }
 
-    public Role(String name, String d, TypeVisibility tv, TypeGroup tg, Team cmd, Action[] act)
+    public Role(String name, String d, TypeVisibility tv, TypeGroup tg, Team cmd, Role[] rls, Action[] act)
     {
         super(name);
-        init(d, tv, tg, cmd, act);
+        init(d, tv, tg, cmd, rls, act);
     }
 //    public Role clone()
 //    {
@@ -65,12 +66,13 @@ public class Role
 //        }
 //        return new Role(this.name, this.description, this.getTypeVisibility(), this.getTypeGroupRole(), this.getTeam(), new_act);
 //    }
-    private void init(String d, TypeVisibility tv, TypeGroup tg, Team cmd, Action[] act)
+    private void init(String d, TypeVisibility tv, TypeGroup tg, Team cmd, Role[] rls, Action[] act)
     {
         this.description = d;
         this.TVisibility = tv;
         this.typeGroup = tg;
         this.team = cmd;
+        this.visibleRoles = rls;
         this.actions = act;
     }
 }

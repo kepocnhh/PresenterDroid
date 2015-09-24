@@ -1,5 +1,6 @@
 package stan.presenter.mafia.fragments.constructor.role;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -27,12 +28,24 @@ public class ChangeTypeGroup
     private TextView constructorWhatText;
     private TextView constructorWhatDescription;
 
-    private TypeGroup typeGroup;
+    private TypeGroup typeGroup = null;
+    private static TypeGroup individualsType;
+    public static void setTypeGroups(Context c)
+    {
+        individualsType = new IndividualsGroup.Individuals(c.getResources().getString(R.string.individuals),
+               c.getResources().getString(R.string.individuals_descr));
+    }
+
+    public void setTypeGroup(TypeGroup tg)
+    {
+        typeGroup = tg;
+    }
 
     public ChangeTypeGroup()
     {
         super(R.layout.constructor_role_typegroup, R.string.ChangeTypeGroup);
-        typeGroup = new IndividualsGroup.Individuals("","");
+
+//        typeGroup = new IndividualsGroup.Individuals("","");
     }
 
     @Override
@@ -51,8 +64,8 @@ public class ChangeTypeGroup
     protected void findViews(View v)
     {
         super.findViews(v);
-        individuals = (Button) v.findViewById(R.id.individuals);
-        individuals.setOnClickListener(new View.OnClickListener()
+//        individuals = (Button) v.findViewById(R.id.individuals);
+        v.findViewById(R.id.individuals).setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -60,8 +73,37 @@ public class ChangeTypeGroup
                 individuals();
             }
         });
+        v.findViewById(R.id.organized).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                organized();
+            }
+        });
+        v.findViewById(R.id.clan).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                clan();
+            }
+        });
+        v.findViewById(R.id.sect).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                sect();
+            }
+        });
         constructorWhatText = (TextView) v.findViewById(R.id.constructorWhatText);
         constructorWhatDescription = (TextView) v.findViewById(R.id.constructorWhatDescription);
+        if(typeGroup == null)
+        {
+            setTypeGroup(individualsType);
+        }
+        setNewTypeGroup();
     }
 
     @Override
@@ -75,10 +117,30 @@ public class ChangeTypeGroup
         };
     }
 
-    private void individuals()
+    private void setNewTypeGroup()
     {
-        typeGroup = new IndividualsGroup.Individuals("","");
         constructorWhatText.setText(typeGroup.name);
         constructorWhatDescription.setText(typeGroup.getDescription());
+    }
+    private void setNewTypeGroup(TypeGroup tg)
+    {
+        setTypeGroup(tg);
+        setNewTypeGroup();
+    }
+    private void individuals()
+    {
+        setNewTypeGroup(individualsType);
+    }
+    private void organized()
+    {
+        setNewTypeGroup(individualsType);
+    }
+    private void clan()
+    {
+        setNewTypeGroup(individualsType);
+    }
+    private void sect()
+    {
+        setNewTypeGroup(individualsType);
     }
 }

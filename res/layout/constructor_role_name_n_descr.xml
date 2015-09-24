@@ -16,6 +16,7 @@
         <EditText
             android:id="@+id/editNameRole"
             android:hint="@string/nameRoleHint"
+            android:text="Комиссар"
             android:lines="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -32,7 +33,7 @@
         <EditText
             android:id="@+id/editDescriptionRole"
             android:hint="@string/descriptionRoleHint"
-            android:lines="1"
+            android:text="Может убить или посадить в тюрьму"
             android:gravity="top"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

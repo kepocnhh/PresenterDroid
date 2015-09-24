@@ -6,6 +6,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import stan.presenter.core.action.Action;
+import stan.presenter.core.role.Role;
 import stan.presenter.core.role.Team;
 import stan.presenter.core.role.typegrouprole.TypeGroup;
 import stan.presenter.mafia.activities.MafiaActivity;
@@ -18,6 +20,7 @@ import stan.presenter.mafia.fragments.constructor.role.ChangeTeam;
 import stan.presenter.mafia.fragments.constructor.role.ChangeSide;
 import stan.presenter.mafia.fragments.constructor.role.ChangeTypeGroup;
 import stan.presenter.mafia.fragments.constructor.role.ChangeVisibleRole;
+import stan.presenter.mafia.fragments.constructor.role.ConstructorRoleResult;
 import stan.presenter.mafia.fragments.transaction.ConstructorTransaction;
 import stan.presenter.mafia.fragments.transaction.FragmentTransactionPattern;
 
@@ -32,6 +35,7 @@ public class ConstructorRole
     private ChangeVisibleRole constructorChangeVisibleRole;
     private ChangeActions constructorChangeActions;
     private ChangeNameAndDescription constructorChangeNameNDescr;
+    private ConstructorRoleResult constructorRoleResult;
 
     //______________Views
     private TextView lableConstructor;
@@ -40,6 +44,15 @@ public class ConstructorRole
     private Button constructorBack;
     private Button constructorCancel;
     private LinearLayout constructorFooter;
+
+    //
+    String name;
+    String descr;
+    Role.TypeVisibility tv;
+    TypeGroup tg;
+    Team cmd;
+    Role[] rls;
+    Action[] act;
 
     public ConstructorRole()
     {
@@ -53,40 +66,16 @@ public class ConstructorRole
     }
 
     @Override
-    public void onBackPressed()
-    {
-        //        stateChange((MafiaFragment) getConstructorTransaction().getCurrentFragment());
-        //
-        //        String tag = ((MafiaFragment)getConstructorTransaction().getCurrentFragment()).getFragmentTag();
-        //        if(tag == null)
-        //        {
-        //            super.onBackPressed();
-        //            return;
-        //        }
-        //        if(tag.equals(ChangeSide.getFragmentTag()))
-        //        {
-        //
-        //        }
-        //        else if(tag.equals(ChangeTypeGroup.getFragmentTag()))
-        //        {
-        //
-        //        }
-        //        else if(tag.equals(ChangeTeam.getFragmentTag()))
-        //        {
-        //
-        //        }
-        super.onBackPressed();
-    }
-
-    @Override
     public void initFragments()
     {
         constructorChangeSide = new ChangeSide();
         constructorChangeTypeGroup = new ChangeTypeGroup();
+        ChangeTypeGroup.setTypeGroups(this);
         constructorChangeTeam = new ChangeTeam();
         constructorChangeVisibleRole = new ChangeVisibleRole();
         constructorChangeActions = new ChangeActions();
         constructorChangeNameNDescr = new ChangeNameAndDescription();
+        constructorRoleResult = new ConstructorRoleResult();
         addFragment(constructorChangeSide);
         stateChange(constructorChangeSide);
     }
@@ -120,37 +109,52 @@ public class ConstructorRole
     @Override
     public void sideNext(boolean peace_side)
     {
+        if(peace_side)
+        {
+            tv = Role.TypeVisibility.peace;
+        }
+        else
+        {
+            tv = Role.TypeVisibility.mafia;
+        }
         addFragmentWithHideTag(constructorChangeTypeGroup);
     }
 
     @Override
     public void typeGroupNext(TypeGroup tg)
     {
+        this.tg = tg;
         addFragmentWithHideTag(constructorChangeTeam);
     }
 
     @Override
     public void teamNext(Team team)
     {
+        cmd = team;
         addFragmentWithHideTag(constructorChangeVisibleRole);
     }
 
     @Override
     public void visibleRoleNext()
     {
+        rls = null;
         addFragmentWithHideTag(constructorChangeActions);
     }
 
     @Override
     public void getActionIDs(String[] actions)
     {
+        act = null;
         addFragmentWithHideTag(constructorChangeNameNDescr);
     }
 
     @Override
     public void getNameAndDescription(String n, String d)
     {
-
+        name = n;
+        descr = d;
+        constructorRoleResult.setRoleBits(name, descr, tv, tg, cmd, rls, act);
+        addFragmentWithHideTag(constructorRoleResult);
     }
 
     private void addFragmentWithHideTag(Fragment f, String tag)

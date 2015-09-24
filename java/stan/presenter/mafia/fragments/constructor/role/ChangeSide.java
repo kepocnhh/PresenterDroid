@@ -22,6 +22,10 @@ public class ChangeSide
     private TextView constructorWhatText;
 
     private boolean peace_side = true;
+    public void setPeaceSide(boolean ps)
+    {
+        peace_side = ps;
+    }
 
     public ChangeSide()
     {
@@ -63,6 +67,14 @@ public class ChangeSide
             }
         });
         constructorWhatText = (TextView) v.findViewById(R.id.constructorWhatText);
+        if(peace_side)
+        {
+            peaceSide();
+        }
+        else
+        {
+            mafiaSide();
+        }
     }
 
     @Override

@@ -1,6 +1,7 @@
 package stan.presenter.mafia.fragments.constructor.role;
 
 import android.view.View;
+import android.widget.EditText;
 
 import stan.presenter.mafia.R;
 import stan.presenter.mafia.fragments.constructor.ConstructorFragment;
@@ -16,10 +17,20 @@ public class ChangeNameAndDescription
     }
 
     //______________Views
+    EditText editNameRole;
+    EditText editDescriptionRole;
 
     public ChangeNameAndDescription()
     {
         super(R.layout.constructor_role_name_n_descr, R.string.ChangeNameAndDescription);
+    }
+
+    @Override
+    protected void findViews(View v)
+    {
+        super.findViews(v);
+        editNameRole = (EditText) v.findViewById(R.id.editNameRole);
+        editDescriptionRole = (EditText) v.findViewById(R.id.editDescriptionRole);
     }
 
     @Override
@@ -42,7 +53,7 @@ public class ChangeNameAndDescription
             @Override
             public void onClick(View v)
             {
-                ((IChangeNameNDescrClick) clickListener).getNameAndDescription(null, null);
+                ((IChangeNameNDescrClick) clickListener).getNameAndDescription(editNameRole.getText().toString(), editDescriptionRole.getText().toString());
             }
         };
     }
