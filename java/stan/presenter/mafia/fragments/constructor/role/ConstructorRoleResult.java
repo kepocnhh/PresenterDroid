@@ -1,13 +1,20 @@
 package stan.presenter.mafia.fragments.constructor.role;
 
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import stan.presenter.core.action.Action;
 import stan.presenter.core.role.Role;
 import stan.presenter.core.role.Team;
 import stan.presenter.core.role.typegrouprole.TypeGroup;
 import stan.presenter.mafia.R;
+import stan.presenter.mafia.activities.constructor.ConstructorRole;
+import stan.presenter.mafia.adapters.constructor.ConstrActionsFRoleResultAdapter;
 import stan.presenter.mafia.fragments.constructor.ConstructorFragment;
 
 public class ConstructorRoleResult
@@ -31,6 +38,7 @@ public class ConstructorRoleResult
     public interface IRoleResultClick
             extends IConstructorClick
     {
+        public void saveRole(Role r);
     }
 
     //______________Views
@@ -39,6 +47,10 @@ public class ConstructorRoleResult
     TextView sideRole;
     TextView typeGroupRole;
     TextView teamRole;
+    ListView actionsList;
+
+    ConstrActionsFRoleResultAdapter actionsAdapter;
+    List<ConstructorRole.ActionForRole> actions;
 
     public ConstructorRoleResult()
     {
@@ -56,6 +68,18 @@ public class ConstructorRoleResult
         typeGroupRole = (TextView) v.findViewById(R.id.typeGroupRole);
         teamRole = (TextView) v.findViewById(R.id.teamRole);
         //
+        actionsList = (ListView) v.findViewById(R.id.actionsList);
+        actionsAdapter = new ConstrActionsFRoleResultAdapter(getActivity(), actions, new ConstrActionsFRoleResultAdapter.IonstrActionsFRoleResultListener()
+        {
+            @Override
+            public void pressItem(int pos)
+            {
+
+            }
+        });
+        actionsList.setAdapter(actionsAdapter);
+        actionsAdapter.notifyDataSetChanged();
+        //
         updateViews();
     }
 
@@ -65,9 +89,10 @@ public class ConstructorRoleResult
                             TypeGroup tg,
                             Team cmd,
                             Role[] rls,
-                            Action[] act)
+                            List<ConstructorRole.ActionForRole> act)
     {
-        role = new Role(name, d, tv, tg, cmd, rls, act);
+        role = new Role(name, d, tv, tg, cmd, rls, null);
+        actions = act;
         //
     }
 
@@ -84,6 +109,7 @@ public class ConstructorRoleResult
             sideRole.setText(R.string.mafia);
         }
         teamRole.setText(role.getTeam().name);
+        typeGroupRole.setText(role.getTypeGroupRole().name);
     }
 
     @Override
@@ -94,7 +120,7 @@ public class ConstructorRoleResult
             @Override
             public void onClick(View v)
             {
-
+                ((IRoleResultClick) clickListener).saveRole(role);
             }
         };
     }

@@ -12,6 +12,7 @@ import stan.db.contract.Contract;
 import stan.presenter.core.action.Action;
 import stan.presenter.core.action.Restrictions;
 import stan.presenter.mafia.R;
+import stan.presenter.mafia.activities.constructor.ConstructorRole;
 import stan.presenter.mafia.adapters.constructor.ConstrActionsFRoleListAdapter;
 import stan.presenter.mafia.adapters.constructor.ConstructorActionsForRoleListCAdapter;
 import stan.presenter.mafia.fragments.constructor.ConstructorFragment;
@@ -22,7 +23,7 @@ public class ChangeActions
     public interface IChangeActionsClick
             extends ConstructorFragment.IConstructorClick
     {
-        void getActionIDs(String[] actions);
+        void getActionIDs(List<ConstructorRole.ActionForRole> actions);
     }
 
     //______________Views
@@ -71,17 +72,17 @@ public class ChangeActions
         adapter.notifyDataSetChanged();
     }
 
-    public List<ConstrActionsFRoleListAdapter.ActionForRole> getActions(Cursor cursor)
+    public List<ConstructorRole.ActionForRole> getActions(Cursor cursor)
     {
         cursor.moveToFirst();
-        List<ConstrActionsFRoleListAdapter.ActionForRole> actions = new ArrayList<>();
+        List<ConstructorRole.ActionForRole> actions = new ArrayList<>();
         while(!cursor.isAfterLast())
         {
             String name = cursor.getString(cursor.getColumnIndex(Contract.NAME));
             String descr = cursor.getString(cursor.getColumnIndex(Contract.DESCRIPTION));
             String id = cursor.getString(cursor.getColumnIndex(Contract.ID));
             Restrictions restrictions = new Restrictions();
-            ConstrActionsFRoleListAdapter.ActionForRole afr = new ConstrActionsFRoleListAdapter.ActionForRole();
+            ConstructorRole.ActionForRole afr = new ConstructorRole.ActionForRole();
             afr.name = name;
             afr.description = descr;
             afr.id = id;
@@ -104,7 +105,7 @@ public class ChangeActions
             @Override
             public void onClick(View v)
             {
-                ((IChangeActionsClick) clickListener).getActionIDs(null);
+                ((IChangeActionsClick) clickListener).getActionIDs(adapter.getActions());
             }
         };
     }

@@ -8,9 +8,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import stan.presenter.core.action.Action;
-import stan.presenter.core.action.Restrictions;
 import stan.presenter.mafia.R;
+import stan.presenter.mafia.activities.constructor.ConstructorRole.ActionForRole;
+import stan.presenter.mafia.activities.constructor.ConstructorRole;
 import stan.presenter.mafia.adapters.MafiaAdapter;
 
 public class ConstrActionsFRoleListAdapter
@@ -21,23 +21,6 @@ public class ConstrActionsFRoleListAdapter
     {
     }
 
-    public static class ActionForRole
-    {
-        private boolean check = false;
-        public boolean isChecked()
-        {
-            return check;
-        }
-        public boolean changeChecked()
-        {
-            check = !check;
-            return check;
-        }
-        public String id;
-        public String name;
-        public String description;
-        public Restrictions restrictions;
-    }
     static class ConstrActionsFRoleListHolder
             extends MafiaHolder
     {
@@ -57,7 +40,7 @@ public class ConstrActionsFRoleListAdapter
     int canvisiblerole = R.string.canvisiblerole;
     int cantvisiblerole = R.string.cantvisiblerole;
 
-    public ConstrActionsFRoleListAdapter(Activity context, List<ActionForRole> d, IConstrActionsFRoleListener l)
+    public ConstrActionsFRoleListAdapter(Activity context, List<ConstructorRole.ActionForRole> d, IConstrActionsFRoleListener l)
     {
         super(context, d, l, R.layout.constr_actions_f_role_list_item);
         whiteColor = context.getResources().getColor(R.color.cwhite);
@@ -154,5 +137,18 @@ public class ConstrActionsFRoleListAdapter
     private ActionForRole getAction(int p)
     {
         return ((ActionForRole) data.get(p));
+    }
+
+    public List<ActionForRole> getActions()
+    {
+        List<ActionForRole> actionForRoles = new ArrayList<>();
+        for(int i=0; i<data.size(); i++)
+        {
+            if(getAction(i).isChecked())
+            {
+                actionForRoles.add(getAction(i));
+            }
+        }
+        return actionForRoles;
     }
 }

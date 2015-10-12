@@ -30,7 +30,7 @@ public class Role
     public enum TypeVisibility//тип видимости для ролей со способностью проверки
     {
         mafia,
-        peace;
+        peace
     }
     private TypeVisibility TVisibility;
     public TypeVisibility getTypeVisibility()

@@ -6,7 +6,13 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.List;
+
+import stan.db.ContentDriver;
+import stan.db.DBHelper;
+import stan.db.contract.Contract;
 import stan.presenter.core.action.Action;
+import stan.presenter.core.action.Restrictions;
 import stan.presenter.core.role.Role;
 import stan.presenter.core.role.Team;
 import stan.presenter.core.role.typegrouprole.TypeGroup;
@@ -26,7 +32,13 @@ import stan.presenter.mafia.fragments.transaction.FragmentTransactionPattern;
 
 public class ConstructorRole
         extends MafiaActivity
-        implements ChangeSide.IChangeSideClick, ChangeTypeGroup.IChangeTypeGroupClick, ChangeTeam.IChangeCommandClick, ChangeVisibleRole.IChangeVisibleRoleClick, ChangeActions.IChangeActionsClick, ChangeNameAndDescription.IChangeNameNDescrClick
+        implements ChangeSide.IChangeSideClick,
+        ChangeTypeGroup.IChangeTypeGroupClick,
+        ChangeTeam.IChangeCommandClick,
+        ChangeVisibleRole.IChangeVisibleRoleClick,
+        ChangeActions.IChangeActionsClick,
+        ChangeNameAndDescription.IChangeNameNDescrClick,
+        ConstructorRoleResult.IRoleResultClick
 {
     //__________FRAGMENTS
     private ChangeSide constructorChangeSide;
@@ -52,7 +64,25 @@ public class ConstructorRole
     TypeGroup tg;
     Team cmd;
     Role[] rls;
-    Action[] act;
+    List<ActionForRole> act;
+
+    public static class ActionForRole
+    {
+        private boolean check = false;
+        public boolean isChecked()
+        {
+            return check;
+        }
+        public boolean changeChecked()
+        {
+            check = !check;
+            return check;
+        }
+        public String id;
+        public String name;
+        public String description;
+        public Restrictions restrictions;
+    }
 
     public ConstructorRole()
     {
@@ -142,9 +172,9 @@ public class ConstructorRole
     }
 
     @Override
-    public void getActionIDs(String[] actions)
+    public void getActionIDs(List<ActionForRole> actions)
     {
-        act = null;
+        act = actions;
         addFragmentWithHideTag(constructorChangeNameNDescr);
     }
 
@@ -155,6 +185,31 @@ public class ConstructorRole
         descr = d;
         constructorRoleResult.setRoleBits(name, descr, tv, tg, cmd, rls, act);
         addFragmentWithHideTag(constructorRoleResult);
+    }
+
+    @Override
+    public void saveRole(Role r)
+    {
+        insertNewRole(r);
+    }
+    private void insertNewRole(Role r)
+    {
+        DBHelper.getInstance(this).insert(Contract.getContract(Contract.TABLE_NAME_ROLE), ContentDriver.getContentValues(r));
+        for(int i=0; i< act.size(); i++)
+        {
+            int s = 0;
+            if(act.get(i).restrictions.canSelfie())
+            {
+                s = 1;
+            }
+            int v = 0;
+            if(act.get(i).restrictions.canVisibles())
+            {
+                v = 1;
+            }
+            DBHelper.getInstance(this).insert(Contract.getContract(Contract.TABLE_NAME_ROLES_ACTIONS),
+                    ContentDriver.getContentValuesFRolesActions(r.UID, act.get(i).id, s, v));
+        }
     }
 
     private void addFragmentWithHideTag(Fragment f, String tag)

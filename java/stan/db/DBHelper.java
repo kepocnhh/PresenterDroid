@@ -11,7 +11,7 @@ import stan.db.contract.Contract;
 public class DBHelper
         extends SQLiteOpenHelper
 {
-    private static final int VERSION = 1509172107;
+    private static final int VERSION = 1510121904;
     private static final String DB_NAME = "mafiadatabase";
 
     private static DBHelper instance;
@@ -64,11 +64,7 @@ public class DBHelper
 
     public Cursor query(Contract contract, String[] projection, String selection, String[] selectionArgs, String sortOrder)
     {
-        Cursor cursor = null;
-        SQLiteDatabase db;
-        db = getWritableDatabase();
-        cursor = db.query(contract.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
-        return cursor;
+        return getWritableDatabase().query(contract.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
     }
 
     public long insert(Contract contract, ContentValues values)
