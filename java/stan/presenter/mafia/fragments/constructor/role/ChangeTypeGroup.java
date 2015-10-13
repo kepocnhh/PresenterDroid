@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import stan.presenter.core.role.typegrouprole.IndividualsGroup;
+import stan.presenter.core.role.typegrouprole.RangGroup;
 import stan.presenter.core.role.typegrouprole.TypeGroup;
 import stan.presenter.mafia.R;
 import stan.presenter.mafia.fragments.constructor.ConstructorFragment;
@@ -29,11 +30,20 @@ public class ChangeTypeGroup
     private TextView constructorWhatDescription;
 
     private TypeGroup typeGroup = null;
-    private static TypeGroup individualsType;
+    private static IndividualsGroup.Individuals individualsType;
+    private static IndividualsGroup.Organized organizedType;
+    private static RangGroup.Clan clanType;
+    private static RangGroup.Sect sectType;
     public static void setTypeGroups(Context c)
     {
         individualsType = new IndividualsGroup.Individuals(c.getResources().getString(R.string.individuals),
-               c.getResources().getString(R.string.individuals_descr));
+                c.getResources().getString(R.string.individuals_descr));
+        organizedType = new IndividualsGroup.Organized(c.getResources().getString(R.string.organized),
+                c.getResources().getString(R.string.organized_descr));
+        clanType = new RangGroup.Clan(c.getResources().getString(R.string.clan),
+                c.getResources().getString(R.string.clan_descr));
+        sectType = new RangGroup.Sect(c.getResources().getString(R.string.sect),
+                c.getResources().getString(R.string.sect_descr));
     }
 
     public void setTypeGroup(TypeGroup tg)
@@ -44,8 +54,6 @@ public class ChangeTypeGroup
     public ChangeTypeGroup()
     {
         super(R.layout.constructor_role_typegroup, R.string.ChangeTypeGroup);
-
-//        typeGroup = new IndividualsGroup.Individuals("","");
     }
 
     @Override
@@ -133,14 +141,14 @@ public class ChangeTypeGroup
     }
     private void organized()
     {
-        setNewTypeGroup(individualsType);
+        setNewTypeGroup(organizedType);
     }
     private void clan()
     {
-        setNewTypeGroup(individualsType);
+        setNewTypeGroup(clanType);
     }
     private void sect()
     {
-        setNewTypeGroup(individualsType);
+        setNewTypeGroup(sectType);
     }
 }

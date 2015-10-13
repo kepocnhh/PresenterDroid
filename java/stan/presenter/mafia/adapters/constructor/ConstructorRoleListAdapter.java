@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import stan.presenter.core.role.Role;
@@ -36,7 +37,7 @@ public class ConstructorRoleListAdapter
     {
     }
 
-    public ConstructorRoleListAdapter(Activity context, ArrayList<Role> d, IConstructorRoleListListener l)
+    public ConstructorRoleListAdapter(Activity context, List<Role> d, IConstructorRoleListListener l)
     {
         super(context, d, l, R.layout.constr_role_list_item);
     }

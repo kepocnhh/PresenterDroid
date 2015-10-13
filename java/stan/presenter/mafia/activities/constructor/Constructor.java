@@ -28,9 +28,16 @@ public class Constructor
     }
 
     @Override
-    public void onBackPressed()
+    public void onActivityResult(int req, int res, Intent data)
     {
-        super.onBackPressed();
+        super.onActivityResult(req, res, data);
+        if(req == ConstructorRole.request)
+        {
+            if(res == ConstructorRole.result_new_role)
+            {
+                constructorRoleList.updateData();
+            }
+        }
     }
 
     @Override
@@ -72,6 +79,6 @@ public class Constructor
     @Override
     public void addRole()
     {
-        startActivityForResult(new Intent(this, ConstructorRole.class), 0);
+        startActivityForResult(new Intent(this, ConstructorRole.class), ConstructorRole.request);
     }
 }

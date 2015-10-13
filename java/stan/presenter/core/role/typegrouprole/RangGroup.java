@@ -20,9 +20,17 @@ public abstract class RangGroup
     public static class Clan
             extends RangGroup
     {
-        public Clan(String n, String d, boolean vr)
+        public Clan(String n, String d)
         {
-            super(n, d, CLAN_TAG, true, false, vr);
+            super(n, d, CLAN_TAG, true, false, true);
+        }
+    }
+    public static class Sect
+            extends RangGroup
+    {
+        public Sect(String n, String d)
+        {
+            super(n, d, SECT_TAG, false, false, true);
         }
     }
 

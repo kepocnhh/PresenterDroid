@@ -40,6 +40,12 @@ public class ConstructorRole
         ChangeNameAndDescription.IChangeNameNDescrClick,
         ConstructorRoleResult.IRoleResultClick
 {
+    public static final int request = 105;
+    public static final int result = 0;
+    public static final int result_new_role = 1;
+    public static final int result_cancel = 2;
+    public static final int result_error = 3;
+
     //__________FRAGMENTS
     private ChangeSide constructorChangeSide;
     private ChangeTypeGroup constructorChangeTypeGroup;
@@ -66,6 +72,22 @@ public class ConstructorRole
     Role[] rls;
     List<ActionForRole> act;
 
+    public static class RoleForRole
+    {
+        private boolean check = false;
+        public boolean isChecked()
+        {
+            return check;
+        }
+        public boolean changeChecked()
+        {
+            check = !check;
+            return check;
+        }
+        public String id;
+        public String name;
+        public String description;
+    }
     public static class ActionForRole
     {
         private boolean check = false;
@@ -191,6 +213,7 @@ public class ConstructorRole
     public void saveRole(Role r)
     {
         insertNewRole(r);
+        finish();
     }
     private void insertNewRole(Role r)
     {

@@ -68,6 +68,7 @@ public class ChangeActions
 
             }
         });
+        cursor.close();
         listActionsForRole.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }

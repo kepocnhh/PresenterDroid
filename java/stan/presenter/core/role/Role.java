@@ -48,6 +48,11 @@ public class Role
         return this.team;
     }
 
+    public Role(String name, String d)
+    {
+        super(name);
+        init(d, null, null, null, null, null);
+    }
     public Role(String name, String d, TypeVisibility tv, TypeGroup tg, Team cmd, Role[] rls, Action[] act)
     {
         super(name);

@@ -1,11 +1,15 @@
 package stan.presenter.mafia.fragments.constructor.menu;
 
+import android.database.Cursor;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import stan.db.DBHelper;
+import stan.db.contract.Contract;
 import stan.presenter.core.role.Team;
 import stan.presenter.core.role.Role;
 import stan.presenter.core.role.typegrouprole.IndividualsGroup;
@@ -45,7 +49,7 @@ public class ConstructorRoleList
             @Override
             public void onClick(View v)
             {
-                ((IConstructorRoleClick)clickListener).addRole();
+                ((IConstructorRoleClick) clickListener).addRole();
             }
         });
     }
@@ -53,13 +57,29 @@ public class ConstructorRoleList
     private void initListRoles(View v)
     {
         listRoles = (ListView) v.findViewById(R.id.listRoles);
-        ArrayList<Role> d = new ArrayList<>();
-        Team town = new Team("Город", "");
-        Team mafia = new Team("Город", "");
-        d.add(new Role("Коммисар", "Сажает в тюрьму или убивает подозреваемого", Role.TypeVisibility.peace, new IndividualsGroup.Individuals("",""), town, null, null));
-        d.add(new Role("Мирный житель", "Ничего не делает", Role.TypeVisibility.peace, new IndividualsGroup.Individuals("",""), town, null, null));
-        d.add(new Role("Мафия", "Босс мафии убивает одного человека", Role.TypeVisibility.mafia, new RangGroup.Clan("","",true), mafia, null, null));
-        adapter = new ConstructorRoleListAdapter(getActivity(), d, new ConstructorRoleListAdapter.IConstructorRoleListListener()
+        updateData();
+    }
+    public List<Role> getRoles(Cursor cursor)
+    {
+        cursor.moveToFirst();
+        List<Role> roles = new ArrayList<>();
+        while(!cursor.isAfterLast())
+        {
+            String name = cursor.getString(cursor.getColumnIndex(Contract.NAME));
+            String descr = cursor.getString(cursor.getColumnIndex(Contract.DESCRIPTION));
+            String id = cursor.getString(cursor.getColumnIndex(Contract.ID));
+            Role r = new Role(name, descr);
+            r.UID = id;
+            roles.add(r);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return roles;
+    }
+    public void updateData()
+    {
+        Cursor cursor = DBHelper.getInstance(getActivity()).query(Contract.getContract(Contract.TABLE_NAME_ROLE), null, null, null, null);
+        adapter = new ConstructorRoleListAdapter(getActivity(), getRoles(cursor), new ConstructorRoleListAdapter.IConstructorRoleListListener()
         {
             @Override
             public void pressItem(int pos)
@@ -69,5 +89,6 @@ public class ConstructorRoleList
         });
         listRoles.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+        cursor.close();
     }
 }
