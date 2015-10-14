@@ -22,7 +22,7 @@ public class ChangeVisibleRole
     public interface IChangeVisibleRoleClick
             extends IConstructorClick
     {
-        void visibleRoleNext();
+        void visibleRoleNext(List<ConstructorRole.RoleForRole> r);
     }
 
     //______________Views
@@ -93,7 +93,7 @@ public class ChangeVisibleRole
             @Override
             public void onClick(View v)
             {
-                ((IChangeVisibleRoleClick) clickListener).visibleRoleNext();
+                ((IChangeVisibleRoleClick) clickListener).visibleRoleNext(adapter.getRoles());
             }
         };
     }

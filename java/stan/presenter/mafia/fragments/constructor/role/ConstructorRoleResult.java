@@ -15,6 +15,7 @@ import stan.presenter.core.role.typegrouprole.TypeGroup;
 import stan.presenter.mafia.R;
 import stan.presenter.mafia.activities.constructor.ConstructorRole;
 import stan.presenter.mafia.adapters.constructor.ConstrActionsFRoleResultAdapter;
+import stan.presenter.mafia.adapters.constructor.ConstrRolesFRoleResultAdapter;
 import stan.presenter.mafia.fragments.constructor.ConstructorFragment;
 
 public class ConstructorRoleResult
@@ -48,9 +49,12 @@ public class ConstructorRoleResult
     TextView typeGroupRole;
     TextView teamRole;
     ListView actionsList;
+    ListView visibleRolesList;
 
-    ConstrActionsFRoleResultAdapter actionsAdapter;
+    List<ConstructorRole.RoleForRole> roles;
+    ConstrRolesFRoleResultAdapter rolesAdapter;
     List<ConstructorRole.ActionForRole> actions;
+    ConstrActionsFRoleResultAdapter actionsAdapter;
 
     public ConstructorRoleResult()
     {
@@ -68,8 +72,20 @@ public class ConstructorRoleResult
         typeGroupRole = (TextView) v.findViewById(R.id.typeGroupRole);
         teamRole = (TextView) v.findViewById(R.id.teamRole);
         //
+        visibleRolesList = (ListView) v.findViewById(R.id.visibleRolesList);
+        rolesAdapter = new ConstrRolesFRoleResultAdapter(getActivity(), roles, new ConstrRolesFRoleResultAdapter.IConstrRolesFRoleResultListener()
+        {
+            @Override
+            public void pressItem(int pos)
+            {
+
+            }
+        });
+        visibleRolesList.setAdapter(rolesAdapter);
+        rolesAdapter.notifyDataSetChanged();
+        //
         actionsList = (ListView) v.findViewById(R.id.actionsList);
-        actionsAdapter = new ConstrActionsFRoleResultAdapter(getActivity(), actions, new ConstrActionsFRoleResultAdapter.IonstrActionsFRoleResultListener()
+        actionsAdapter = new ConstrActionsFRoleResultAdapter(getActivity(), actions, new ConstrActionsFRoleResultAdapter.IConstrActionsFRoleResultListener()
         {
             @Override
             public void pressItem(int pos)
@@ -88,12 +104,12 @@ public class ConstructorRoleResult
                             Role.TypeVisibility tv,
                             TypeGroup tg,
                             Team cmd,
-                            Role[] rls,
+                            List<ConstructorRole.RoleForRole> rls,
                             List<ConstructorRole.ActionForRole> act)
     {
-        role = new Role(name, d, tv, tg, cmd, rls, null);
+        role = new Role(name, d, tv, tg, cmd, null, null);
+        roles = rls;
         actions = act;
-        //
     }
 
     private void updateViews()

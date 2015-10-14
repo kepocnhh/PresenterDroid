@@ -69,7 +69,7 @@ public class ConstructorRole
     Role.TypeVisibility tv;
     TypeGroup tg;
     Team cmd;
-    Role[] rls;
+    List<RoleForRole> rls;
     List<ActionForRole> act;
 
     public static class RoleForRole
@@ -187,9 +187,9 @@ public class ConstructorRole
     }
 
     @Override
-    public void visibleRoleNext()
+    public void visibleRoleNext(List<RoleForRole> r)
     {
-        rls = null;
+        rls = r;
         addFragmentWithHideTag(constructorChangeActions);
     }
 
@@ -213,6 +213,7 @@ public class ConstructorRole
     public void saveRole(Role r)
     {
         insertNewRole(r);
+        setResult(result_new_role);
         finish();
     }
     private void insertNewRole(Role r)
@@ -232,6 +233,11 @@ public class ConstructorRole
             }
             DBHelper.getInstance(this).insert(Contract.getContract(Contract.TABLE_NAME_ROLES_ACTIONS),
                     ContentDriver.getContentValuesFRolesActions(r.UID, act.get(i).id, s, v));
+        }
+        for(int i=0; i< rls.size(); i++)
+        {
+            DBHelper.getInstance(this).insert(Contract.getContract(Contract.TABLE_NAME_VISIBLE_ROLES),
+                    ContentDriver.getContentValuesFRolesVisiblesRoles(r.UID, rls.get(i).id));
         }
     }
 

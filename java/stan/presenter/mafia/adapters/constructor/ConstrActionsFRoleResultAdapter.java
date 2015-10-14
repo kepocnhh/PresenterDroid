@@ -13,7 +13,7 @@ import stan.presenter.mafia.adapters.MafiaAdapter;
 public class ConstrActionsFRoleResultAdapter
         extends MafiaAdapter
 {
-    public interface IonstrActionsFRoleResultListener
+    public interface IConstrActionsFRoleResultListener
             extends MafiaAdapterListener
     {
     }
@@ -26,7 +26,7 @@ public class ConstrActionsFRoleResultAdapter
         TextView visibleRoleRestriction;
     }
 
-    public ConstrActionsFRoleResultAdapter(Activity context, List<ConstructorRole.ActionForRole> d, IonstrActionsFRoleResultListener l)
+    public ConstrActionsFRoleResultAdapter(Activity context, List<ConstructorRole.ActionForRole> d, IConstrActionsFRoleResultListener l)
     {
         super(context, d, l, R.layout.constr_actions_f_role_result_item);
     }

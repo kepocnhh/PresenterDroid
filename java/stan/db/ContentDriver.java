@@ -95,10 +95,14 @@ public class ContentDriver
     }
     static public ContentValues getContentValues(stan.presenter.core.role.Role r, stan.presenter.core.role.Role rw)
     {
+        return getContentValuesFRolesVisiblesRoles(r.UID, rw.UID);
+    }
+    static public ContentValues getContentValuesFRolesVisiblesRoles(String ruid, String rwuid)
+    {
         ContentValues cv = new ContentValues();
         cv.put(Contract.ID, getUI());
-        cv.put(VisibleRoles.ROLE_ID, r.UID);
-        cv.put(VisibleRoles.ROLE_WHOM, rw.UID);
+        cv.put(VisibleRoles.ROLE_ID, ruid);
+        cv.put(VisibleRoles.ROLE_WHOM, rwuid);
         return cv;
     }
 }

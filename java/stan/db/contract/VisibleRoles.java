@@ -3,7 +3,7 @@ package stan.db.contract;
 public class VisibleRoles
         extends Contract
 {
-    public static final String ROLE_WHOM = "Role_whom";
+    public static final String ROLE_WHOM = "role_whom";
     public static final String ROLE_ID = "role_id";
 
     @Override
