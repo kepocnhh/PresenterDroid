@@ -84,4 +84,9 @@ public abstract class MafiaAdapter
         realize(holder, p);
         return convertView;
     }
+
+    protected MafiaAdapterListener getListener()
+    {
+        return listener;
+    }
 }

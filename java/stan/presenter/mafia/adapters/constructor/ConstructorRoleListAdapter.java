@@ -35,6 +35,8 @@ public class ConstructorRoleListAdapter
     public interface IConstructorRoleListListener
             extends MafiaAdapterListener
     {
+        void editRole(String id);
+        void deleteRole(String id);
     }
 
     public ConstructorRoleListAdapter(Activity context, List<Role> d, IConstructorRoleListListener l)
@@ -69,21 +71,44 @@ public class ConstructorRoleListAdapter
     }
 
     @Override
-    protected void realizeItem(MafiaHolder holder, int p)
+    protected void realizeItem(MafiaHolder h, final int p)
     {
-        ((ConstructorRoleListHolder) holder).lableRole.setText(((Role) data.get(p)).name);
+        ConstructorRoleListHolder holder = getHolder(h);
+        holder.lableRole.setText(getRole(p).name);
         if(checkPosition == p)
         {
-            ((ConstructorRoleListHolder) holder).infoRole.setVisibility(View.VISIBLE);
-            ((ConstructorRoleListHolder) holder).customizeRole.setVisibility(View.VISIBLE);
-            ((ConstructorRoleListHolder) holder).deleteRole.setVisibility(View.VISIBLE);
-            ((ConstructorRoleListHolder) holder).descriptionRole.setText(((Role) data.get(p)).description);
+            holder.infoRole.setVisibility(View.VISIBLE);
+            holder.customizeRole.setVisibility(View.VISIBLE);
+            holder.deleteRole.setVisibility(View.VISIBLE);
+            holder.descriptionRole.setText(((Role) data.get(p)).description);
         }
         else
         {
-            ((ConstructorRoleListHolder) holder).infoRole.setVisibility(View.GONE);
-            ((ConstructorRoleListHolder) holder).customizeRole.setVisibility(View.INVISIBLE);
-            ((ConstructorRoleListHolder) holder).deleteRole.setVisibility(View.INVISIBLE);
+            holder.infoRole.setVisibility(View.GONE);
+            holder.customizeRole.setVisibility(View.INVISIBLE);
+            holder.deleteRole.setVisibility(View.INVISIBLE);
         }
+        holder.customizeRole.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                getThisListener().editRole(getRole(p).UID);
+            }
+        });
     }
+
+    private ConstructorRoleListHolder getHolder(MafiaHolder h)
+    {
+        return (ConstructorRoleListHolder)h;
+    }
+    private IConstructorRoleListListener getThisListener()
+    {
+        return (IConstructorRoleListListener) getListener();
+    }
+    private Role getRole(int p)
+    {
+        return ((Role) data.get(p));
+    }
+
 }

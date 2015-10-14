@@ -20,11 +20,14 @@ import stan.presenter.mafia.fragments.constructor.ConstructorMenuFragment;
 
 public class ConstructorRoleList
         extends ConstructorMenuFragment
+        implements ConstructorRoleListAdapter.IConstructorRoleListListener
 {
     public interface IConstructorRoleClick
             extends IMafiaFragmentClick
     {
         void addRole();
+        void editRole(String id);
+        void deleteRole(String id);
     }
 
     //______________Views
@@ -78,17 +81,28 @@ public class ConstructorRoleList
     }
     public void updateData()
     {
-        Cursor cursor = DBHelper.getInstance(getActivity()).query(Contract.getContract(Contract.TABLE_NAME_ROLE), null, null, null, null);
-        adapter = new ConstructorRoleListAdapter(getActivity(), getRoles(cursor), new ConstructorRoleListAdapter.IConstructorRoleListListener()
-        {
-            @Override
-            public void pressItem(int pos)
-            {
-
-            }
-        });
+        Cursor cursor = DBHelper.getInstance(getActivity()).query(Contract.getContract(Contract.TABLE_NAME_ROLE));
+        adapter = new ConstructorRoleListAdapter(getActivity(), getRoles(cursor), this);
         listRoles.setAdapter(adapter);
         adapter.notifyDataSetChanged();
         cursor.close();
+    }
+
+    @Override
+    public void pressItem(int pos)
+    {
+
+    }
+
+    @Override
+    public void editRole(String id)
+    {
+        ((IConstructorRoleClick) clickListener).editRole(id);
+    }
+
+    @Override
+    public void deleteRole(String id)
+    {
+        ((IConstructorRoleClick) clickListener).deleteRole(id);
     }
 }

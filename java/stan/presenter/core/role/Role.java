@@ -37,15 +37,27 @@ public class Role
     {
         return this.TVisibility;
     }
+    public void setTypeVisibility(TypeVisibility tv)
+    {
+        this.TVisibility = tv;
+    }
     private TypeGroup typeGroup;
     public TypeGroup getTypeGroupRole()
     {
         return this.typeGroup;
     }
+    public void setTypeGroupRole(TypeGroup tg)
+    {
+        this.typeGroup = tg;
+    }
     private Team team;
     public Team getTeam()
     {
         return this.team;
+    }
+    public void setTeam(Team t)
+    {
+        this.team = t;
     }
 
     public Role(String name, String d)

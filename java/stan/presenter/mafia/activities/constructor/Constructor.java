@@ -81,4 +81,18 @@ public class Constructor
     {
         startActivityForResult(new Intent(this, ConstructorRole.class), ConstructorRole.request);
     }
+
+    @Override
+    public void editRole(String id)
+    {
+        Intent intent = new Intent(this, ConstructorRole.class);
+        intent.putExtra(ConstructorRole.ID_ROLE, id);
+        startActivityForResult(intent, ConstructorRole.request);
+    }
+
+    @Override
+    public void deleteRole(String id)
+    {
+
+    }
 }

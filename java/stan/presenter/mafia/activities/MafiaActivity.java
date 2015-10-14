@@ -27,6 +27,7 @@ public abstract class MafiaActivity
         super.onCreate(savedInstanceState);
         setContentView(contentView);
         fTP = setFragmentTransactionPattern();
+        init();
         initViews();
         initFragments();
     }
@@ -63,7 +64,11 @@ public abstract class MafiaActivity
         addFragmentWithTag(f, f.getFragmentTag());
     }
 
-    public abstract void initFragments();
+    protected void init()
+    {
+
+    }
     public abstract void initViews();
+    public abstract void initFragments();
 
 }

@@ -1,12 +1,17 @@
 package stan.db.contract;
 
 public class RolesAndActions
-        extends Contract
+        extends ConnectTable
 {
     public static final String ROLE_ID = "role_id";
     public static final String ACTION_ID = "action_id";
     public static final String SELFIE = "selfie";
     public static final String VISIBLES = "visibles";
+
+    public RolesAndActions()
+    {
+        super(ROLE_ID, ACTION_ID, Contract.TABLE_NAME_ROLE, Contract.TABLE_NAME_ACTION);
+    }
 
     @Override
     protected String setTableName()

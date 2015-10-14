@@ -65,7 +65,7 @@ public abstract class Contract
     {
         String s = "create table " +
                 TABLE_NAME + "(" +
-                ID + " " + TEXT_TYPE + "," +
+                ID + " " + TEXT_TYPE + " PRIMARY KEY," +
                 NAME + " " + TEXT_TYPE + "," +
                 DESCRIPTION + " " + TEXT_TYPE;
         for(int i = 0; i < args.length; i += 2)
@@ -81,5 +81,10 @@ public abstract class Contract
     public String dropTable()
     {
         return "drop table if exists " + TABLE_NAME;
+    }
+
+    public static String getKeyForSearch(String s)
+    {
+        return s+" = ?";
     }
 }

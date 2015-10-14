@@ -16,6 +16,6 @@ public class Role
     @Override
     public String createTable()
     {
-        return createTable(SIDE, INTEGER_TYPE, TYPEGROUP, INTEGER_TYPE, TEAM, INTEGER_TYPE);
+        return createTable(SIDE, INTEGER_TYPE, TYPEGROUP, TEXT_TYPE, TEAM, TEXT_TYPE);
     }
 }

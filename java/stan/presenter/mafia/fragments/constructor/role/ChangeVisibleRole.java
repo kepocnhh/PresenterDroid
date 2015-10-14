@@ -28,6 +28,7 @@ public class ChangeVisibleRole
     //______________Views
     ListView roleList;
 
+    Role[] genRoles;
     ConstrRolesFRoleListAdapter adapter;
 
     public ChangeVisibleRole()
@@ -66,11 +67,27 @@ public class ChangeVisibleRole
             rfr.name = name;
             rfr.description = descr;
             rfr.id = id;
+            if(genRoles!=null)
+            {
+                for(int i=0; i<genRoles.length; i++)
+                {
+                    if(genRoles[i].UID.equals(rfr.id))
+                    {
+                        rfr.changeChecked();
+                        break;
+                    }
+                }
+            }
             roles.add(rfr);
             cursor.moveToNext();
         }
         cursor.close();
         return roles;
+    }
+
+    public void setGenRoles(Role[] gr)
+    {
+        genRoles = gr;
     }
 
     @Override
