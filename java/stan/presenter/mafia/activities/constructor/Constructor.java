@@ -3,7 +3,11 @@ package stan.presenter.mafia.activities.constructor;
 import android.content.Intent;
 import android.widget.TextView;
 
+import stan.db.ContentDriver;
+import stan.db.DBHelper;
+import stan.db.contract.Contract;
 import stan.presenter.core.action.Action;
+import stan.presenter.core.role.Role;
 import stan.presenter.mafia.activities.MafiaActivity;
 import stan.presenter.mafia.R;
 import stan.presenter.mafia.fragments.constructor.menu.ConstructorAction;
@@ -35,8 +39,40 @@ public class Constructor
         {
             if(res == ConstructorRole.result_new_role)
             {
+                Role r = (Role) data.getSerializableExtra(ConstructorRole.CUSTOMIZE_ROLE);
+                insertNewRole(r);
                 constructorRoleList.updateData();
+                say("add role: " + r.name);
             }
+            else
+            if(res == ConstructorRole.result_edit_role)
+            {
+                say("customize role: " + "?");
+            }
+        }
+    }
+    private void insertNewRole(Role r)
+    {
+        DBHelper.getInstance(this).insert(Contract.getContract(Contract.TABLE_NAME_ROLE), ContentDriver.getContentValues(r));
+        for(int i=0; i< r.actions.length; i++)
+        {
+            int s = 0;
+            if(r.actions[i].getRestrictions().canSelfie())
+            {
+                s = 1;
+            }
+            int v = 0;
+            if(r.actions[i].getRestrictions().canVisibles())
+            {
+                v = 1;
+            }
+            DBHelper.getInstance(this).insert(Contract.getContract(Contract.TABLE_NAME_ROLES_ACTIONS),
+                    ContentDriver.getContentValuesFRolesActions(r.UID, r.actions[i].UID, s, v));
+        }
+        for(int i=0; i< r.visibleRoles.length; i++)
+        {
+            DBHelper.getInstance(this).insert(Contract.getContract(Contract.TABLE_NAME_VISIBLE_ROLES),
+                    ContentDriver.getContentValuesFRolesVisiblesRoles(r.UID, r.visibleRoles[i].UID));
         }
     }
 

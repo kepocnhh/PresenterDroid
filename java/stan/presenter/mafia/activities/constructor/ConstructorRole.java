@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +17,7 @@ import java.util.List;
 import stan.db.ContentDriver;
 import stan.db.DBHelper;
 import stan.db.contract.Contract;
+import stan.db.contract.RolesAndActions;
 import stan.presenter.core.action.Action;
 import stan.presenter.core.action.Restrictions;
 import stan.presenter.core.role.Role;
@@ -55,6 +57,7 @@ public class ConstructorRole
     public static final int result_edit_role = 4;
 
     public static final String ID_ROLE = "id_role";
+    public static final String CUSTOMIZE_ROLE = "customize_role";
 
     //__________FRAGMENTS
     private ChangeSide constructorChangeSide;
@@ -135,11 +138,11 @@ public class ConstructorRole
         String id_role = intent.getStringExtra(ID_ROLE);
         if(id_role!=null)
         {
-            genRole = getroleForomDB(this, id_role);
+            genRole = getRoleForomDB(this, id_role);
         }
     }
 
-    static public Role getroleForomDB(Activity a, String id_role)
+    static public Role getRoleForomDB(Activity a, String id_role)
     {
         String whereClause = Contract.getKeyForSearch(Contract.ID);
         String[] selectionArgs = new String[]{id_role};
@@ -240,8 +243,20 @@ public class ConstructorRole
             String _name = cursor.getString(cursor.getColumnIndex(Contract.NAME));
             String _descr = cursor.getString(cursor.getColumnIndex(Contract.DESCRIPTION));
             String _id = cursor.getString(cursor.getColumnIndex(Contract.ID));
+            int _se = cursor.getInt(cursor.getColumnIndex(RolesAndActions.SELFIE));
+            int _vi = cursor.getInt(cursor.getColumnIndex(RolesAndActions.VISIBLES));
             Action action = new Action(_name, _descr);
             action.UID = _id;
+            Restrictions r = new Restrictions();
+            if(_se == 0)
+            {
+                r.changeSelfie();
+            }
+            if(_vi == 0)
+            {
+                r.changeVisibleRole();
+            }
+            action.setRestrictions(r);
             acts.add(action);
             cursor.moveToNext();
         }
@@ -262,10 +277,34 @@ public class ConstructorRole
         constructorRoleResult = new ConstructorRoleResult();
         if(genRole != null)
         {
-            constructorChangeSide.setPeaceSide(genRole.getTypeVisibility() == Role.TypeVisibility.peace);
+            rls = new ArrayList<>();
+            for(int i=0; i<genRole.visibleRoles.length; i++)
+            {
+                ConstructorRole.RoleForRole rfr = new ConstructorRole.RoleForRole();
+                rfr.name = genRole.visibleRoles[i].name;
+                rfr.description = genRole.visibleRoles[i].description;
+                rfr.id = genRole.visibleRoles[i].UID;
+                rls.add(rfr);
+            }
+            act = new ArrayList<>();
+            for(int i=0; i<genRole.actions.length; i++)
+            {
+                ConstructorRole.ActionForRole afr = new ConstructorRole.ActionForRole();
+                afr.name = genRole.actions[i].name;
+                afr.description = genRole.actions[i].description;
+                afr.id = genRole.actions[i].UID;
+                afr.restrictions = genRole.actions[i].getRestrictions();
+                act.add(afr);
+            }
+            constructorRoleResult.setRoleBits(genRole, rls, act);
+            addFragment(constructorRoleResult);
+            stateChange(constructorRoleResult);
         }
-        addFragment(constructorChangeSide);
-        stateChange(constructorChangeSide);
+        else
+        {
+            addFragment(constructorChangeSide);
+            stateChange(constructorChangeSide);
+        }
     }
 
     @Override
@@ -297,6 +336,12 @@ public class ConstructorRole
     @Override
     public void sideNext(boolean peace_side)
     {
+        if(!constructorChangeSide.getCreateState())
+        {
+            constructorRoleResult.setRolePeaceSide(peace_side);
+            super.onBackPressed();
+            return;
+        }
         if(peace_side)
         {
             tv = Role.TypeVisibility.peace;
@@ -363,33 +408,28 @@ public class ConstructorRole
     @Override
     public void saveRole(Role r)
     {
-        insertNewRole(r);
-        setResult(result_new_role);
+        Intent i = new Intent();
+        i.putExtra(CUSTOMIZE_ROLE, r);
+//        insertNewRole(r);
+        setResult(result_new_role, i);
         finish();
     }
-    private void insertNewRole(Role r)
+
+    @Override
+    public void editRole(Role r)
     {
-        DBHelper.getInstance(this).insert(Contract.getContract(Contract.TABLE_NAME_ROLE), ContentDriver.getContentValues(r));
-        for(int i=0; i< act.size(); i++)
-        {
-            int s = 0;
-            if(act.get(i).restrictions.canSelfie())
-            {
-                s = 1;
-            }
-            int v = 0;
-            if(act.get(i).restrictions.canVisibles())
-            {
-                v = 1;
-            }
-            DBHelper.getInstance(this).insert(Contract.getContract(Contract.TABLE_NAME_ROLES_ACTIONS),
-                    ContentDriver.getContentValuesFRolesActions(r.UID, act.get(i).id, s, v));
-        }
-        for(int i=0; i< rls.size(); i++)
-        {
-            DBHelper.getInstance(this).insert(Contract.getContract(Contract.TABLE_NAME_VISIBLE_ROLES),
-                    ContentDriver.getContentValuesFRolesVisiblesRoles(r.UID, rls.get(i).id));
-        }
+        Intent i = new Intent();
+        i.putExtra(CUSTOMIZE_ROLE, r);
+        //        insertNewRole(r);
+        setResult(result_edit_role, i);
+        finish();
+    }
+
+    @Override
+    public void editSide()
+    {
+        constructorChangeSide.customizeState();
+        addFragmentWithHideTag(constructorChangeSide);
     }
 
     private void addFragmentWithHideTag(Fragment f, String tag)

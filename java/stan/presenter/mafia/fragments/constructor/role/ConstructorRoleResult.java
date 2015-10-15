@@ -1,6 +1,7 @@
 package stan.presenter.mafia.fragments.constructor.role;
 
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,6 +22,9 @@ import stan.presenter.mafia.fragments.constructor.ConstructorFragment;
 public class ConstructorRoleResult
         extends ConstructorFragment
 {
+    //______________Views
+//    LinearLayout sideLL;
+
     Role role;
 
     @Override
@@ -39,7 +43,9 @@ public class ConstructorRoleResult
     public interface IRoleResultClick
             extends IConstructorClick
     {
-        public void saveRole(Role r);
+        void saveRole(Role r);
+        void editRole(Role r);
+        void editSide();
     }
 
     //______________Views
@@ -66,6 +72,14 @@ public class ConstructorRoleResult
     {
         super.findViews(v);
         //
+        v.findViewById(R.id.sideLL).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                ((IRoleResultClick) clickListener).editSide();
+            }
+        });
         nameRole = (TextView) v.findViewById(R.id.nameRole);
         descriptionRole = (TextView) v.findViewById(R.id.descriptionRole);
         sideRole = (TextView) v.findViewById(R.id.sideRole);
@@ -98,24 +112,22 @@ public class ConstructorRoleResult
         //
         updateViews();
     }
-
-    public void setRoleBits(String name,
-                            String d,
-                            Role.TypeVisibility tv,
-                            TypeGroup tg,
-                            Team cmd,
-                            List<ConstructorRole.RoleForRole> rls,
-                            List<ConstructorRole.ActionForRole> act)
+    public void setRolePeaceSide(boolean peace_side)
     {
-        role = new Role(name, d, tv, tg, cmd, null, null);
-        roles = rls;
-        actions = act;
+        Role.TypeVisibility tv;
+        if(peace_side)
+        {
+            tv = Role.TypeVisibility.peace;
+        }
+        else
+        {
+            tv = Role.TypeVisibility.mafia;
+        }
+        role.setTypeVisibility(tv);
+        sideRoleUpdate();
     }
-
-    private void updateViews()
+    private void sideRoleUpdate()
     {
-        nameRole.setText(role.name);
-        descriptionRole.setText(role.description);
         if(role.getTypeVisibility() == Role.TypeVisibility.peace)
         {
             sideRole.setText(R.string.peace);
@@ -124,6 +136,48 @@ public class ConstructorRoleResult
         {
             sideRole.setText(R.string.mafia);
         }
+    }
+    public void setRoleBits(Role r,
+                            List<ConstructorRole.RoleForRole> rls,
+                            List<ConstructorRole.ActionForRole> act)
+    {
+        customizeState();
+        role = r;
+        roles = rls;
+        actions = act;
+    }
+    public void setRoleBits(String name,
+                            String d,
+                            Role.TypeVisibility tv,
+                            TypeGroup tg,
+                            Team cmd,
+                            List<ConstructorRole.RoleForRole> rls,
+                            List<ConstructorRole.ActionForRole> act)
+    {
+        createState();
+        Role[] rm = new Role[rls.size()];
+        Action[] am = new Action[act.size()];
+        for(int i=0; i<rls.size(); i++)
+        {
+            rm[i] = new Role(rls.get(i).name, rls.get(i).description);
+            rm[i].UID = rls.get(i).id;
+        }
+        for(int i=0; i<act.size(); i++)
+        {
+            am[i] = new Action(act.get(i).name, act.get(i).description);
+            am[i].setRestrictions(act.get(i).restrictions);
+            am[i].UID = act.get(i).id;
+        }
+        role = new Role(name, d, tv, tg, cmd, rm, am);
+        roles = rls;
+        actions = act;
+    }
+
+    private void updateViews()
+    {
+        nameRole.setText(role.name);
+        descriptionRole.setText(role.description);
+        sideRoleUpdate();
         teamRole.setText(role.getTeam().name);
         typeGroupRole.setText(role.getTypeGroupRole().name);
     }
@@ -136,7 +190,14 @@ public class ConstructorRoleResult
             @Override
             public void onClick(View v)
             {
-                ((IRoleResultClick) clickListener).saveRole(role);
+                if(getCreateState())
+                {
+                    ((IRoleResultClick) clickListener).saveRole(role);
+                }
+                else
+                {
+                    ((IRoleResultClick) clickListener).editRole(role);
+                }
             }
         };
     }

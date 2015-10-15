@@ -3,6 +3,7 @@ package stan.presenter.mafia.activities;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import stan.presenter.mafia.fragments.transaction.FragmentTransactionPattern;
 import stan.presenter.mafia.fragments.MafiaFragment;
@@ -71,4 +72,8 @@ public abstract class MafiaActivity
     public abstract void initViews();
     public abstract void initFragments();
 
+    protected void say(String s)
+    {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+    }
 }

@@ -1,6 +1,9 @@
 package stan.presenter.core.action;
 
+import java.io.Serializable;
+
 public class Restrictions
+    implements Serializable
 {
     private boolean selfie = true;
     private boolean visibles = true;

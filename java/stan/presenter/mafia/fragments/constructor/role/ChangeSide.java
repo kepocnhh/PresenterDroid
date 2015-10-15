@@ -55,6 +55,10 @@ public class ChangeSide
             public void onClick(View v)
             {
                 peaceSide();
+                if(!getCreateState())
+                {
+                    ((IChangeSideClick) clickListener).sideNext(peace_side);
+                }
             }
         });
         mafiaSide = (Button) v.findViewById(R.id.mafiaSide);
@@ -64,6 +68,10 @@ public class ChangeSide
             public void onClick(View v)
             {
                 mafiaSide();
+                if(!getCreateState())
+                {
+                    ((IChangeSideClick) clickListener).sideNext(peace_side);
+                }
             }
         });
         constructorWhatText = (TextView) v.findViewById(R.id.constructorWhatText);

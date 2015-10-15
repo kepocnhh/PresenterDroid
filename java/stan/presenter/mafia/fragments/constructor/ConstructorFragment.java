@@ -7,6 +7,7 @@ import stan.presenter.mafia.fragments.MafiaFragment;
 public abstract class ConstructorFragment
         extends MafiaFragment
 {
+    private boolean state = true;
     protected int label;
     protected int why;
     public int getWhyString()
@@ -70,4 +71,17 @@ public abstract class ConstructorFragment
     }
 
     protected abstract View.OnClickListener setNextClickListener();
+
+    public boolean getCreateState()
+    {
+        return state;
+    }
+    public void customizeState()
+    {
+        state = false;
+    }
+    public void createState()
+    {
+        state = true;
+    }
 }
